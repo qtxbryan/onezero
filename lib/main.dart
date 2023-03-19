@@ -5,6 +5,7 @@ import 'package:onezero/pages/create_listing.dart';
 import 'package:onezero/pages/landing_page.dart';
 import 'package:onezero/pages/test_read_listing.dart';
 import 'package:onezero/pages/profile_page.dart';
+import 'package:onezero/pages/test_register.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: LandingPage(),
+      home: TestRegisterPage(),
     );
   }
 }
