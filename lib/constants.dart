@@ -1,0 +1,3 @@
+final int PRIMARY_COLOR = 0x4B39EF;
+final int ALTERNATE_COLOR = 0xFF5963;
+final int SECONDARY_COLOR = 0x39D2C0;

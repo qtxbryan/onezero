@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "422555546992",
+    "project_id": "onezero-49166",
+    "storage_bucket": "onezero-49166.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:422555546992:android:8657add38fed01fe604bb5",
+        "android_client_info": {
+          "package_name": "com.example.onezero"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "422555546992-u8mndigbgak3rdnna09mj15q7oco6klq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHnd4hJJzx_WPhLScD7vqtaPsu3CNNay0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "422555546992-u8mndigbgak3rdnna09mj15q7oco6klq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
