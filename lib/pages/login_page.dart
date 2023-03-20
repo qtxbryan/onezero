@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:onezero/pages/landing_page.dart';
 
 import '../auth.dart';
 
@@ -27,6 +28,10 @@ class _LoginPageState extends State<LoginPage> {
         errorMessage = e.message;
       });
     }
+
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => LandingPage(),
+    ));
   }
 
   Widget _errorMessage() {
@@ -146,12 +151,12 @@ class _LoginPageState extends State<LoginPage> {
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Image.asset(
-                                  '',
-                                  width: 242,
-                                  height: 120,
-                                  fit: BoxFit.fitWidth,
-                                ),
+                                // Image.asset(
+                                //   '',
+                                //   width: 242,
+                                //   height: 120,
+                                //   fit: BoxFit.fitWidth,
+                                // ),
                               ],
                             ))
                       ],

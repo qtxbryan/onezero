@@ -173,7 +173,10 @@ class _LandingPageState extends State<LandingPage> {
                                               numOfBedroom: int.parse(
                                                   listingsData['numOfBedroom']),
                                               dimension: int.parse(
-                                                  listingsData['dimension']))),
+                                                  listingsData['dimension']),
+                                              lease: int.parse(
+                                                listingsData['lease'],
+                                              ))),
                                     ));
                                   }, //push individual property page,
                                   child: Container(

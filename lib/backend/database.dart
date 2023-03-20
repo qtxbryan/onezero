@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:onezero/models/Listing.dart';
+import '../auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Database {
   //Listing
@@ -37,4 +39,17 @@ class Database {
   //Read Listing
   CollectionReference listings =
       FirebaseFirestore.instance.collection('listing');
+
+  Stream<DocumentSnapshot> readSingleDocument(
+      String collectionName, String uid) {
+    CollectionReference _collectionRef;
+    DocumentReference _collectionDocRef;
+    Stream<DocumentSnapshot> _collectionDocStream;
+
+    _collectionRef = FirebaseFirestore.instance.collection(collectionName);
+    _collectionDocRef = _collectionRef.doc(uid);
+    _collectionDocStream = _collectionDocRef.snapshots();
+
+    return _collectionDocStream;
+  }
 }

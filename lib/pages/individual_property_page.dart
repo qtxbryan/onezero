@@ -5,6 +5,10 @@ import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:onezero/constants.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import '../auth.dart';
+import 'package:onezero/components/EditProfileWidget.dart';
 
 class IndividualPropertyPageWidget extends StatefulWidget {
   final String propertyName;
@@ -12,6 +16,7 @@ class IndividualPropertyPageWidget extends StatefulWidget {
   final int numOfBedroom;
   final int dimension;
   final String id;
+  final int lease;
 
   const IndividualPropertyPageWidget({
     Key? key,
@@ -20,6 +25,7 @@ class IndividualPropertyPageWidget extends StatefulWidget {
     required this.price,
     required this.numOfBedroom,
     required this.dimension,
+    required this.lease,
   }) : super(key: key);
 
   @override
@@ -30,6 +36,21 @@ class IndividualPropertyPageWidget extends StatefulWidget {
 class _IndividualPropertyPageWidgetState
     extends State<IndividualPropertyPageWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  late final CollectionReference _usersRef;
+  late final DocumentReference _userDocRef;
+  late final User? _user;
+  late final Stream<DocumentSnapshot> _userDocStream;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _usersRef = FirebaseFirestore.instance.collection('users');
+    _user = Auth().currentUser;
+    _userDocRef = _usersRef.doc(_user!.uid);
+    _userDocStream = _userDocRef.snapshots();
+  }
 
   Widget IndividualProperty(
       String neighbourhood, String description, double price) {
@@ -468,39 +489,42 @@ class _IndividualPropertyPageWidgetState
                               mainAxisSize: MainAxisSize.max,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Text(
-                                  'Grant Awarded:',
-                                  style: FlutterFlowTheme.of(context).bodyText1,
-                                ),
-                                Text(
-                                  'TEST GRANT',
-                                  style: FlutterFlowTheme.of(context).bodyText1,
-                                ),
-                                FFButtonWidget(
-                                  onPressed: null,
-                                  text: 'Edit Details',
-                                  options: FFButtonOptions(
-                                    width: 130.0,
-                                    height: 40.0,
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 0.0, 0.0, 0.0),
-                                    iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 0.0, 0.0, 0.0),
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryColor,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .subtitle2
-                                        .override(
-                                          fontFamily: 'Poppins',
-                                          color: Colors.white,
-                                        ),
-                                    borderSide: BorderSide(
-                                      color: Colors.transparent,
-                                      width: 1.0,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8.0),
-                                  ),
-                                ),
+                                EditProfileWidget(
+                                    numOfBedroom: widget.numOfBedroom,
+                                    lease: widget.lease)
+                                // Text(
+                                //   'Grant Awarded:',
+                                //   style: FlutterFlowTheme.of(context).bodyText1,
+                                // ),
+                                // Text(
+                                //   'TEST GRANT',
+                                //   style: FlutterFlowTheme.of(context).bodyText1,
+                                // ),
+                                // FFButtonWidget(
+                                //   onPressed: null,
+                                //   text: 'Edit Details',
+                                //   options: FFButtonOptions(
+                                //     width: 130.0,
+                                //     height: 40.0,
+                                //     padding: EdgeInsetsDirectional.fromSTEB(
+                                //         0.0, 0.0, 0.0, 0.0),
+                                //     iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                //         0.0, 0.0, 0.0, 0.0),
+                                //     color: FlutterFlowTheme.of(context)
+                                //         .primaryColor,
+                                //     textStyle: FlutterFlowTheme.of(context)
+                                //         .subtitle2
+                                //         .override(
+                                //           fontFamily: 'Poppins',
+                                //           color: Colors.white,
+                                //         ),
+                                //     borderSide: BorderSide(
+                                //       color: Colors.transparent,
+                                //       width: 1.0,
+                                //     ),
+                                //     borderRadius: BorderRadius.circular(8.0),
+                                //   ),
+                                // ),
                               ],
                             ),
                           ),
