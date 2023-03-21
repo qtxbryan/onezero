@@ -6,6 +6,7 @@ import 'package:onezero/models/Listing.dart';
 import 'package:onezero/constants.dart';
 import 'package:onezero/backend/database.dart';
 import 'package:onezero/pages/individual_property_page.dart';
+import 'package:onezero/pages/settings_page.dart';
 
 class LandingPage extends StatefulWidget {
   LandingPage({super.key});
@@ -98,7 +99,13 @@ class _LandingPageState extends State<LandingPage> {
                               mainAxisSize: MainAxisSize.max,
                               children: [
                                 OutlinedButton(
-                                  onPressed: signOut,
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: ((context) =>
+                                                SettingPage())));
+                                  },
                                   child: Text(
                                     'Search',
                                     style: TextStyle(
