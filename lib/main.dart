@@ -3,6 +3,10 @@ import 'package:onezero/pages/login_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:onezero/pages/test_register.dart';
 import 'package:onezero/pages/test_individual_page.dart';
+import 'package:onezero/pages/splash_page.dart';
+import 'package:onezero/components/GrantCard.dart';
+import 'package:onezero/pages/create_listing.dart';
+import 'package:onezero/pages/profile_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,7 +26,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: IndividualPropertyPage(),
+      home: LoginPage(),
     );
   }
 }

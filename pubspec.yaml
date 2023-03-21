@@ -46,6 +46,8 @@ dependencies:
   auto_size_text: 3.0.0
   expandable: 5.0.1
   go_router: 3.1.0
+  curved_navigation_bar: ^1.0.1
+  firebase_storage: ^10.0.0
   
 dev_dependencies:
   flutter_test:
@@ -73,6 +75,15 @@ flutter:
   assets:
     - assets/fonts/
     - assets/images/
+
+  fonts:
+    - family: Helvetica-Neue-Regular
+      fonts:
+        - asset: assets/fonts/Helvetica-Neue-Regular.ttf
+    - family: Helvetica-Neue-Medium
+      fonts:
+        - asset: assets/fonts/Helvetica-Neue-Medium.ttf
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
