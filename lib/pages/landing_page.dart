@@ -7,6 +7,7 @@ import 'package:onezero/constants.dart';
 import 'package:onezero/backend/database.dart';
 import 'package:onezero/pages/home_page.dart';
 import 'package:onezero/pages/individual_property_page.dart';
+import 'package:onezero/pages/search_page.dart';
 import 'package:onezero/pages/settings_page.dart';
 
 class LandingPage extends StatefulWidget {
@@ -106,7 +107,7 @@ class _LandingPageState extends State<LandingPage> {
                                         context,
                                         MaterialPageRoute(
                                             builder: ((context) =>
-                                                HomePage())));
+                                                SearchPageWidget())));
                                   },
                                   child: Text(
                                     'Search',
