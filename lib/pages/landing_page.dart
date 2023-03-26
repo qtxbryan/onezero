@@ -5,6 +5,7 @@ import 'package:onezero/auth.dart';
 import 'package:onezero/models/Listing.dart';
 import 'package:onezero/constants.dart';
 import 'package:onezero/backend/database.dart';
+import 'package:onezero/pages/home_page.dart';
 import 'package:onezero/pages/individual_property_page.dart';
 import 'package:onezero/pages/settings_page.dart';
 
@@ -52,6 +53,7 @@ class _LandingPageState extends State<LandingPage> {
                     ],
                   ),
                   child: Column(
+                    // Logo
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -104,7 +106,7 @@ class _LandingPageState extends State<LandingPage> {
                                         context,
                                         MaterialPageRoute(
                                             builder: ((context) =>
-                                                SettingPage())));
+                                                HomePage())));
                                   },
                                   child: Text(
                                     'Search',

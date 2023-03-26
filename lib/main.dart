@@ -8,6 +8,7 @@ import 'package:onezero/components/GrantCard.dart';
 import 'package:onezero/pages/create_listing.dart';
 import 'package:onezero/pages/settings_page.dart';
 import 'package:onezero/pages/reset_password_page.dart';
+import 'package:onezero/pages/landing_page.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: ChangePasswordWidget(),
+      home: LandingPage(),
     );
   }
 }
