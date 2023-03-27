@@ -95,7 +95,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                 Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).dark600,
+                    color: Colors.white,
                     boxShadow: [
                       BoxShadow(
                         blurRadius: 3.0,
