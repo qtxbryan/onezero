@@ -1,34 +1,77 @@
 {
   "project_info": {
-    "project_number": "422555546992",
-    "project_id": "onezero-49166",
-    "storage_bucket": "onezero-49166.appspot.com"
+    "project_number": "434781259509",
+    "project_id": "test-7c593",
+    "storage_bucket": "test-7c593.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:422555546992:android:8657add38fed01fe604bb5",
+        "mobilesdk_app_id": "1:434781259509:android:36aad7e2c3b62cd7c067bc",
         "android_client_info": {
-          "package_name": "com.example.onezero"
+          "package_name": "com.flutterflow.homeU"
         }
       },
       "oauth_client": [
         {
-          "client_id": "422555546992-u8mndigbgak3rdnna09mj15q7oco6klq.apps.googleusercontent.com",
+          "client_id": "434781259509-s4isohmf1ua9l0o4ms8nb721m9b4ekl1.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAHnd4hJJzx_WPhLScD7vqtaPsu3CNNay0"
+          "current_key": "AIzaSyCuqhIhWSYxovXq70syuhArmJBROXMB7jU"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "422555546992-u8mndigbgak3rdnna09mj15q7oco6klq.apps.googleusercontent.com",
+              "client_id": "434781259509-s4isohmf1ua9l0o4ms8nb721m9b4ekl1.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "434781259509-4275mehpkb75iugo6ncado9qknbq6u3v.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mycompany.onezero"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:434781259509:android:9552838d12f930cec067bc",
+        "android_client_info": {
+          "package_name": "com.mycompany.onezero"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "434781259509-s4isohmf1ua9l0o4ms8nb721m9b4ekl1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCuqhIhWSYxovXq70syuhArmJBROXMB7jU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "434781259509-s4isohmf1ua9l0o4ms8nb721m9b4ekl1.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "434781259509-4275mehpkb75iugo6ncado9qknbq6u3v.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mycompany.onezero"
+              }
             }
           ]
         }

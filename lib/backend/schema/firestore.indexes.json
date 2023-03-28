@@ -1,0 +1,18 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "listing",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "listed_by",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "propertyName",
+          "order": "DESCENDING"
+        }
+      ]
+    }
+  ]
+}
