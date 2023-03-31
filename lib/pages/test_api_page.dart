@@ -25,10 +25,10 @@ class _ComparePageState extends State<ComparePage> {
     super.initState();
 
     //fetch data from API
-    getData(); // resale contains the data
+    getResaleData(); // resale contains the data
   }
 
-  getData() async {
+  getResaleData() async {
     resale = await RemoteService().getResale();
     records = resale!.result.records;
 
