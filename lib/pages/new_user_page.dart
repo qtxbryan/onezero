@@ -84,6 +84,7 @@ class _NewUserPageWidgetState extends State<NewUserPageWidget> {
             size: 30.0,
           ),
           onPressed: () async {
+            Navigator.pop(context);
            // context.pushNamed('createProperty_1Test');
           },
         ),

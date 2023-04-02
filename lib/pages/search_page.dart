@@ -76,7 +76,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
           style: FlutterFlowTheme.of(context).subtitle1.override(
                 fontFamily: 'Lexend Deca',
                 color: FlutterFlowTheme.of(context).tertiaryColor,
-                fontSize: 18.0,
+                fontSize: 22.0,
                 fontWeight: FontWeight.w500,
               ),
         ),

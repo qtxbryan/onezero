@@ -216,7 +216,16 @@ void OnBeingTapped(int index) {
                                         //     fit: BoxFit.cover,
                                         //   ),
                                         // ),
-                                        Padding(
+                                        
+                                        ClipRRect(
+                           borderRadius: BorderRadius.circular(10),
+                           child: Image.asset(
+                             'assets/images/239183274_1205782896609021_3013960168526323226_n.jpeg',
+                             width: double.infinity,
+                             fit: BoxFit.cover,
+                           ),
+                         ),
+                         Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
                                                   16, 12, 16, 8),
@@ -225,20 +234,16 @@ void OnBeingTapped(int index) {
                                             children: [
                                               Expanded(
                                                 child: Text(listingsData[
-                                                    'propertyName']),
+                                                    'propertyName'],
+                                                    style: TextStyle(
+                                                    fontFamily: 'Helvetica-Neue-Regular',
+                                                    color: Colors.black,
+                                                    fontSize: 20,),
+                                                ),    
                                               ),
                                             ],
                                           ),
                                         ),
-                                        ClipRRect(
-                           borderRadius: BorderRadius.circular(10),
-                           child: Image.asset(
-                             'assets/images/icon.png',
-                             width: 160,
-                             height: 70,
-                             fit: BoxFit.fitWidth,
-                           ),
-                         ),
                                         Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(

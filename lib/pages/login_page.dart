@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:onezero/pages/landing_page.dart';
+import 'package:onezero/pages/test_register.dart';
 
 import '../auth.dart';
 
@@ -269,7 +270,13 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                           TextButton(
-                            onPressed: null,
+                             onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: ((context) =>
+                                                TestRegisterPage())));
+                                  },
                             style: ButtonStyle(
                               fixedSize:
                                   MaterialStateProperty.all(Size(150, 30)),

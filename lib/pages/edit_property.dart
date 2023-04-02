@@ -68,13 +68,9 @@ class _EditPropertyState extends State<EditPropertyWidget> {
             color: Colors.white,
             size: 30.0,
           ),
-          onPressed: () async {
-             Navigator.push(context,
-                            MaterialPageRoute(
-                                builder: ((context) =>
-                                    LandingPage())));
-           // context.pop();
-          },
+           onPressed: () async {
+                    Navigator.pop(context);
+                  },
         ),
         title: Text(
           'Edit Listing',
