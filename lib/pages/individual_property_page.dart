@@ -8,7 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../auth.dart';
-import 'package:onezero/components/EditProfileWidget.dart';
+import 'package:onezero/pages/edit_profile_page.dart';
 import 'package:favorite_button/favorite_button.dart';
 
 class IndividualPropertyPageWidget extends StatefulWidget {
@@ -52,18 +52,32 @@ class _IndividualPropertyPageWidgetState
     _userDocRef = _usersRef.doc('b4TMeQt27ZekOrREdQYyp9bYPjF2');
     _userDocStream = _userDocRef.snapshots();
   }
-
+void handleClick(int item) {
+  switch (item) {
+    case 0:
+      break;
+    case 1:
+      break;
+  }
+}
   Widget IndividualProperty(
       String neighbourhood, String description, double price) {
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: Color(0xFFF1F4F8),
       appBar: AppBar(
-        backgroundColor: Color(0xFFF1F4F8),
+        backgroundColor: Color(0xFF41436A),
         iconTheme:
-            IconThemeData(color: FlutterFlowTheme.of(context).primaryText),
+            IconThemeData(color: Colors.white),
         automaticallyImplyLeading: true,
-        actions: [],
+        actions: [PopupMenuButton<int>(
+          color: Colors.white,
+          onSelected: (item) => handleClick(item),
+          itemBuilder: (context) => [
+            PopupMenuItem<int>(value: 0, child: Text('PlaceHolder1')),
+            PopupMenuItem<int>(value: 1, child: Text('PlaceHolder2')),
+          ],
+        ),],
         centerTitle: false,
         elevation: 4.0,
       ),
@@ -102,6 +116,7 @@ class _IndividualPropertyPageWidgetState
                       ),
                     ),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Padding(
@@ -117,13 +132,15 @@ class _IndividualPropertyPageWidgetState
                                 ),
                           ),
                         ),
+                        
                       ],
                     ),
                     Row(
                       
-                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.end,
+                     
                       children: [
-                        Padding(
+                        /*Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
                               16.0, 8.0, 16.0, 8.0),
                           child: Container(
@@ -176,17 +193,19 @@ class _IndividualPropertyPageWidgetState
                             ),
                             borderRadius: BorderRadius.circular(24.0),
                           ),
-                        ),
-                         Padding(
-                            padding: const EdgeInsets.only(left: 149.0),
-                            
-                         ),
+                        ),*/
+                        
                           FavoriteButton(
                             iconSize: 54,
                           valueChanged: (_isFavorite) {
                             print('Is Favorite $_isFavorite)');
                           },
-                        )
+                        ),
+                        Padding(
+                            padding:
+                          EdgeInsets.only(right: 12),
+                            
+                         ),
                                       
                       ],
                     ),
@@ -197,8 +216,8 @@ class _IndividualPropertyPageWidgetState
                         neighbourhood,
                         style: FlutterFlowTheme.of(context).bodyText2.override(
                               fontFamily: 'Outfit',
-                              color: Color(0xFF57636C),
-                              fontSize: 14.0,
+                              color: Colors.black,
+                              fontSize: 28.0,
                               fontWeight: FontWeight.normal,
                             ),
                       ),
@@ -214,44 +233,26 @@ class _IndividualPropertyPageWidgetState
                         child: Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
                               16.0, 0.0, 16.0, 0.0),
-                          child: Container(
-                            width: double.infinity,
-                            color: Colors.white,
-                            child: ExpandableNotifier(
-                              initialExpanded: false,
-                              child: ExpandablePanel(
-                                header: Text(
+                          child: Column(
+                              children: [
+                                new Container(
+                                  alignment: Alignment.centerLeft,
+                                 child: Text(
                                   'Description',
+                                  
                                   style: FlutterFlowTheme.of(context)
                                       .bodyText1
                                       .override(
                                         fontFamily: 'Outfit',
                                         color: Color(0xFF0F1113),
-                                        fontSize: 14.0,
+                                        fontSize: 20.0,
                                         fontWeight: FontWeight.normal,
                                       ),
                                 ),
-                                collapsed: Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 1.0,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                  ),
-                                  child: Text(
-                                    description,
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyText2
-                                        .override(
-                                          fontFamily: 'Outfit',
-                                          color: Color(0xFF57636C),
-                                          fontSize: 14.0,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                  ),
                                 ),
-                                expanded: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
+                                new Container(
+                                  
+                                  child: 
                                     Text(
                                       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
                                       style: FlutterFlowTheme.of(context)
@@ -263,18 +264,11 @@ class _IndividualPropertyPageWidgetState
                                             fontWeight: FontWeight.normal,
                                           ),
                                     ),
-                                  ],
+                                
                                 ),
-                                theme: ExpandableThemeData(
-                                  tapHeaderToExpand: true,
-                                  tapBodyToExpand: false,
-                                  tapBodyToCollapse: false,
-                                  headerAlignment:
-                                      ExpandablePanelHeaderAlignment.center,
-                                  hasIcon: true,
-                                ),
-                              ),
-                            ),
+                              ],
+                              
+                            
                           ),
                         ),
                       ),
@@ -308,8 +302,9 @@ class _IndividualPropertyPageWidgetState
                           Container(
                             width: double.infinity,
                             height: 120.0,
+                            alignment: Alignment.centerRight,
                             constraints: BoxConstraints(
-                              maxWidth: 120.0,
+                              maxWidth: 160.0,
                             ),
                             decoration: BoxDecoration(
                               color: Color(0xFFF1F4F8),
@@ -346,7 +341,7 @@ class _IndividualPropertyPageWidgetState
                                     padding: EdgeInsetsDirectional.fromSTEB(
                                         0.0, 4.0, 0.0, 0.0),
                                     child: Text(
-                                      '# Rooms',
+                                      '# Bedrooms',
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText2
                                           .override(
@@ -364,8 +359,9 @@ class _IndividualPropertyPageWidgetState
                           Container(
                             width: double.infinity,
                             height: 120.0,
+                            alignment: Alignment.topRight,
                             constraints: BoxConstraints(
-                              maxWidth: 130.0,
+                              maxWidth: 160.0,
                             ),
                             decoration: BoxDecoration(
                               color: Color(0xFFF1F4F8),
@@ -420,8 +416,9 @@ class _IndividualPropertyPageWidgetState
                           Container(
                             width: double.infinity,
                             height: 120.0,
+                            alignment: Alignment.centerRight,
                             constraints: BoxConstraints(
-                              maxWidth: 120.0,
+                              maxWidth: 160.0,
                             ),
                             decoration: BoxDecoration(
                               color: Color(0xFFF1F4F8),
@@ -473,8 +470,84 @@ class _IndividualPropertyPageWidgetState
                               ),
                             ),
                           ),
+                          Container(
+                            width: double.infinity,
+                            height: 120.0,
+                            alignment: Alignment.centerRight,
+                            constraints: BoxConstraints(
+                              maxWidth: 160.0,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Color(0xFFF1F4F8),
+                              borderRadius: BorderRadius.circular(12.0),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  4.0, 4.0, 4.0, 4.0),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.access_time,
+                                    color: Color(0xFF0F1113),
+                                    size: 36.0,
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 8.0, 0.0, 0.0),
+                                    child: Text(
+                                      '3.5',
+                                      style: FlutterFlowTheme.of(context)
+                                          .subtitle1
+                                          .override(
+                                            fontFamily: 'Outfit',
+                                            color: Color(0xFF0F1113),
+                                            fontSize: 18.0,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 4.0, 0.0, 0.0),
+                                    child: Text(
+                                      'Years Left',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText2
+                                          .override(
+                                            fontFamily: 'Outfit',
+                                            color: Color(0xFF57636C),
+                                            fontSize: 14.0,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          
                         ],
                       ),
+                    ),
+                     Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              16.0, 12.0, 16.0, 0.0),
+                          child: Text(
+                            'Location',
+                            style: FlutterFlowTheme.of(context).title1.override(
+                                  fontFamily: 'Outfit',
+                                  color: Color(0xFF0F1113),
+                                  fontSize: 28.0,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                          ),
+                        ),
+                      ],
                     ),
                     Container(
                       width: double.infinity,
@@ -483,8 +556,9 @@ class _IndividualPropertyPageWidgetState
                         color: Color(0xFFF1F4F8),
                         borderRadius: BorderRadius.circular(12.0),
                       ),
+                      
                     ),
-                    Row(
+                   /* Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -502,49 +576,130 @@ class _IndividualPropertyPageWidgetState
                               mainAxisSize: MainAxisSize.max,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                //EditProfileWidget(
-                                    //numOfBedroom: widget.numOfBedroom,
-                                    //lease: widget.lease)
-                                // Text(
-                                //   'Grant Awarded:',
-                                //   style: FlutterFlowTheme.of(context).bodyText1,
-                                // ),
-                                // Text(
-                                //   'TEST GRANT',
-                                //   style: FlutterFlowTheme.of(context).bodyText1,
-                                // ),
-                                // FFButtonWidget(
-                                //   onPressed: null,
-                                //   text: 'Edit Details',
-                                //   options: FFButtonOptions(
-                                //     width: 130.0,
-                                //     height: 40.0,
-                                //     padding: EdgeInsetsDirectional.fromSTEB(
-                                //         0.0, 0.0, 0.0, 0.0),
-                                //     iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                //         0.0, 0.0, 0.0, 0.0),
-                                //     color: FlutterFlowTheme.of(context)
-                                //         .primaryColor,
-                                //     textStyle: FlutterFlowTheme.of(context)
-                                //         .subtitle2
-                                //         .override(
-                                //           fontFamily: 'Poppins',
-                                //           color: Colors.white,
-                                //         ),
-                                //     borderSide: BorderSide(
-                                //       color: Colors.transparent,
-                                //       width: 1.0,
-                                //     ),
-                                //     borderRadius: BorderRadius.circular(8.0),
-                                //   ),
-                                // ),
+                                /*
+                                EditProfileWidget(
+                                    numOfBedroom: widget.numOfBedroom,
+                                    lease: widget.lease),
+                                 Text(
+                                   'Grant Awarded:',
+                                   style: FlutterFlowTheme.of(context).bodyText1,
+                                 ),
+                                 Text(
+                                   'TEST GRANT',
+                                   style: FlutterFlowTheme.of(context).bodyText1,
+                                 ),
+                                 FFButtonWidget(
+                                   onPressed: null,
+                                   text: 'Edit Details',
+                                   options: FFButtonOptions(
+                                     width: 130.0,
+                                     height: 40.0,
+                                     padding: EdgeInsetsDirectional.fromSTEB(
+                                         0.0, 0.0, 0.0, 0.0),
+                                     iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                         0.0, 0.0, 0.0, 0.0),
+                                     color: FlutterFlowTheme.of(context)
+                                         .primaryColor,
+                                     textStyle: FlutterFlowTheme.of(context)
+                                         .subtitle2
+                                         .override(
+                                           fontFamily: 'Poppins',
+                                           color: Colors.white,
+                                         ),
+                                     borderSide: BorderSide(
+                                       color: Colors.transparent,
+                                       width: 1.0,
+                                     ),
+                                     borderRadius: BorderRadius.circular(8.0),
+                                   ),
+                                 ),*/
                               ],
                             ),
                           ),
                         ),
                       ],
+                    ),*/
+
+                  
+                 Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              16.0, 12.0, 16.0, 0.0),
+                          child: Text(
+                            'Grant Available',
+                            style: FlutterFlowTheme.of(context).title1.override(
+                                  fontFamily: 'Outfit',
+                                  color: Color(0xFF0F1113),
+                                  fontSize: 32.0,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              16.0, 12.0, 16.0, 0.0),
+                          child: Text(
+                            'Grant:',
+                            style: FlutterFlowTheme.of(context).title1.override(
+                                  fontFamily: 'Outfit',
+                                  color: Color(0xFF0F1113),
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              16.0, 12.0, 16.0, 0.0),
+                          child: Text(
+                            'Amount:',
+                            style: FlutterFlowTheme.of(context).title1.override(
+                                  fontFamily: 'Outfit',
+                                  color: Color(0xFF0F1113),
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                          ),
+                        ),
+                      ],
                     ),
                     Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 8.0, 8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        ElevatedButton(
+                         onPressed: (){Navigator.push(context,
+                            MaterialPageRoute(
+                                builder: ((context) =>
+                                    EditProfileWidget())));},
+      
+                      child: const Text('Edit Profile'),
+                      style: ElevatedButton.styleFrom(
+                    primary: Colors.green,) 
+                    ),
+                        
+                      ]
+                    ),
+                  ),
+                    Padding(
+                          padding: EdgeInsets.only(bottom:50)
+                          
+                        ),
+                    /*Padding(
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 0.0),
                       child: Container(
@@ -560,7 +715,7 @@ class _IndividualPropertyPageWidgetState
                               FlutterFlowTheme.of(context).secondaryBackground,
                         ),
                       ),
-                    ),
+                    ),*/
                   ],
                 ),
               ),
