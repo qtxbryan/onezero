@@ -27,7 +27,7 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
       appBar: AppBar(
-        backgroundColor: Color(0xFFEDEDED),
+        backgroundColor: Color(0xFF41436A),
         automaticallyImplyLeading: false,
         leading: IconButton(
           onPressed: () {
@@ -36,14 +36,17 @@ class _ChangePasswordWidgetState extends State<ChangePasswordWidget> {
           },
           icon: Icon(
             Icons.arrow_back_rounded,
-            color: FlutterFlowTheme.of(context).primaryText,
+            color: Colors.white,
             size: 30.0,
           ),
         ),
         title: Text(
           'Change Password',
-          style: FlutterFlowTheme.of(context).title2,
+          style: TextStyle(color: Colors.white,
+          fontSize: 22,),
+          
         ),
+        
         actions: [],
         centerTitle: false,
         elevation: 0.0,

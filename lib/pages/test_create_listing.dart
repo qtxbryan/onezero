@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:onezero/models/Listing.dart';
 import 'package:onezero/backend/database.dart';
-
+/*
 class CreatePropertyPageWidget extends StatefulWidget {
   const CreatePropertyPageWidget({Key? key}) : super(key: key);
 
@@ -490,3 +490,4 @@ class _CreatePropertyPageWidgetState extends State<CreatePropertyPageWidget> {
     );
   }
 }
+*/

@@ -8,7 +8,7 @@ import 'package:onezero/backend/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../constants.dart';
 import 'package:onezero/components/change_photo_widget.dart';
-
+import 'package:onezero/pages/settings_page.dart';
 class EditProfileWidget extends StatefulWidget {
   const EditProfileWidget({
     Key? key,
@@ -44,7 +44,8 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
     super.initState();
 
     _user = Auth().currentUser;
-    _userDocStream = db.readSingleDocument('users', _user!.uid);
+    _userDocStream = db.readSingleDocument('users', '7Q63BuSERgWRGve391m0d5WntOy2');
+    
 
     // _model = createModel(context, () => EditProfileModel());
 
@@ -92,19 +93,26 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
           if (snapshot.hasData) {
             final userProfileData =
                 snapshot.data!.data() as Map<String, dynamic>;
-
-            martialController.text = userProfileData['Martial'];
-            addressController.text = userProfileData['address'];
-            ageController.text = userProfileData['age'];
+          displayNameController.text = userProfileData['displayName'];
+          emailAddressController.text = userProfileData['email'];
+          phoneNumberController.text = userProfileData['phoneNumber'];
+          addressController.text = userProfileData['address'];
+          monthlyHouseholdController.text =
+                userProfileData['averageMonthlyHousehold'];
+                ageController.text = userProfileData['age'];
+          //martialController.text = userProfileData['Martial'];
+          
+           //
+           /* 
+            
             _citizenship = userProfileData['Citizenship'];
             applicationStatus = userProfileData['applicationStatus'];
             applicationType = userProfileData['applicationType'];
-            monthlyHouseholdController.text =
-                userProfileData['averageMonthlyHousehold'];
+            
             displayNameController.text = userProfileData['displayName'];
-            emailAddressController.text = userProfileData['email'];
+            
             firstTime = userProfileData['firstTime'];
-            phoneNumberController.text = userProfileData['phoneNumber'];
+            */ //
 
             print('path: ${_path}');
             print('addressController: ${addressController.text}');
@@ -114,7 +122,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
               key: scaffoldKey,
               backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
               appBar: AppBar(
-                backgroundColor: FlutterFlowTheme.of(context).cultured,
+                backgroundColor: Color(0xFF41436A),
                 automaticallyImplyLeading: false,
                 leading: InkWell(
                   onTap: () async {
@@ -122,7 +130,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                   },
                   child: Icon(
                     Icons.arrow_back_rounded,
-                    color: FlutterFlowTheme.of(context).gunmetal,
+                    color: Colors.white,
                     size: 24.0,
                   ),
                 ),
@@ -133,7 +141,8 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                     textAlign: TextAlign.start,
                     style: FlutterFlowTheme.of(context).subtitle2.override(
                           fontFamily: 'Urbanist',
-                          color: FlutterFlowTheme.of(context).gunmetal,
+                          fontSize: 22,
+                          color: Colors.white,
                         ),
                   ),
                 ),
@@ -436,35 +445,76 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                         padding:
                             EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 12.0),
                         child: Container(
-                          width: 335.0,
+                          width: 370.0,
                           height: 70.0,
-                          decoration: BoxDecoration(
-                            color: FlutterFlowTheme.of(context)
-                                .secondaryBackground,
-                            borderRadius: BorderRadius.circular(8.0),
-                            shape: BoxShape.rectangle,
-                            border: Border.all(
-                              color: FlutterFlowTheme.of(context).lineGray,
-                              width: 2.0,
+                       
+                                        child: InputDecorator(
+                                          
+                        decoration: InputDecoration(
+                          labelText: 'First Time Applicant',
+                          enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).lineGray,
+                                width: 2.0,
+                              ),
+                              borderRadius: BorderRadius.circular(8.0),
                             ),
-                          ),
-                          child: DropdownButton<String>(
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 2.0,
+                              ),
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 2.0,
+                              ),
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 2.0,
+                              ),
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                          contentPadding: EdgeInsets.all(10),
+                        ),
+                         child: DropdownButton<String>(
+                            
                             value: firstTime,
                             onChanged: (val) => setState(() {
                               firstTime = val;
                             }),
+
+
+                            
                             items: ['Yes', 'No']
                                 .map<DropdownMenuItem<String>>((val) {
                               return DropdownMenuItem<String>(
                                 value: val,
                                 child: Text(val),
+                                
                               );
+                              
                             }).toList(),
-                            hint: Text('First Time Applicant'),
-                            underline: Container(
-                              height: 1.0,
-                              color: Colors.transparent,
+                            isExpanded: true,
+                            hint: Text(
+                              'First Time Applicants',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyText1
+                                  .override(
+                                    fontFamily: 'Urbanist',
+                                    color: Colors.black,
+                                  ),
                             ),
+                            
+                             underline: SizedBox()
+                            
+                          ),
+                            
                           ),
                         ),
                       ),
@@ -520,18 +570,41 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                         padding:
                             EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 12.0),
                         child: Container(
-                          width: 335.0,
+                          width: 370.0,
                           height: 70.0,
-                          decoration: BoxDecoration(
-                            color: FlutterFlowTheme.of(context)
-                                .secondaryBackground,
-                            borderRadius: BorderRadius.circular(8.0),
-                            shape: BoxShape.rectangle,
-                            border: Border.all(
-                              color: FlutterFlowTheme.of(context).lineGray,
-                              width: 2.0,
+                          child: InputDecorator(
+                        decoration: InputDecoration(
+                          labelText: 'Marital Status',
+                         enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).lineGray,
+                                width: 2.0,
+                              ),
+                              borderRadius: BorderRadius.circular(8.0),
                             ),
-                          ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 2.0,
+                              ),
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 2.0,
+                              ),
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 2.0,
+                              ),
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                          contentPadding: EdgeInsets.all(10),
+                        ),
                           child: DropdownButton<String>(
                             value: applicationType,
                             onChanged: (val) => setState(() {
@@ -551,6 +624,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                 child: Text('Family'),
                               ),
                             ],
+                            isExpanded: true,
                             hint: Text(
                               'Single / Couple / Family',
                               style: FlutterFlowTheme.of(context)
@@ -560,18 +634,9 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                     color: Colors.black,
                                   ),
                             ),
-                            icon: const Icon(Icons.arrow_downward),
-                            iconSize: 24,
-                            elevation: 2,
-                            style:
-                                FlutterFlowTheme.of(context).bodyText1.override(
-                                      fontFamily: 'Urbanist',
-                                      color: Colors.black,
-                                    ),
-                            underline: Container(
-                              height: 1,
-                              color: Colors.black,
-                            ),
+                            
+                            underline: SizedBox()
+                          ),
                           ),
                         ),
                       ),
@@ -627,27 +692,54 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                         padding:
                             EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 12.0),
                         child: Container(
-                          width: 335.0,
+                          width: 370.0,
                           height: 70.0,
-                          decoration: BoxDecoration(
-                            color: FlutterFlowTheme.of(context)
-                                .secondaryBackground,
-                            borderRadius: BorderRadius.circular(8.0),
-                            shape: BoxShape.rectangle,
-                            border: Border.all(
-                              color: FlutterFlowTheme.of(context).lineGray,
-                              width: 2.0,
+                          child: InputDecorator(
+                            
+                        decoration: InputDecoration(
+                          labelText: 'Citizenship',
+                          enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).lineGray,
+                                width: 2.0,
+                              ),
+                              borderRadius: BorderRadius.circular(8.0),
                             ),
-                          ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 2.0,
+                              ),
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 2.0,
+                              ),
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Color(0x00000000),
+                                width: 2.0,
+                              ),
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+                          contentPadding: EdgeInsets.all(10),
+                        ),
+
+                          
                           child: DropdownButton<String>(
                             value: _citizenship,
                             onChanged: (val) => setState(() {
                               _citizenship = val;
                             }),
+                            isExpanded: true,
                             items: [
                               DropdownMenuItem<String>(
                                 value: 'Singaporean',
-                                child: Text('Singaporean'),
+                                child: Text('Singaporeans'),
                               ),
                               DropdownMenuItem<String>(
                                 value: 'Permanent Resident',
@@ -667,19 +759,15 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                     color: Colors.black,
                                   ),
                             ),
-                            icon: const Icon(Icons.arrow_downward),
-                            iconSize: 24,
-                            elevation: 2,
+                           
                             style:
                                 FlutterFlowTheme.of(context).bodyText1.override(
                                       fontFamily: 'Urbanist',
                                       color: Colors.black,
                                     ),
-                            underline: Container(
-                              height: 1,
-                              color: Colors.black,
-                            ),
+                            underline: SizedBox()
                           ),
+                        ),
                         ),
                       ),
                       Align(
@@ -747,7 +835,9 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                 automaticallyImplyLeading: false,
                 leading: InkWell(
                   onTap: () async {
-                    Navigator.pop(context);
+                    Navigator.push(context, MaterialPageRoute(
+                                builder: ((context) =>
+                                    SettingPage())));
                   },
                   child: Icon(
                     Icons.arrow_back_rounded,
@@ -761,7 +851,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                     'Edit Profile',
                     textAlign: TextAlign.start,
                     style: FlutterFlowTheme.of(context).subtitle2.override(
-                          fontFamily: 'Urbanist',
+                          fontFamily: 'Helvetica-Neue-Regular',
                           color: FlutterFlowTheme.of(context).gunmetal,
                         ),
                   ),
@@ -852,7 +942,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                 textStyle: FlutterFlowTheme.of(context)
                                     .bodyText1
                                     .override(
-                                      fontFamily: 'Lexend Deca',
+                                      fontFamily: 'Helvetica-Neue-Regular',
                                       color:
                                           FlutterFlowTheme.of(context).lineGray,
                                       fontSize: 14.0,
@@ -1020,7 +1110,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                           controller: addressController,
                           obscureText: false,
                           decoration: InputDecoration(
-                            labelText: 'Address',
+                            labelText: 'Adddddddddddress',
                             labelStyle: FlutterFlowTheme.of(context).bodyText1,
                             hintText: 'Where You Live...',
                             hintStyle: FlutterFlowTheme.of(context).bodyText1,
@@ -1089,10 +1179,16 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                 child: Text(val),
                               );
                             }).toList(),
-                            hint: Text('First Time Applicant'),
+                            hint: Text('Firasdst Time Applsicant'),
+                            style: FlutterFlowTheme.of(context)
+                                  .bodyText1
+                                  .override(
+                                    fontFamily: 'Helvetica-Neue-Regular',
+                                    color: Colors.pink,
+                                  ),
                             underline: Container(
                               height: 1.0,
-                              color: Colors.transparent,
+                              color: Colors.black,
                             ),
                           ),
                         ),
@@ -1185,8 +1281,8 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                               style: FlutterFlowTheme.of(context)
                                   .bodyText1
                                   .override(
-                                    fontFamily: 'Urbanist',
-                                    color: Colors.black,
+                                    fontFamily: 'Helvetica-Neue-Regular',
+                                    color: Colors.pink,
                                   ),
                             ),
                             icon: const Icon(Icons.arrow_downward),
@@ -1194,12 +1290,12 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                             elevation: 2,
                             style:
                                 FlutterFlowTheme.of(context).bodyText1.override(
-                                      fontFamily: 'Urbanist',
+                                      fontFamily: 'Helvetica-Neue-Regular',
                                       color: Colors.black,
                                     ),
                             underline: Container(
-                              height: 1,
-                              color: Colors.black,
+                              height: 5,
+                              color: Colors.red,
                             ),
                           ),
                         ),
@@ -1292,7 +1388,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                               style: FlutterFlowTheme.of(context)
                                   .bodyText1
                                   .override(
-                                    fontFamily: 'Urbanist',
+                                    fontFamily: 'Helvetica-Neue-Regular',
                                     color: Colors.black,
                                   ),
                             ),

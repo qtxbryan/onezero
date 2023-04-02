@@ -53,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
       style: ButtonStyle(
         fixedSize: MaterialStateProperty.all(Size(130, 50)),
         padding: MaterialStateProperty.all(EdgeInsets.all(0)),
-        backgroundColor: MaterialStateProperty.all(Color(0xFF4B39EF)),
+        backgroundColor: MaterialStateProperty.all(Color(0xFFF64668)),
         elevation: MaterialStateProperty.all(3),
         side: MaterialStateProperty.all(
           BorderSide(
@@ -163,7 +163,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   Text(
-                    'Wecome Back!',
+                    'FlatFinderSG',
                     style: TextStyle(
                       fontFamily: 'Outfit',
                       color: Color(0xFF0F1113),
@@ -171,22 +171,11 @@ class _LoginPageState extends State<LoginPage> {
                       fontWeight: FontWeight.w500,
                     ),
                   ),
+                  
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
                     child: Text(
-                      'Use the form below to access your account. ',
-                      style: TextStyle(
-                        fontFamily: 'Outfit',
-                        color: Color(0xFF57636C),
-                        fontSize: 14,
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
-                    child: Text(
-                      'Use the form below to access your account',
+                      "Welcome back you've been missed!",
                       style: TextStyle(
                         fontFamily: 'Outfit',
                         color: Color(0xFF57636C),
@@ -227,7 +216,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 24, 10, 0),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -256,6 +245,10 @@ class _LoginPageState extends State<LoginPage> {
                                 width: 1,
                               ))),
                         ),
+                         Padding(
+                            padding: const EdgeInsets.only(left: 100.0),
+                            
+                         ),
                         _loginButton(),
                       ],
                     ),

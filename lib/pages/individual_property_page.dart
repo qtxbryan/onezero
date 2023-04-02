@@ -9,6 +9,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../auth.dart';
 import 'package:onezero/components/EditProfileWidget.dart';
+import 'package:favorite_button/favorite_button.dart';
 
 class IndividualPropertyPageWidget extends StatefulWidget {
   final String propertyName;
@@ -48,7 +49,7 @@ class _IndividualPropertyPageWidgetState
     super.initState();
     _usersRef = FirebaseFirestore.instance.collection('users');
     _user = Auth().currentUser;
-    _userDocRef = _usersRef.doc(_user!.uid);
+    _userDocRef = _usersRef.doc('b4TMeQt27ZekOrREdQYyp9bYPjF2');
     _userDocStream = _userDocRef.snapshots();
   }
 
@@ -119,6 +120,7 @@ class _IndividualPropertyPageWidgetState
                       ],
                     ),
                     Row(
+                      
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Padding(
@@ -175,6 +177,17 @@ class _IndividualPropertyPageWidgetState
                             borderRadius: BorderRadius.circular(24.0),
                           ),
                         ),
+                         Padding(
+                            padding: const EdgeInsets.only(left: 149.0),
+                            
+                         ),
+                          FavoriteButton(
+                            iconSize: 54,
+                          valueChanged: (_isFavorite) {
+                            print('Is Favorite $_isFavorite)');
+                          },
+                        )
+                                      
                       ],
                     ),
                     Padding(
@@ -296,7 +309,7 @@ class _IndividualPropertyPageWidgetState
                             width: double.infinity,
                             height: 120.0,
                             constraints: BoxConstraints(
-                              maxWidth: 110.0,
+                              maxWidth: 120.0,
                             ),
                             decoration: BoxDecoration(
                               color: Color(0xFFF1F4F8),
@@ -352,7 +365,7 @@ class _IndividualPropertyPageWidgetState
                             width: double.infinity,
                             height: 120.0,
                             constraints: BoxConstraints(
-                              maxWidth: 110.0,
+                              maxWidth: 130.0,
                             ),
                             decoration: BoxDecoration(
                               color: Color(0xFFF1F4F8),
@@ -408,7 +421,7 @@ class _IndividualPropertyPageWidgetState
                             width: double.infinity,
                             height: 120.0,
                             constraints: BoxConstraints(
-                              maxWidth: 110.0,
+                              maxWidth: 120.0,
                             ),
                             decoration: BoxDecoration(
                               color: Color(0xFFF1F4F8),
@@ -489,9 +502,9 @@ class _IndividualPropertyPageWidgetState
                               mainAxisSize: MainAxisSize.max,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                EditProfileWidget(
-                                    numOfBedroom: widget.numOfBedroom,
-                                    lease: widget.lease)
+                                //EditProfileWidget(
+                                    //numOfBedroom: widget.numOfBedroom,
+                                    //lease: widget.lease)
                                 // Text(
                                 //   'Grant Awarded:',
                                 //   style: FlutterFlowTheme.of(context).bodyText1,
@@ -555,11 +568,11 @@ class _IndividualPropertyPageWidgetState
             Container(
               width: double.infinity,
               decoration: BoxDecoration(
-                color: Color(0xFF0F1113),
+                color: Color(0xFF41436A),
                 boxShadow: [
                   BoxShadow(
                     blurRadius: 7.0,
-                    color: Color(0x32000000),
+                    color: Color(0xFF41436A),
                     offset: Offset(0.0, -2.0),
                   )
                 ],
@@ -585,7 +598,7 @@ class _IndividualPropertyPageWidgetState
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Text(
-                              price.toString(),
+                              'S\$' + price.toString(),
                               style:
                                   FlutterFlowTheme.of(context).title1.override(
                                         fontFamily: 'Outfit',
@@ -616,7 +629,7 @@ class _IndividualPropertyPageWidgetState
                       onPressed: () {
                         print('Button pressed ...');
                       },
-                      text: 'Enters Chat',
+                      text: 'Send Email',
                       options: FFButtonOptions(
                         width: 120.0,
                         height: 50.0,
@@ -624,7 +637,7 @@ class _IndividualPropertyPageWidgetState
                             EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                         iconPadding:
                             EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                        color: Color(0xFF4B39EF),
+                        color: Color(0xFFF64668),
                         textStyle:
                             FlutterFlowTheme.of(context).subtitle2.override(
                                   fontFamily: 'Outfit',

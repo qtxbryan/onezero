@@ -2,26 +2,29 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:onezero/auth.dart';
-import 'package:onezero/pages/my_likes.dart';
 import 'package:onezero/models/Listing.dart';
 import 'package:onezero/constants.dart';
 import 'package:onezero/backend/database.dart';
 import 'package:onezero/pages/create_property1_test_widget.dart';
+import 'package:onezero/pages/edit_property.dart';
 import 'package:onezero/pages/home_page.dart';
 import 'package:onezero/pages/individual_property_page.dart';
 import 'package:onezero/pages/search_page.dart';
 import 'package:onezero/pages/settings_page.dart';
 import 'package:flutter/services.dart';
 import 'package:favorite_button/favorite_button.dart';
-class LandingPage extends StatefulWidget {
+import 'package:onezero/pages/landing_page.dart';
+import '/flutter_flow/flutter_flow_icon_button.dart';
+
+class myProperties extends StatefulWidget {
   
-  LandingPage({super.key});
+  myProperties({super.key});
 
   @override
-  State<LandingPage> createState() => _LandingPageState();
+  State<myProperties> createState() => _myPropertiesState();
 }
 
-class _LandingPageState extends State<LandingPage> {
+class _myPropertiesState extends State<myProperties> {
   final _unfocusNode = FocusNode();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 int _selected = 0;
@@ -56,7 +59,7 @@ void OnBeingTapped(int index) {
               children: [
                 Container(
                   width: double.infinity,
-                  height: 150,
+                  height: 60,
                   decoration: BoxDecoration(
                     color: Color(0xFF41436A),
                     boxShadow: [
@@ -67,80 +70,44 @@ void OnBeingTapped(int index) {
                       )
                     ],
                   ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                  child: Row(
+                   
                     children: [
-                       
-                         ClipRRect(
-                           borderRadius: BorderRadius.circular(10),
-                           child: Image.asset(
-                             'assets/images/icon.png',
-                             width: 160,
-                             height: 70,
-                             fit: BoxFit.fitWidth,
-                           ),
-                         ),
+                     FlutterFlowIconButton(
+          borderColor: Colors.transparent,
+          borderRadius: 30.0,
+          borderWidth: 1.0,
+          buttonSize: 60.0,
+          icon: Icon(
+            Icons.arrow_back_rounded,
+            color: Colors.white,
+            size: 30.0,
+          ),
+          onPressed: () async {
+             Navigator.push(context,
+                            MaterialPageRoute(
+                                builder: ((context) =>
+                                    SettingPage())));
+           // context.pop();
+          },
+                     ), 
                       
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(12, 12, 6, 8),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Text(
-                              'Welcome, ',
+                        child: Text(
+                              'My Properties ',
                               style: TextStyle(
-                                fontFamily: 'Helvetica-Neue',
+                                fontFamily: 'Poppins',
                                 color: Colors.white,
-                                fontSize: 24,
+                                fontSize: 22,
                               ),
                             ),
-                            OutlinedButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: ((context) =>
-                                                SearchPageWidget())));
-                                  },
-                                  child: Text(
-                                    'Search',
-                                    style: TextStyle(
-                                      fontFamily: 'Helvetica-Neue',
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  style: ButtonStyle(
-                                    elevation: MaterialStateProperty.all(2),
-                                    fixedSize: MaterialStateProperty.all(
-                                        Size(100, 40)),
-                                    padding: MaterialStateProperty.all(
-                                        EdgeInsets.all(0)),
-                                    backgroundColor: MaterialStateProperty.all(
-                                        Color(0xFFF64668)),
-                                    side: MaterialStateProperty.all(
-                                      BorderSide(
-                                        color: Colors.transparent,
-                                        width: 1,
-                                      ),
-                                    ),
-                                    shape: MaterialStateProperty.all(
-                                      RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(50),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                            //Authenticated user's display name
-                          ],
-                        ),
                       ),
                       
                     ],
                   ),
                 ),
-              
+
                 //ADD IN THE LIST FOR PRINTED PROPERTIES
                 Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 50),
@@ -271,7 +238,7 @@ void OnBeingTapped(int index) {
                                                     .toString(),
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
-                                                  fontFamily: 'Helvetica-Neue',
+                                                  fontFamily: 'Poppins',
                                                   color: Colors.black,
                                                 ),
                                               ),
@@ -292,7 +259,7 @@ void OnBeingTapped(int index) {
                                                 '2',
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
-                                                  fontFamily: 'Helvetica-Neue',
+                                                  fontFamily: 'Poppins',
                                                   color: Colors.black,
                                                 ),
                                               ),
@@ -313,7 +280,7 @@ void OnBeingTapped(int index) {
                                                 '|',
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
-                                                  fontFamily: 'Helvetica-Neue',
+                                                  fontFamily: 'Poppins',
                                                   color: Colors.black,
                                                 ),
                                               ),
@@ -363,29 +330,104 @@ void OnBeingTapped(int index) {
                                           child: Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    16, 0, 24, 12),
+                                                    16, 0, 8, 12),
                                             child: Row(
                                               mainAxisSize: MainAxisSize.max,
                                               children: [
-                                                FavoriteButton(
-                                                  
-                                            iconSize: 24,
-                                            iconDisabledColor: Colors.white,
-                                          valueChanged: (_isFavorite) {
-                                            print('Is Favorite $_isFavorite)');
-                                          },
-                                                    ),
-                                                Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(4, 0, 0, 0),
-                                                  child: Text(
-                                                    'Add to Likes',
-                                                    style: TextStyle(
-                                                  fontFamily: 'Poppins',
-                                                  color: Colors.black
-                                                  ),
-                                                  ),
+                                                Spacer(),
+                                                Padding( 
+                                                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
+                                                 child: OutlinedButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: ((context) =>
+                                                EditPropertyWidget())));
+                                  },
+                                  child: Text(
+                                    'Edit',
+                                    style: TextStyle(
+                                      fontFamily: 'Helvetica-Neue',
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  style: ButtonStyle(
+                                    elevation: MaterialStateProperty.all(2),
+                                    fixedSize: MaterialStateProperty.all(
+                                        Size(50, 40)),
+                                    padding: MaterialStateProperty.all(
+                                        EdgeInsets.all(0)),
+                                    backgroundColor: MaterialStateProperty.all(
+                                        Colors.green),
+                                    side: MaterialStateProperty.all(
+                                      BorderSide(
+                                        color: Colors.transparent,
+                                        width: 1,
+                                      ),
+                                    ),
+                                    shape: MaterialStateProperty.all(
+                                      RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                    ),
+                                  ),
+                                ),
                                                 ),
+                                OutlinedButton(
+                                  onPressed: () async {
+                                    var confirmDialogResponse = await showDialog<bool>(
+                        context: context,
+                        builder: (alertDialogContext) {
+                          return AlertDialog(
+                            title: Text('Remove Listing'),
+                            content: Text('Are you sure you want to remove a property?'),
+                            actions: [
+                              TextButton(
+                                onPressed: () =>
+                                    Navigator.pop(alertDialogContext, false),
+                                child: Text('Cancel'),
+                              ),
+                              TextButton(
+                                onPressed: () =>
+                                    Navigator.pop(alertDialogContext, true),
+                                child: Text('Confirm'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                                  },
+                                  child: Text(
+                                    'Remove',
+                                    style: TextStyle(
+                                      fontFamily: 'Helvetica-Neue',
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                  style: ButtonStyle(
+                                    elevation: MaterialStateProperty.all(2),
+                                    fixedSize: MaterialStateProperty.all(
+                                        Size(50, 40)),
+                                    padding: MaterialStateProperty.all(
+                                        EdgeInsets.all(0)),
+                                    backgroundColor: MaterialStateProperty.all(
+                                        Colors.red),
+                                    side: MaterialStateProperty.all(
+                                      BorderSide(
+                                        color: Colors.transparent,
+                                        width: 1,
+                                      ),
+                                    ),
+                                    shape: MaterialStateProperty.all(
+                                      RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(5),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+
+
                                               ],
                                             ),
                                           ),
@@ -415,72 +457,7 @@ void OnBeingTapped(int index) {
           ),
         ),
        
-        bottomNavigationBar: BottomNavigationBar(
-           type: BottomNavigationBarType.fixed, // Fixed 
-  backgroundColor: Color(0xFF41436A),
-  
-          
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home'
-            ,
-            backgroundColor: Colors.white,
-            
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: 'Likes',
-            
-          ),
-           BottomNavigationBarItem(
-            icon: Icon(Icons.add_circle_outline),
-            label: 'Add Listing',
-           
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle_outlined),
-            label: 'Profile',
-           
-          ),
-         
-        ],
         
-        currentIndex: _selected,
-        selectedItemColor: Colors.red,
-        unselectedItemColor: Colors.white,
-        onTap: (int index) {
-          switch (index) {
-            case 0:
-            Navigator.push(context,
-                            MaterialPageRoute(
-                                builder: ((context) =>
-                                    LandingPage())));
-                break;
-                case 1: 
-                Navigator.push(context,
-                            MaterialPageRoute(
-                                builder: ((context) =>
-                                    myLikes())));
-                break;
-                case 2: 
-                Navigator.push(context,
-                            MaterialPageRoute(
-                                builder: ((context) =>
-                                    CreateProperty1TestWidget())));
-                break;
-                case 3: 
-                Navigator.push(context,
-                            MaterialPageRoute(
-                                builder: ((context) =>
-                                    SettingPage())));
-                break;
-                }
-        }         
-              // only scroll to top when current index is selected.
-             
-              
-      ),
       )
         ;
         
