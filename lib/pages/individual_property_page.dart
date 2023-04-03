@@ -63,25 +63,67 @@ void handleClick(int item) {
   Widget IndividualProperty(
       String neighbourhood, String description, double price) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       key: scaffoldKey,
       backgroundColor: Color(0xFFF1F4F8),
       appBar: AppBar(
-        backgroundColor: Color(0xFF41436A),
-        iconTheme:
-            IconThemeData(color: Colors.white),
-        automaticallyImplyLeading: true,
-        actions: [PopupMenuButton<int>(
+        bottomOpacity: 0.0,
+        elevation: 0.0,
+        backgroundColor: Colors.transparent,
+       // iconTheme:
+        leadingWidth: 40,
+        
+          //  IconThemeData(color: Colors.black),
+          leading: Container(
+            width: 10,
+          height: 10,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.white,
+              border: Border.all(color: Colors.white)
+            ),
+            child: IconButton(
           color: Colors.white,
+          icon: Icon(
+            Icons.arrow_back_rounded,
+            color: Colors.black,
+           
+          ),
+          
+         onPressed: () {
+            // Action to perform when the button is pressed
+            Navigator.pop(context);
+          },
+        ),
+          ),
+        automaticallyImplyLeading: true,
+        actions: [Container(
+          width: 40,
+          height: 40,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.white,
+              border: Border.all(color: Colors.white)
+            ),
+            child: PopupMenuButton<int>(
+          color: Colors.white,
+          icon: Icon(
+                                Icons.more_vert,
+                                color: Colors.black,
+                              ),
+          shadowColor: Colors.white,
           onSelected: (item) => handleClick(item),
           itemBuilder: (context) => [
             PopupMenuItem<int>(value: 0, child: Text('PlaceHolder1')),
             PopupMenuItem<int>(value: 1, child: Text('PlaceHolder2')),
           ],
-        ),],
+        ),
+          )],
         centerTitle: false,
-        elevation: 4.0,
+        
+        
       ),
-      body: SafeArea(
+      body: Container(
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
@@ -91,12 +133,9 @@ void handleClick(int item) {
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(16.0, 8.0, 16.0, 0.0),
-                      child: Container(
+                   Container(
                         width: double.infinity,
-                        height: 230.0,
+                        height: 400,
                         decoration: BoxDecoration(
                           color: Color(0xFFF1F4F8),
                           borderRadius: BorderRadius.circular(16.0),
@@ -109,12 +148,12 @@ void handleClick(int item) {
                               'https://images.unsplash.com/photo-1618220179428-22790b461013?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTN8fGhvbWV8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60',
                               width: double.infinity,
                               height: double.infinity,
-                              fit: BoxFit.cover,
+                              fit: BoxFit.fitWidth,
                             ),
                           ),
                         ),
                       ),
-                    ),
+                    
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       mainAxisSize: MainAxisSize.max,
@@ -553,7 +592,7 @@ void handleClick(int item) {
                       width: double.infinity,
                       height: 230.0,
                       decoration: BoxDecoration(
-                        color: Color(0xFFF1F4F8),
+                        color: Colors.white,
                         borderRadius: BorderRadius.circular(12.0),
                       ),
                       
@@ -680,6 +719,7 @@ void handleClick(int item) {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       mainAxisSize: MainAxisSize.max,
+                      
                       children: [
                         ElevatedButton(
                          onPressed: (){Navigator.push(context,
