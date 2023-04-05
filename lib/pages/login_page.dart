@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:onezero/pages/test_register.dart';
 import 'package:onezero/pages/new_landing_6-4.dart';
 import 'fav_list_page.dart';
+import 'package:onezero/pages/my_properties_page.dart';
 
 import '../auth.dart';
 
@@ -32,7 +33,7 @@ class _LoginPageState extends State<LoginPage> {
     }
 
     Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => HomePage(),
+      builder: (context) => MyPropertiesWidget(),
     ));
   }
 

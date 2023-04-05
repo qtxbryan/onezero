@@ -1,17 +1,62 @@
 class Listing {
-  String id;
-  final String? address;
-  final String? description;
-  final String? dimension;
-  final String? lease;
-  final String? neighbourhood;
-  final String? numOfBedroom;
-  final String? price;
-  final String? propertyName;
-  final String? listed_by_email;
+  String? id;
+  String? address;
+  String? description;
+  String? dimension;
+  String? lease;
+  String? neighbourhood;
+  String? numOfBedroom;
+  String? price;
+  String? propertyName;
+  String? listed_by_email;
+  String? upload_url;
+
+  String? get getId => this.id;
+
+  set setId(String? id) => this.id = id;
+
+  get getAddress => this.address;
+
+  set setAddress(address) => this.address = address;
+
+  get getDescription => this.description;
+
+  set setDescription(description) => this.description = description;
+
+  get getDimension => this.dimension;
+
+  set setDimension(dimension) => this.dimension = dimension;
+
+  get getLease => this.lease;
+
+  set setLease(lease) => this.lease = lease;
+
+  get getNeighbourhood => this.neighbourhood;
+
+  set setNeighbourhood(neighbourhood) => this.neighbourhood = neighbourhood;
+
+  get getNumOfBedroom => this.numOfBedroom;
+
+  set setNumOfBedroom(numOfBedroom) => this.numOfBedroom = numOfBedroom;
+
+  get getPrice => this.price;
+
+  set setPrice(price) => this.price = price;
+
+  get getPropertyName => this.propertyName;
+
+  set setPropertyName(propertyName) => this.propertyName = propertyName;
+
+  get listedby_email => this.listed_by_email;
+
+  set listedby_email(value) => this.listed_by_email = value;
+
+  get uploadurl => this.upload_url;
+
+  set uploadurl(value) => this.upload_url = value;
 
   Listing({
-    this.id = '',
+    this.id,
     required this.address,
     required this.description,
     required this.dimension,
@@ -21,6 +66,7 @@ class Listing {
     required this.price,
     required this.propertyName,
     required this.listed_by_email,
+    this.upload_url,
   });
 
   Map<String, dynamic> toJson() => {
