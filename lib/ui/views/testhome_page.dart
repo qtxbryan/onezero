@@ -1,11 +1,23 @@
-import '/flutter_flow/flutter_flow_animations.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:onezero/pages/add_to_fav.dart';
+
 import '/flutter_flow/flutter_flow_theme.dart';
-import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:badges/badges.dart' as badges;
+import 'package:onezero/backend/database.dart';
+import 'package:onezero/auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:onezero/pages/individual_property_page.dart';
+import 'package:onezero/models/LocationModel.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:provider/provider.dart';
+import 'package:onezero/models/Listing.dart';
+import 'package:onezero/constants.dart';
+import 'package:onezero/pages/settings_page.dart';
+import 'package:onezero/pages/create_listing.dart';
+import 'package:onezero/pages/test_create_listing.dart';
 
 class HomePageWidget extends StatefulWidget {
   const HomePageWidget({Key? key}) : super(key: key);
@@ -18,14 +30,36 @@ class _HomePageWidgetState extends State<HomePageWidget>
     with TickerProviderStateMixin {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final _unfocusNode = FocusNode();
-  LatLng? currentUserLocationValue;
+
+  final Auth _auth = Auth();
+
+  int index = 2;
+
+  late Stream<List<Listing>> _listingsStream;
+  late List<Listing> _displayList;
+  late String _query;
+
+  String country = '';
+  String name = '';
+  String street = '';
+  String postalCode = '';
+
+  Database db = Database();
 
   @override
   void initState() {
     super.initState();
+    getLocation();
 
-    getCurrentUserLocation(defaultLocation: LatLng(0.0, 0.0), cached: true)
-        .then((loc) => setState(() => currentUserLocationValue = loc));
+    //set up the stream to listen for changes in firestore collection
+    _listingsStream = FirebaseFirestore.instance
+        .collection('listing')
+        .snapshots()
+        .map((querySnapshot) => querySnapshot.docs
+            .map((doc) => Listing.fromJson(doc.data()))
+            .toList());
+    _displayList = [];
+    _query = '';
   }
 
   @override
@@ -34,9 +68,62 @@ class _HomePageWidgetState extends State<HomePageWidget>
     super.dispose();
   }
 
+  void _updateDisplayList(String query) {
+    setState(() {
+      _query = query.toLowerCase();
+      if (_query.isEmpty) {
+        _displayList = [];
+      } else {
+        _displayList = _displayList
+            .where((listing) =>
+                listing.propertyName!.toLowerCase().contains(_query))
+            .toList();
+      }
+    });
+  }
+
+  void _updateDisplayListRoom(String room) {
+    setState(() {
+      _query = room.toLowerCase();
+      if (_query.isEmpty) {
+        _displayList = [];
+      } else {
+        _displayList = _displayList
+            .where((listing) =>
+                listing.numOfBedroom!.toLowerCase().contains(_query))
+            .toList();
+      }
+    });
+  }
+
+  Future<void> getLocation() async {
+    List<Placemark> placemark =
+        await placemarkFromCoordinates(UserLocation.lat, UserLocation.long);
+
+    print(placemark[0].country);
+    print(placemark[0].name);
+    print(placemark[0].street);
+    print(placemark[0].postalCode);
+
+    setState(() {
+      country = placemark[0].country!;
+      name = placemark[0].name!;
+      street = placemark[0].street!;
+      postalCode = placemark[0].postalCode!;
+    });
+  }
+
+  int currentIndex = 0;
+  final screens = [
+    SettingPage(),
+    CreatePropertyPageWidget(),
+  ];
+
   @override
   Widget build(BuildContext context) {
-    if (currentUserLocationValue == null) {
+    User? user = _auth.currentUser;
+    print('AUTH: ${user!.email}');
+    if (name == null) {
       return Container(
         color: FlutterFlowTheme.of(context).primaryBackground,
         child: Center(
@@ -53,6 +140,38 @@ class _HomePageWidgetState extends State<HomePageWidget>
 
     return Scaffold(
       key: scaffoldKey,
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        currentIndex: currentIndex,
+        onTap: (index) => setState(() => currentIndex = index),
+        items: [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+            backgroundColor: Colors.blue,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add),
+            label: 'Add',
+            backgroundColor: Colors.blue,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.favorite),
+            label: 'Favourite',
+            backgroundColor: Colors.blue,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'Setting',
+            backgroundColor: Colors.blue,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+            backgroundColor: Colors.blue,
+          ),
+        ],
+      ),
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
@@ -94,10 +213,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                         ),
                                   ),
                                   Text(
-                                    valueOrDefault<String>(
-                                      currentUserLocationValue?.toString(),
-                                      'Singapore',
-                                    ),
+                                    street,
                                     style: FlutterFlowTheme.of(context)
                                         .title1
                                         .override(
@@ -167,7 +283,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   10.0, 0.0, 10.0, 0.0),
                               child: TextFormField(
-                                controller: _model.textController,
+                                onChanged: _updateDisplayList,
                                 autofocus: true,
                                 obscureText: false,
                                 decoration: InputDecoration(
@@ -219,8 +335,6 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                   ),
                                 ),
                                 style: FlutterFlowTheme.of(context).bodyText1,
-                                validator: _model.textControllerValidator
-                                    .asValidator(context),
                               ),
                             ),
                           ),
@@ -240,23 +354,32 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                 width: 80.0,
                                 height: 80.0,
                                 decoration: BoxDecoration(),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Icon(
-                                      Icons.home,
-                                      color: Color(0xFFCD2D16),
-                                      size: 24.0,
-                                    ),
-                                    Text(
-                                      'House',
-                                      textAlign: TextAlign.center,
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText1,
-                                    ),
-                                  ],
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: ((context) =>
+                                                CreatePropertyPageWidget())));
+                                  },
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Icon(
+                                        Icons.home,
+                                        color: Color(0xFFCD2D16),
+                                        size: 24.0,
+                                      ),
+                                      Text(
+                                        '2 Room',
+                                        textAlign: TextAlign.center,
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyText1,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -267,24 +390,29 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                 width: 80.0,
                                 height: 80.0,
                                 decoration: BoxDecoration(),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Icon(
-                                      Icons.apartment,
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryColor,
-                                      size: 24.0,
-                                    ),
-                                    Text(
-                                      'Condo',
-                                      textAlign: TextAlign.center,
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText1,
-                                    ),
-                                  ],
+                                child: GestureDetector(
+                                  onTap: () {
+                                    _updateDisplayListRoom("3");
+                                  },
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Icon(
+                                        Icons.apartment,
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryColor,
+                                        size: 24.0,
+                                      ),
+                                      Text(
+                                        '3 Room',
+                                        textAlign: TextAlign.center,
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyText1,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -295,24 +423,29 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                 width: 80.0,
                                 height: 80.0,
                                 decoration: BoxDecoration(),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    FaIcon(
-                                      FontAwesomeIcons.tree,
-                                      color: FlutterFlowTheme.of(context)
-                                          .tertiaryColor,
-                                      size: 24.0,
-                                    ),
-                                    Text(
-                                      'Landed',
-                                      textAlign: TextAlign.center,
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText1,
-                                    ),
-                                  ],
+                                child: GestureDetector(
+                                  onTap: () {
+                                    _updateDisplayListRoom("4");
+                                  },
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      FaIcon(
+                                        FontAwesomeIcons.tree,
+                                        color: FlutterFlowTheme.of(context)
+                                            .tertiaryColor,
+                                        size: 24.0,
+                                      ),
+                                      Text(
+                                        '4 Room',
+                                        textAlign: TextAlign.center,
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyText1,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -323,24 +456,29 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                 width: 80.0,
                                 height: 80.0,
                                 decoration: BoxDecoration(),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Icon(
-                                      Icons.domain,
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryColor,
-                                      size: 24.0,
-                                    ),
-                                    Text(
-                                      'Office',
-                                      textAlign: TextAlign.center,
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyText1,
-                                    ),
-                                  ],
+                                child: GestureDetector(
+                                  onTap: () {
+                                    _updateDisplayListRoom("5");
+                                  },
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Icon(
+                                        Icons.domain,
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryColor,
+                                        size: 24.0,
+                                      ),
+                                      Text(
+                                        '5 Room',
+                                        textAlign: TextAlign.center,
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyText1,
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -370,11 +508,13 @@ class _HomePageWidgetState extends State<HomePageWidget>
                     Padding(
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 50.0),
-                      child: StreamBuilder<List<ListingRecord>>(
-                        stream: queryListingRecord(),
+                      child: StreamBuilder<List<Listing>>(
+                        stream: _listingsStream,
                         builder: (context, snapshot) {
                           // Customize what your widget looks like when it's loading.
-                          if (!snapshot.hasData) {
+                          if (snapshot.hasError) {
+                            print('HIT SNAPSHOT NO DATA');
+                            print('Error: ${snapshot.error}');
                             return Center(
                               child: SizedBox(
                                 width: 50.0,
@@ -386,24 +526,63 @@ class _HomePageWidgetState extends State<HomePageWidget>
                               ),
                             );
                           }
-                          List<ListingRecord> listViewListingRecordList =
-                              snapshot.data!;
+
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Center(
+                              child: SizedBox(
+                                width: 50.0,
+                                height: 50.0,
+                                child: CircularProgressIndicator(
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryColor,
+                                ),
+                              ),
+                            );
+                          }
+
+                          _displayList = snapshot.data!;
+
+                          if (_query.isNotEmpty) {
+                            _displayList = _displayList
+                                .where((listing) => listing.propertyName!
+                                    .toLowerCase()
+                                    .contains(_query))
+                                .toList();
+                          }
+
                           return ListView.builder(
                             padding: EdgeInsets.zero,
                             primary: false,
                             shrinkWrap: true,
                             scrollDirection: Axis.vertical,
-                            itemCount: listViewListingRecordList.length,
-                            itemBuilder: (context, listViewIndex) {
-                              final listViewListingRecord =
-                                  listViewListingRecordList[listViewIndex];
+                            itemCount: _displayList.length,
+                            itemBuilder: (context, index) {
                               return Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     16.0, 0.0, 16.0, 12.0),
                                 child: InkWell(
                                   onTap: () async {
-                                    context
-                                        .pushNamed('IndividualProperty_Page');
+                                    //PUSH INDIVIDUAL PAGE
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                      builder: ((context) =>
+                                          IndividualPropertyPageWidget(
+                                              id: _displayList[index].id,
+                                              propertyName: _displayList[index]
+                                                  .propertyName!,
+                                              price: double.parse(
+                                                  _displayList[index].price!),
+                                              numOfBedroom: int.parse(
+                                                  _displayList[index]
+                                                      .numOfBedroom!),
+                                              dimension: int.parse(
+                                                  _displayList[index]
+                                                      .dimension!),
+                                              lease: int.parse(
+                                                _displayList[index].lease!,
+                                              ))),
+                                    ));
                                   },
                                   child: Container(
                                     width: 100.0,
@@ -427,10 +606,10 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                         Expanded(
                                           child: Align(
                                             alignment:
-                                                AlignmentDirectional(-0.3, 0.0),
+                                                AlignmentDirectional(-0.3, 0),
                                             child: Container(
-                                              width: 110.0,
-                                              height: 110.0,
+                                              width: 110,
+                                              height: 110,
                                               decoration: BoxDecoration(
                                                 color:
                                                     FlutterFlowTheme.of(context)
@@ -439,10 +618,10 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                               ),
                                               child: ClipRRect(
                                                 borderRadius:
-                                                    BorderRadius.circular(8.0),
+                                                    BorderRadius.circular(8),
                                                 child: Image.asset(
                                                   'assets/images/239183274_1205782896609021_3013960168526323226_n.jpeg',
-                                                  height: 200.0,
+                                                  height: double.infinity,
                                                   fit: BoxFit.cover,
                                                 ),
                                               ),
@@ -451,14 +630,14 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                         ),
                                         Align(
                                           alignment:
-                                              AlignmentDirectional(-1.0, 0.0),
+                                              AlignmentDirectional(-1, 0),
                                           child: Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 0.0, 20.0, 0.0),
+                                                    0, 0, 20, 0),
                                             child: Container(
-                                              width: 200.0,
-                                              height: 100.0,
+                                              width: 200,
+                                              height: 150,
                                               decoration: BoxDecoration(
                                                 color:
                                                     FlutterFlowTheme.of(context)
@@ -466,7 +645,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                               ),
                                               child: Align(
                                                 alignment: AlignmentDirectional(
-                                                    -0.05, 0.0),
+                                                    -0.05, 0),
                                                 child: Column(
                                                   mainAxisSize:
                                                       MainAxisSize.max,
@@ -477,10 +656,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                       padding:
                                                           EdgeInsetsDirectional
                                                               .fromSTEB(
-                                                                  8.0,
-                                                                  0.0,
-                                                                  16.0,
-                                                                  0.0),
+                                                                  8, 0, 16, 0),
                                                       child: Row(
                                                         mainAxisSize:
                                                             MainAxisSize.max,
@@ -489,19 +665,18 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                                 .spaceBetween,
                                                         children: [
                                                           Text(
-                                                            listViewListingRecord
+                                                            _displayList[index]
                                                                 .propertyName!,
                                                             style: FlutterFlowTheme
                                                                     .of(context)
-                                                                .title3
+                                                                .bodyText2
                                                                 .override(
                                                                   fontFamily:
                                                                       'Outfit',
                                                                   color: FlutterFlowTheme.of(
                                                                           context)
                                                                       .alternate,
-                                                                  fontSize:
-                                                                      20.0,
+                                                                  fontSize: 20,
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .w500,
@@ -514,10 +689,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                       padding:
                                                           EdgeInsetsDirectional
                                                               .fromSTEB(
-                                                                  8.0,
-                                                                  0.0,
-                                                                  16.0,
-                                                                  0.0),
+                                                                  8, 0, 16, 0),
                                                       child: Row(
                                                         mainAxisSize:
                                                             MainAxisSize.max,
@@ -526,7 +698,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                                 .spaceBetween,
                                                         children: [
                                                           Text(
-                                                            listViewListingRecord
+                                                            _displayList[index]
                                                                 .address!,
                                                             style: FlutterFlowTheme
                                                                     .of(context)
@@ -536,8 +708,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                                       'Outfit',
                                                                   color: Color(
                                                                       0xFF57636C),
-                                                                  fontSize:
-                                                                      12.0,
+                                                                  fontSize: 12,
                                                                   fontWeight:
                                                                       FontWeight
                                                                           .normal,
@@ -549,15 +720,12 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                     Align(
                                                       alignment:
                                                           AlignmentDirectional(
-                                                              0.0, 0.0),
+                                                              0, 0),
                                                       child: Padding(
                                                         padding:
                                                             EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    0.0,
-                                                                    10.0,
-                                                                    0.0,
-                                                                    0.0),
+                                                                .fromSTEB(0, 10,
+                                                                    0, 0),
                                                         child: Column(
                                                           mainAxisSize:
                                                               MainAxisSize.max,
@@ -568,14 +736,15 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                             Align(
                                                               alignment:
                                                                   AlignmentDirectional(
-                                                                      0.0, 0.0),
+                                                                      0, 0),
                                                               child: Padding(
-                                                                padding: EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        8.0,
-                                                                        20.0,
-                                                                        16.0,
-                                                                        0.0),
+                                                                padding:
+                                                                    EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            8,
+                                                                            20,
+                                                                            16,
+                                                                            0),
                                                                 child: Row(
                                                                   mainAxisSize:
                                                                       MainAxisSize
@@ -590,15 +759,15 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                                     Align(
                                                                       alignment:
                                                                           AlignmentDirectional(
-                                                                              0.0,
-                                                                              0.0),
+                                                                              0,
+                                                                              0),
                                                                       child:
                                                                           Padding(
                                                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                                                            0.0,
-                                                                            0.0,
-                                                                            10.0,
-                                                                            0.0),
+                                                                            0,
+                                                                            0,
+                                                                            10,
+                                                                            0),
                                                                         child:
                                                                             Row(
                                                                           mainAxisSize:
@@ -607,13 +776,13 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                                             Icon(
                                                                               Icons.single_bed,
                                                                               color: FlutterFlowTheme.of(context).alternate,
-                                                                              size: 24.0,
+                                                                              size: 24,
                                                                             ),
                                                                             Text(
-                                                                              listViewListingRecord.numOfBedroom!.toString(),
+                                                                              _displayList[index].numOfBedroom!.toString(),
                                                                               style: FlutterFlowTheme.of(context).bodyText1.override(
                                                                                     fontFamily: 'Poppins',
-                                                                                    fontSize: 12.0,
+                                                                                    fontSize: 12,
                                                                                   ),
                                                                             ),
                                                                           ],
@@ -621,11 +790,12 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                                       ),
                                                                     ),
                                                                     Padding(
-                                                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                                                          0.0,
-                                                                          0.0,
-                                                                          10.0,
-                                                                          0.0),
+                                                                      padding: EdgeInsetsDirectional
+                                                                          .fromSTEB(
+                                                                              0,
+                                                                              0,
+                                                                              10,
+                                                                              0),
                                                                       child:
                                                                           Row(
                                                                         mainAxisSize:
@@ -636,46 +806,102 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                                             color:
                                                                                 FlutterFlowTheme.of(context).alternate,
                                                                             size:
-                                                                                24.0,
+                                                                                24,
                                                                           ),
                                                                           Text(
                                                                             '2',
                                                                             style: FlutterFlowTheme.of(context).bodyText1.override(
                                                                                   fontFamily: 'Poppins',
-                                                                                  fontSize: 12.0,
+                                                                                  fontSize: 12,
                                                                                 ),
                                                                           ),
                                                                         ],
                                                                       ),
                                                                     ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            Align(
+                                                              alignment:
+                                                                  AlignmentDirectional(
+                                                                      0, 0),
+                                                              child: Padding(
+                                                                padding:
+                                                                    EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            8,
+                                                                            10,
+                                                                            16,
+                                                                            0),
+                                                                child: Row(
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .max,
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .start,
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .start,
+                                                                  children: [
                                                                     Align(
                                                                       alignment:
                                                                           AlignmentDirectional(
-                                                                              0.0,
-                                                                              0.0),
+                                                                              0,
+                                                                              0),
                                                                       child:
                                                                           Padding(
                                                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                                                            40.0,
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0),
+                                                                            0,
+                                                                            0,
+                                                                            10,
+                                                                            0),
                                                                         child:
+                                                                            Row(
+                                                                          mainAxisSize:
+                                                                              MainAxisSize.max,
+                                                                          children: [
+                                                                            Icon(
+                                                                              Icons.attach_money,
+                                                                              color: FlutterFlowTheme.of(context).alternate,
+                                                                              size: 24,
+                                                                            ),
                                                                             Text(
-                                                                          listViewListingRecord
-                                                                              .price!
-                                                                              .toString(),
-                                                                          textAlign:
-                                                                              TextAlign.end,
-                                                                          style: FlutterFlowTheme.of(context)
-                                                                              .subtitle1
-                                                                              .override(
-                                                                                fontFamily: 'Outfit',
-                                                                                color: FlutterFlowTheme.of(context).primaryColor,
-                                                                                fontSize: 18.0,
-                                                                                fontWeight: FontWeight.w500,
-                                                                              ),
+                                                                              'Price',
+                                                                              style: FlutterFlowTheme.of(context).bodyText1.override(
+                                                                                    fontFamily: 'Poppins',
+                                                                                    fontSize: 12,
+                                                                                  ),
+                                                                            ),
+                                                                          ],
                                                                         ),
+                                                                      ),
+                                                                    ),
+                                                                    Padding(
+                                                                      padding: EdgeInsetsDirectional
+                                                                          .fromSTEB(
+                                                                              80,
+                                                                              0,
+                                                                              10,
+                                                                              0),
+                                                                      child:
+                                                                          Row(
+                                                                        mainAxisSize:
+                                                                            MainAxisSize.max,
+                                                                        children: [
+                                                                          Padding(
+                                                                            padding: EdgeInsetsDirectional.fromSTEB(
+                                                                                0,
+                                                                                10,
+                                                                                0,
+                                                                                0),
+                                                                            child:
+                                                                                AddToFavoritesButton(
+                                                                              propertyId: _displayList[index].id,
+                                                                            ),
+                                                                          ),
+                                                                        ],
                                                                       ),
                                                                     ),
                                                                   ],

@@ -1,11 +1,16 @@
-import '/flutter_flow/flutter_flow_animations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
-import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:badges/badges.dart' as badges;
+import 'package:onezero/backend/database.dart';
+import 'package:onezero/auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:onezero/pages/individual_property_page.dart';
+import 'package:onezero/models/LocationModel.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:provider/provider.dart';
+import 'package:onezero/models/Listing.dart';
 
 class HomePageWidget extends StatefulWidget {
   const HomePageWidget({Key? key}) : super(key: key);
@@ -16,16 +21,34 @@ class HomePageWidget extends StatefulWidget {
 
 class _HomePageWidgetState extends State<HomePageWidget>
     with TickerProviderStateMixin {
+  late Stream<List<Listing>> _listingsStream;
+  late List<Listing> _displayList;
+
+  String country = '';
+  String name = '';
+  String street = '';
+  String postalCode = '';
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final _unfocusNode = FocusNode();
-  LatLng? currentUserLocationValue;
+
+  Database db = Database();
+
+  final User? user = Auth().currentUser;
 
   @override
   void initState() {
     super.initState();
+    getLocation();
 
-    getCurrentUserLocation(defaultLocation: LatLng(0.0, 0.0), cached: true)
-        .then((loc) => setState(() => currentUserLocationValue = loc));
+    //set up the stream to listen for changes in firestore collection
+    _listingsStream = FirebaseFirestore.instance
+        .collection('listings')
+        .snapshots()
+        .map((querySnapshot) => querySnapshot.docs
+            .map((doc) => Listing.fromJson(doc.data()))
+            .toList());
+    _displayList = [];
   }
 
   @override
@@ -34,9 +57,36 @@ class _HomePageWidgetState extends State<HomePageWidget>
     super.dispose();
   }
 
+  void _updateDisplayList(String query){
+
+    setState(() {
+      
+      if(query.isEmpty){
+        _displayList = 
+      }
+    });
+  }
+
+  Future<void> getLocation() async {
+    List<Placemark> placemark =
+        await placemarkFromCoordinates(UserLocation.lat, UserLocation.long);
+
+    print(placemark[0].country);
+    print(placemark[0].name);
+    print(placemark[0].street);
+    print(placemark[0].postalCode);
+
+    setState(() {
+      country = placemark[0].country!;
+      name = placemark[0].name!;
+      street = placemark[0].street!;
+      postalCode = placemark[0].postalCode!;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    if (currentUserLocationValue == null) {
+    if (name == null) {
       return Container(
         color: FlutterFlowTheme.of(context).primaryBackground,
         child: Center(
@@ -94,10 +144,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                         ),
                                   ),
                                   Text(
-                                    valueOrDefault<String>(
-                                      currentUserLocationValue?.toString(),
-                                      'Singapore',
-                                    ),
+                                    street,
                                     style: FlutterFlowTheme.of(context)
                                         .title1
                                         .override(
@@ -167,7 +214,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   10.0, 0.0, 10.0, 0.0),
                               child: TextFormField(
-                                controller: _model.textController,
+                                onChanged: (value) => updateList(value),
                                 autofocus: true,
                                 obscureText: false,
                                 decoration: InputDecoration(
@@ -219,8 +266,6 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                   ),
                                 ),
                                 style: FlutterFlowTheme.of(context).bodyText1,
-                                validator: _model.textControllerValidator
-                                    .asValidator(context),
                               ),
                             ),
                           ),
@@ -370,9 +415,10 @@ class _HomePageWidgetState extends State<HomePageWidget>
                     Padding(
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 50.0),
-                      child: StreamBuilder<List<ListingRecord>>(
-                        stream: queryListingRecord(),
-                        builder: (context, snapshot) {
+                      child: StreamBuilder(
+                        stream: db.listings.snapshots(),
+                        builder:
+                            (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                           // Customize what your widget looks like when it's loading.
                           if (!snapshot.hasData) {
                             return Center(
@@ -386,24 +432,38 @@ class _HomePageWidgetState extends State<HomePageWidget>
                               ),
                             );
                           }
-                          List<ListingRecord> listViewListingRecordList =
-                              snapshot.data!;
                           return ListView.builder(
                             padding: EdgeInsets.zero,
                             primary: false,
                             shrinkWrap: true,
                             scrollDirection: Axis.vertical,
-                            itemCount: listViewListingRecordList.length,
-                            itemBuilder: (context, listViewIndex) {
-                              final listViewListingRecord =
-                                  listViewListingRecordList[listViewIndex];
+                            itemCount: snapshot.data!.docs.length,
+                            itemBuilder: (context, index) {
+                              final DocumentSnapshot listingsData =
+                                  snapshot.data!.docs[index];
+
                               return Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     16.0, 0.0, 16.0, 12.0),
                                 child: InkWell(
                                   onTap: () async {
-                                    context
-                                        .pushNamed('IndividualProperty_Page');
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                      builder: ((context) =>
+                                          IndividualPropertyPageWidget(
+                                              id: listingsData['id'],
+                                              propertyName:
+                                                  listingsData['propertyName'],
+                                              price: double.parse(
+                                                  listingsData['price']),
+                                              numOfBedroom: int.parse(
+                                                  listingsData['numOfBedroom']),
+                                              dimension: int.parse(
+                                                  listingsData['dimension']),
+                                              lease: int.parse(
+                                                listingsData['lease'],
+                                              ))),
+                                    ));
                                   },
                                   child: Container(
                                     width: 100.0,
@@ -441,7 +501,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                 borderRadius:
                                                     BorderRadius.circular(8.0),
                                                 child: Image.asset(
-                                                  'assets/images/239183274_1205782896609021_3013960168526323226_n.jpeg',
+                                                  'assets/images/city6.jpg',
                                                   height: 200.0,
                                                   fit: BoxFit.cover,
                                                 ),
@@ -489,7 +549,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                                 .spaceBetween,
                                                         children: [
                                                           Text(
-                                                            listViewListingRecord
+                                                            display_list[index]
                                                                 .propertyName!,
                                                             style: FlutterFlowTheme
                                                                     .of(context)
@@ -526,7 +586,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                                 .spaceBetween,
                                                         children: [
                                                           Text(
-                                                            listViewListingRecord
+                                                            display_list[index]
                                                                 .address!,
                                                             style: FlutterFlowTheme
                                                                     .of(context)
@@ -610,7 +670,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                                               size: 24.0,
                                                                             ),
                                                                             Text(
-                                                                              listViewListingRecord.numOfBedroom!.toString(),
+                                                                              display_list[index].numOfBedroom!.toString(),
                                                                               style: FlutterFlowTheme.of(context).bodyText1.override(
                                                                                     fontFamily: 'Poppins',
                                                                                     fontSize: 12.0,
@@ -662,7 +722,7 @@ class _HomePageWidgetState extends State<HomePageWidget>
                                                                             0.0),
                                                                         child:
                                                                             Text(
-                                                                          listViewListingRecord
+                                                                          display_list[index]
                                                                               .price!
                                                                               .toString(),
                                                                           textAlign:

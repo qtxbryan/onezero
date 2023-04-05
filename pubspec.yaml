@@ -49,6 +49,18 @@ dependencies:
   curved_navigation_bar: ^1.0.1
   firebase_storage: ^10.0.0
   file_picker: ^4.0.3
+  substring_highlight: 1.0.33
+  easy_debounce: 2.0.1
+  image_picker: ^0.8.4+4
+  provider: ^6.0.5
+  get_it: ^7.2.0
+  badges: 2.0.2
+  location: ^4.4.0
+  geocoding: ^2.1.0
+  google_maps_flutter: ^2.2.5
+  flutter_number_picker: ^1.0.0
+
+
   
 dev_dependencies:
   flutter_test:

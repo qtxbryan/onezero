@@ -38,16 +38,18 @@ class Database {
 
   //Listing
 
-  //Create Functions
-  Future createListing(
-      {required String address,
-      required String description,
-      required int dimension,
-      required int lease,
-      required String neighbourhood,
-      required int numOfBedroom,
-      required double price,
-      required String propertyName}) async {
+  // Create Functions
+  Future createListing({
+    required String address,
+    required String description,
+    required String dimension,
+    required String lease,
+    required String neighbourhood,
+    required String numOfBedroom,
+    required String price,
+    required String propertyName,
+    required String listedEmail,
+  }) async {
     final docListing = FirebaseFirestore.instance.collection('listing').doc();
 
     final listing = Listing(
@@ -60,6 +62,7 @@ class Database {
       numOfBedroom: numOfBedroom,
       price: price,
       propertyName: propertyName,
+      listed_by_email: listedEmail,
     );
 
     final json = listing.toJson();

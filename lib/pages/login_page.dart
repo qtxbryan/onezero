@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:onezero/pages/landing_page.dart';
+import 'package:onezero/pages/test_register.dart';
+import 'package:onezero/pages/new_landing_6-4.dart';
+import 'fav_list_page.dart';
 
 import '../auth.dart';
 
@@ -30,7 +32,7 @@ class _LoginPageState extends State<LoginPage> {
     }
 
     Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => LandingPage(),
+      builder: (context) => HomePage(),
     ));
   }
 
@@ -134,6 +136,7 @@ class _LoginPageState extends State<LoginPage> {
         body: GestureDetector(
             onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
             child: Container(
+                child: SafeArea(
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
@@ -276,7 +279,14 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                           ),
                           TextButton(
-                            onPressed: null,
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => TestRegisterPage(),
+                                ),
+                              );
+                            },
                             style: ButtonStyle(
                               fixedSize:
                                   MaterialStateProperty.all(Size(150, 30)),
@@ -305,6 +315,6 @@ class _LoginPageState extends State<LoginPage> {
                   _errorMessage(),
                 ],
               ),
-            )));
+            ))));
   }
 }

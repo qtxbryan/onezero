@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:onezero/models/Listing.dart';
 import 'package:onezero/backend/database.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import '../auth.dart';
 
 class CreatePropertyPageWidget extends StatefulWidget {
   const CreatePropertyPageWidget({Key? key}) : super(key: key);
@@ -19,6 +21,8 @@ class _CreatePropertyPageWidgetState extends State<CreatePropertyPageWidget> {
   final _unfocusNode = FocusNode();
 
   Database db = Database();
+  final Auth _auth = Auth();
+  bool isCreating = false;
 
   final addressController = TextEditingController();
   final descriptionController = TextEditingController();
@@ -42,8 +46,59 @@ class _CreatePropertyPageWidgetState extends State<CreatePropertyPageWidget> {
 
   String? _selectedValue;
 
+  void createListing(User user) async {
+    final address = addressController.text;
+    final desc = descriptionController.text;
+    final dimension = dimensionController.text;
+    final lease = leaseController.text;
+    final neighbour = neighbourhoodController.text;
+    final numOfBedroom = numOfBedroomController.text;
+    final price = priceController.text;
+    final propertyName = propertyNameController.text;
+
+    setState(() {
+      isCreating = true;
+    });
+
+    await db.createListing(
+      address: address,
+      description: desc,
+      dimension: dimension,
+      lease: lease,
+      neighbourhood: neighbour,
+      numOfBedroom: numOfBedroom,
+      price: price,
+      propertyName: propertyName,
+      listedEmail: user.email!,
+    );
+
+    setState(() {
+      isCreating = false;
+    });
+
+    Navigator.pop(context);
+  }
+
   @override
   Widget build(BuildContext context) {
+    User? user = _auth.currentUser;
+    print(user!.displayName);
+
+    if (isCreating == true) {
+      return Container(
+        color: FlutterFlowTheme.of(context).primaryBackground,
+        child: Center(
+          child: SizedBox(
+            width: 50.0,
+            height: 50.0,
+            child: CircularProgressIndicator(
+              color: FlutterFlowTheme.of(context).primaryColor,
+            ),
+          ),
+        ),
+      );
+    }
+
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
@@ -62,20 +117,7 @@ class _CreatePropertyPageWidgetState extends State<CreatePropertyPageWidget> {
               color: FlutterFlowTheme.of(context).secondaryText,
               iconSize: 30.0,
               onPressed: () {
-                
-              },
-            )
-            child: FlutterFlowIconButton(
-              borderColor: Colors.transparent,
-              borderRadius: 30.0,
-              buttonSize: 48.0,
-              icon: Icon(
-                Icons.close_rounded,
-                color: FlutterFlowTheme.of(context).secondaryText,
-                size: 30.0,
-              ),
-              onPressed: () async {
-                context.pop();
+                Navigator.pop(context);
               },
             ),
           ),
@@ -440,24 +482,7 @@ class _CreatePropertyPageWidgetState extends State<CreatePropertyPageWidget> {
                         EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 16.0),
                     child: FFButtonWidget(
                       onPressed: () {
-                        final address = addressController.text;
-                        final desc = descriptionController.text;
-                        final dimension = dimensionController.text;
-                        final lease = leaseController.text;
-                        final neighbour = neighbourhoodController.text;
-                        final numOfBedroom = numOfBedroomController.text;
-                        final price = priceController.text;
-                        final propertyName = propertyNameController.text;
-
-                        db.createListing(
-                            address: address,
-                            description: desc,
-                            dimension: int.parse(dimension),
-                            lease: int.parse(lease),
-                            neighbourhood: neighbour,
-                            numOfBedroom: int.parse(numOfBedroom),
-                            price: double.parse(price),
-                            propertyName: propertyName);
+                        createListing(user);
                       },
                       text: 'List Now!',
                       options: FFButtonOptions(

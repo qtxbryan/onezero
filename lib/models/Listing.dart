@@ -2,12 +2,13 @@ class Listing {
   String id;
   final String? address;
   final String? description;
-  final int? dimension;
-  final int? lease;
+  final String? dimension;
+  final String? lease;
   final String? neighbourhood;
-  final int? numOfBedroom;
-  final double? price;
+  final String? numOfBedroom;
+  final String? price;
   final String? propertyName;
+  final String? listed_by_email;
 
   Listing({
     this.id = '',
@@ -19,6 +20,7 @@ class Listing {
     required this.numOfBedroom,
     required this.price,
     required this.propertyName,
+    required this.listed_by_email,
   });
 
   Map<String, dynamic> toJson() => {
@@ -31,16 +33,19 @@ class Listing {
         'numOfBedroom': numOfBedroom,
         'price': price,
         'propertyName': propertyName,
+        'Listed_by_email': listed_by_email,
       };
 
-  static Listing fromJson(Map<String, dynamic> json) => Listing(
-      id: json['id'],
-      address: json['address'],
-      description: json['description'],
-      dimension: json['dimension'],
-      lease: json['lease'],
-      neighbourhood: json['neighbourhood'],
-      numOfBedroom: json['numOfBedroom'],
-      price: json['price'],
-      propertyName: json['propertyName']);
+  factory Listing.fromJson(Map<String, dynamic> json) => Listing(
+        id: json['id'],
+        address: json['address'],
+        description: json['description'],
+        dimension: json['dimension'],
+        lease: json['lease'],
+        neighbourhood: json['neighbourhood'],
+        numOfBedroom: json['numOfBedroom'],
+        price: json['price'],
+        propertyName: json['propertyName'],
+        listed_by_email: json['listed_by_email'],
+      );
 }

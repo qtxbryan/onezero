@@ -275,10 +275,10 @@ class _SettingPageState extends State<SettingPage> {
                     padding: EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 8.0, 8.0),
                     child: GestureDetector(
                       onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => EditProfileWidget()));
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) => EditProfileWidget()));
                       },
                       child: Row(
                         mainAxisSize: MainAxisSize.max,

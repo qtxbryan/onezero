@@ -115,8 +115,13 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
               String citizenship = userProfileData['Citizenship'];
               int age = int.parse(userProfileData['age']);
 
+              print('This is applicationType: ${applicationType}');
+              print(applicationType.runtimeType);
+
+              print('Going into IF STATEMENT');
+
               if (applicationType == 'Couple' &&
-                  firstTime == 'true' &&
+                  firstTime == 'Yes' &&
                   averageMonthlyHousehold <= 14000 &&
                   citizenship == 'Singaporean' &&
                   age >= 21 &&
@@ -136,8 +141,11 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                   grantAmount.add(CPF_HOUSING_GRANT_AMOUNT_5RM);
                   grantAwarded.add(CPF_HOUSING_GRANT_5RM);
                 }
+
+                grantAmount.add(CPF_HOUSING_GRANT_AMOUNT);
+                grantAwarded.add(CPF_HOUSING_GRANT);
               } else if (applicationType == 'Family' &&
-                  firstTime == 'true' &&
+                  firstTime == 'Yes' &&
                   averageMonthlyHousehold <= 21000 &&
                   citizenship == 'Singaporean' &&
                   age >= 21 &&
@@ -155,7 +163,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                   grantAwarded.add(CPF_HOUSING_GRANT_FAMILY_5RM);
                 }
               } else if (applicationType == 'Singles' &&
-                  firstTime == true &&
+                  firstTime == "Yes" &&
                   averageMonthlyHousehold <= 7000 &&
                   citizenship == 'Singaporean' &&
                   age >= 35 &&

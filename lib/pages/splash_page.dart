@@ -1,8 +1,62 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:onezero/models/LocationModel.dart';
+import 'package:location/location.dart';
+import 'dart:async';
+import 'package:onezero/pages/login_page.dart';
 
-class SplashPage extends StatelessWidget {
-  const SplashPage({Key? key}) : super(key: key);
+class SplashPage extends StatefulWidget {
+  const SplashPage({super.key});
+
+  @override
+  State<SplashPage> createState() => _SplashPageState();
+}
+
+class _SplashPageState extends State<SplashPage> {
+  @override
+  void initState() {
+    super.initState();
+    locationService();
+  }
+
+  Future<void> locationService() async {
+    Location location = new Location();
+
+    bool _serviceEnabled;
+    PermissionStatus _permissionLocation;
+    LocationData _locData;
+
+    _serviceEnabled = await location.serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled = await location.requestService();
+      if (!_serviceEnabled) {
+        return;
+      }
+    }
+
+    _permissionLocation = await location.hasPermission();
+    if (_permissionLocation == PermissionStatus.denied) {
+      _permissionLocation = await location.requestPermission();
+      if (_permissionLocation != PermissionStatus.granted) {
+        return;
+      }
+    }
+
+    _locData = await location.getLocation();
+
+    print(_locData.latitude);
+    print(_locData.longitude);
+
+    setState(() {
+      UserLocation.lat = _locData.latitude!;
+      UserLocation.long = _locData.longitude!;
+    });
+
+    Timer(Duration(milliseconds: 500), () {
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => LoginPage()));
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,22 +118,30 @@ class SplashPage extends StatelessWidget {
                           Padding(
                             padding: EdgeInsets.fromLTRB(0, 40, 0, 0),
                             child: Container(
-                              height: 50,
-                              decoration: const BoxDecoration(
-                                color: Color(0xD9B43C42),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
-                              ),
-                              child: const Center(
-                                child: Text('Create Account',
-                                    style: TextStyle(
-                                      fontFamily: 'Helvetica-Neue-Regular',
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.white,
-                                      fontSize: 18,
-                                    )),
-                              ),
-                            ),
+                                height: 50,
+                                decoration: const BoxDecoration(
+                                  color: Color(0xD9B43C42),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)),
+                                ),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (((context) =>
+                                                LoginPage()))));
+                                  },
+                                  child: const Center(
+                                    child: Text('Create Account',
+                                        style: TextStyle(
+                                          fontFamily: 'Helvetica-Neue-Regular',
+                                          fontWeight: FontWeight.w500,
+                                          color: Colors.white,
+                                          fontSize: 18,
+                                        )),
+                                  ),
+                                )),
                           ),
                         ],
                       ),
