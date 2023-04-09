@@ -3,10 +3,15 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:onezero/models/Listing.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
+
 import 'package:onezero/auth.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:onezero/constants.dart';
 
 class AddPropertyPage extends StatefulWidget {
   @override
@@ -18,6 +23,11 @@ class _AddPropertyPageState extends State<AddPropertyPage> {
   final FirebaseStorage storage = FirebaseStorage.instance;
   final ImagePicker picker = ImagePicker();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  TextEditingController postalCodeController = TextEditingController();
+  TextEditingController streetNameController = TextEditingController();
+  TextEditingController blockNumberController = TextEditingController();
+  TextEditingController unitNumberController = TextEditingController();
 
   Auth _auth = Auth();
 
@@ -32,6 +42,8 @@ class _AddPropertyPageState extends State<AddPropertyPage> {
   String? price;
   String? propertyName;
   String? listedByEmail;
+  String? postalCode;
+  List<double> longlat = [];
 
   @override
   Widget build(BuildContext context) {
@@ -42,11 +54,23 @@ class _AddPropertyPageState extends State<AddPropertyPage> {
     }
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text("Add Property"),
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.white,
+        centerTitle: true,
+        elevation: 0,
+        title: Text(
+          "Add Property",
+          style: TextStyle(
+            fontFamily: 'Urbanist',
+            color: Color(TEXT_COLOR),
+            fontSize: 18,
+          ),
+        ),
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: EdgeInsetsDirectional.fromSTEB(16, 25, 16, 16),
         child: Form(
           key: formKey,
           child: ListView(
@@ -72,8 +96,9 @@ class _AddPropertyPageState extends State<AddPropertyPage> {
               ),
               SizedBox(height: 16.0),
               TextFormField(
+                controller: postalCodeController,
                 decoration: InputDecoration(
-                  labelText: "Address",
+                  labelText: "Postal Code",
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -81,7 +106,50 @@ class _AddPropertyPageState extends State<AddPropertyPage> {
                   }
                   return null;
                 },
-                onSaved: (value) => address = value,
+              ),
+              SizedBox(height: 16.0),
+              TextButton(
+                onPressed: searchAddress,
+                child: Text('Search'),
+              ),
+              SizedBox(height: 16.0),
+              TextFormField(
+                controller: streetNameController,
+                decoration: InputDecoration(
+                  labelText: "Street",
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Please enter an address.";
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(height: 16.0),
+              TextFormField(
+                controller: blockNumberController,
+                decoration: InputDecoration(
+                  labelText: "Block",
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Please enter an address.";
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(height: 16.0),
+              TextFormField(
+                controller: unitNumberController,
+                decoration: InputDecoration(
+                  labelText: "Unit Number",
+                ),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return "Please enter an address.";
+                  }
+                  return null;
+                },
               ),
               SizedBox(height: 16.0),
               TextFormField(
@@ -177,9 +245,27 @@ class _AddPropertyPageState extends State<AddPropertyPage> {
                 onSaved: (value) => propertyName = value,
               ),
               SizedBox(height: 16.0),
-              ElevatedButton(
-                child: Text("Add Property"),
+              FFButtonWidget(
                 onPressed: () => addProperty(),
+                text: 'Add Property',
+                options: FFButtonOptions(
+                  width: 320.0,
+                  height: 50.0,
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                  iconPadding:
+                      EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                  color: Colors.white,
+                  textStyle: FlutterFlowTheme.of(context).bodyText1.override(
+                        fontFamily: 'Poppins',
+                        color: Color(ALTERNATE_COLOR),
+                        fontSize: 14,
+                      ),
+                  borderSide: BorderSide(
+                    color: Color(ALTERNATE_COLOR),
+                    width: 1.0,
+                  ),
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
               ),
             ],
           ),
@@ -196,6 +282,43 @@ class _AddPropertyPageState extends State<AddPropertyPage> {
     return downloadUrl;
   }
 
+  Future<String> searchAddress() async {
+    String postalCode = postalCodeController.text;
+    String latLongString;
+
+    if (postalCode.isNotEmpty) {
+      try {
+        List<Location> locations = await locationFromAddress(postalCode);
+        if (locations.isNotEmpty) {
+          Location location = locations.first;
+          List<Placemark> placemarks = await placemarkFromCoordinates(
+              location.latitude, location.longitude);
+
+          if (placemarks.isNotEmpty) {
+            Placemark placemark = placemarks.first;
+            setState(() {
+              streetNameController.text = placemark.street ?? '';
+              blockNumberController.text = placemark.subThoroughfare ?? '';
+            });
+          }
+
+          longlat.add(location.latitude);
+          longlat.add(location.longitude);
+
+          print('LONG: ${location.longitude}');
+          print('LAT ${location.latitude}');
+          latLongString = longlat.join(",");
+
+          return latLongString;
+        }
+      } catch (e) {
+        print(e);
+      }
+    }
+
+    return '';
+  }
+
   void addProperty() async {
     if (formKey.currentState!.validate()) {
       formKey.currentState!.save();
@@ -204,9 +327,15 @@ class _AddPropertyPageState extends State<AddPropertyPage> {
         imageUrl = await uploadImage();
       }
 
+      DocumentReference newDocRef = firestore.collection('listing').doc();
+      String newDocId = newDocRef.id;
+
       // Add data to Firebase
-      await firestore.collection("listing").add({
-        "address": address,
+      await newDocRef.set({
+        "id": newDocId,
+        "address": streetNameController.text,
+        "postalCode": postalCodeController.text,
+        "unitNumber": unitNumberController.text,
         "description": description,
         "dimension": dimension,
         "neighbourhood": neighbourhood,
@@ -216,9 +345,11 @@ class _AddPropertyPageState extends State<AddPropertyPage> {
         "propertyName": propertyName,
         "listed_by_email": listedByEmail,
         "upload_url": imageUrl,
+        "lat": longlat[0].toString(),
+        "long": longlat[1].toString(),
       });
 
-      Navigator.pop(context, true);
+      Navigator.pop(context);
     }
   }
 }

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:onezero/pages/individual_property_page.dart';
+import 'package:onezero/pages/new_individual_page.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
-import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:onezero/constants.dart';
 
 class PropertyListItem extends StatefulWidget {
@@ -16,8 +14,12 @@ class PropertyListItem extends StatefulWidget {
   _PropertyListItemState createState() => _PropertyListItemState();
 }
 
-class _PropertyListItemState extends State<PropertyListItem> {
+class _PropertyListItemState extends State<PropertyListItem>
+    with AutomaticKeepAliveClientMixin {
   bool isFavorite = false;
+
+  @override
+  bool get wantKeepAlive => true;
 
   void _addToFavorites(BuildContext context) async {
 // Get the current user's ID
@@ -80,6 +82,7 @@ class _PropertyListItemState extends State<PropertyListItem> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 12.0),
       child: InkWell(
@@ -87,14 +90,18 @@ class _PropertyListItemState extends State<PropertyListItem> {
           //PUSH INDIVIDUAL PAGE
           Navigator.of(context).push(MaterialPageRoute(
             builder: ((context) => IndividualPropertyPageWidget(
-                id: widget.property['id'],
-                propertyName: widget.property['propertyName'],
-                price: double.parse(widget.property['price']),
-                numOfBedroom: int.parse(widget.property['numOfBedroom']),
-                dimension: int.parse(widget.property['dimension']),
-                lease: int.parse(
-                  widget.property['lease'],
-                ))),
+                  id: widget.property['id'],
+                  propertyName: widget.property['propertyName'],
+                  price: double.parse(widget.property['price']),
+                  numOfBedroom: int.parse(widget.property['numOfBedroom']),
+                  dimension: int.parse(widget.property['dimension']),
+                  lease: int.parse(
+                    widget.property['lease'],
+                  ),
+                  lat: widget.property['lat'],
+                  long: widget.property['long'],
+                  url: widget.property['upload_url'],
+                )),
           ));
         },
         child: Container(
@@ -127,8 +134,8 @@ class _PropertyListItemState extends State<PropertyListItem> {
                     ),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8),
-                      child: Image.asset(
-                        'assets/images/239183274_1205782896609021_3013960168526323226_n.jpeg',
+                      child: Image.network(
+                        widget.property['upload_url'],
                         height: double.infinity,
                         fit: BoxFit.cover,
                       ),
@@ -154,19 +161,20 @@ class _PropertyListItemState extends State<PropertyListItem> {
                         children: [
                           Padding(
                             padding:
-                                EdgeInsetsDirectional.fromSTEB(8, 0, 16, 0),
+                                EdgeInsetsDirectional.fromSTEB(8, 10, 16, 0),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
                                   widget.property['propertyName'],
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 1,
                                   style: FlutterFlowTheme.of(context)
                                       .bodyText2
                                       .override(
                                         fontFamily: 'Outfit',
                                         color: Color(ALTERNATE_COLOR),
-                                        fontSize: 20,
+                                        fontSize: 16,
                                         fontWeight: FontWeight.w500,
                                       ),
                                 ),
@@ -307,7 +315,7 @@ class _PropertyListItemState extends State<PropertyListItem> {
                                                       size: 24,
                                                     ),
                                                     Text(
-                                                      'Price',
+                                                      widget.property['price'],
                                                       style: FlutterFlowTheme
                                                               .of(context)
                                                           .bodyText1
@@ -324,15 +332,17 @@ class _PropertyListItemState extends State<PropertyListItem> {
                                             ),
                                             Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(80, 0, 10, 0),
+                                                  .fromSTEB(0, 0, 10, 0),
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.end,
                                                 children: [
                                                   Padding(
                                                     padding:
                                                         EdgeInsetsDirectional
                                                             .fromSTEB(
-                                                                0, 5, 0, 0),
+                                                                60, 0, 0, 0),
                                                     child: IconButton(
                                                       icon: Icon(
                                                         isFavorite

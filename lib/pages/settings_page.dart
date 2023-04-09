@@ -1,6 +1,8 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:onezero/auth.dart';
+
 import 'package:onezero/pages/edit_profile_page.dart';
 
 class SettingPage extends StatefulWidget {
@@ -14,8 +16,12 @@ class _SettingPageState extends State<SettingPage> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final _unfocusNode = FocusNode();
 
+  final Auth _auth = Auth();
+
   @override
   Widget build(BuildContext context) {
+    User? user = _auth.currentUser;
+
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: Color(0xFFF1F4F8),
@@ -111,7 +117,7 @@ class _SettingPageState extends State<SettingPage> {
                                     0.0, 4.0, 0.0, 0.0),
                                 child: Text(
                                   // currentUserEmail,
-                                  'User Email',
+                                  user!.email!,
                                   style: FlutterFlowTheme.of(context)
                                       .bodyText2
                                       .override(
@@ -275,10 +281,10 @@ class _SettingPageState extends State<SettingPage> {
                     padding: EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 8.0, 8.0),
                     child: GestureDetector(
                       onTap: () {
-                        // Navigator.push(
-                        //     context,
-                        //     MaterialPageRoute(
-                        //         builder: (context) => EditProfileWidget()));
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => EditProfileWidget()));
                       },
                       child: Row(
                         mainAxisSize: MainAxisSize.max,

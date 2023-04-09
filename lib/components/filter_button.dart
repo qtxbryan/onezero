@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:onezero/constants.dart';
 
 class FilterButton extends StatelessWidget {
   final String title;
@@ -13,7 +14,7 @@ class FilterButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        primary: isActive ? Colors.blue : Colors.grey,
+        primary: isActive ? Color(ALTERNATE_COLOR) : Color(PRIMARY_COLOR),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
         ),

@@ -1,3 +1,5 @@
+import 'package:onezero/constants.dart';
+
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -63,33 +65,19 @@ class _MyPropertiesWidgetState extends State<MyPropertiesWidget> {
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
       appBar: AppBar(
-        backgroundColor: FlutterFlowTheme.of(context).cultured,
         automaticallyImplyLeading: false,
-        leading: FlutterFlowIconButton(
-          borderColor: Colors.transparent,
-          borderRadius: 30.0,
-          borderWidth: 1.0,
-          buttonSize: 46.0,
-          icon: Icon(
-            Icons.arrow_back_rounded,
-            color: FlutterFlowTheme.of(context).gunmetal,
-            size: 24.0,
-          ),
-          onPressed: () async {
-            Navigator.pop(context);
-          },
-        ),
+        backgroundColor: Colors.white,
+        elevation: 0,
         title: Text(
           'My Properties',
           style: FlutterFlowTheme.of(context).bodyText1.override(
                 fontFamily: 'Urbanist',
-                color: FlutterFlowTheme.of(context).gunmetal,
+                color: Color(TEXT_COLOR),
                 fontSize: 18.0,
               ),
         ),
         actions: [],
-        centerTitle: false,
-        elevation: 2.0,
+        centerTitle: true,
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: firestore.collection('listing').snapshots(),
@@ -169,8 +157,8 @@ class _MyPropertiesWidgetState extends State<MyPropertiesWidget> {
                               ),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(8.0),
-                                child: Image.asset(
-                                  'assets/images/239183274_1205782896609021_3013960168526323226_n.jpeg',
+                                child: Image.network(
+                                  property.upload_url!,
                                   height: double.infinity,
                                   fit: BoxFit.cover,
                                 ),
@@ -210,9 +198,7 @@ class _MyPropertiesWidgetState extends State<MyPropertiesWidget> {
                                                 .bodyText2
                                                 .override(
                                                   fontFamily: 'Outfit',
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .alternate,
+                                                  color: Color(ALTERNATE_COLOR),
                                                   fontSize: 20.0,
                                                   fontWeight: FontWeight.w500,
                                                 ),
@@ -222,7 +208,7 @@ class _MyPropertiesWidgetState extends State<MyPropertiesWidget> {
                                     ),
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          8.0, 0.0, 16.0, 0.0),
+                                          8.0, 2.0, 16.0, 0.0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -285,9 +271,8 @@ class _MyPropertiesWidgetState extends State<MyPropertiesWidget> {
                                                           children: [
                                                             Icon(
                                                               Icons.single_bed,
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .alternate,
+                                                              color: Color(
+                                                                  ALTERNATE_COLOR),
                                                               size: 24.0,
                                                             ),
                                                             Text(
@@ -323,9 +308,8 @@ class _MyPropertiesWidgetState extends State<MyPropertiesWidget> {
                                                           Icon(
                                                             Icons
                                                                 .bathtub_outlined,
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .alternate,
+                                                            color: Color(
+                                                                ALTERNATE_COLOR),
                                                             size: 24.0,
                                                           ),
                                                           Text(
@@ -381,13 +365,12 @@ class _MyPropertiesWidgetState extends State<MyPropertiesWidget> {
                                                             Icon(
                                                               Icons
                                                                   .attach_money,
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .alternate,
+                                                              color: Color(
+                                                                  ALTERNATE_COLOR),
                                                               size: 24.0,
                                                             ),
                                                             Text(
-                                                              'Price',
+                                                              property.price!,
                                                               style: FlutterFlowTheme
                                                                       .of(context)
                                                                   .bodyText1
@@ -462,9 +445,8 @@ class _MyPropertiesWidgetState extends State<MyPropertiesWidget> {
                                                                             0.0,
                                                                             0.0,
                                                                             0.0),
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryColor,
+                                                                color: Color(
+                                                                    PRIMARY_COLOR),
                                                                 textStyle: FlutterFlowTheme.of(
                                                                         context)
                                                                     .bodyText2
@@ -519,9 +501,8 @@ class _MyPropertiesWidgetState extends State<MyPropertiesWidget> {
                                                                           0.0,
                                                                           0.0,
                                                                           0.0),
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .alternate,
+                                                                  color: Color(
+                                                                      ALTERNATE_COLOR),
                                                                   textStyle: FlutterFlowTheme.of(
                                                                           context)
                                                                       .bodyText2

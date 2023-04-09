@@ -17,6 +17,9 @@ class IndividualPropertyPageWidget extends StatefulWidget {
   final int dimension;
   final String id;
   final int lease;
+  final String long;
+  final String lat;
+  final String imageURL;
 
   const IndividualPropertyPageWidget({
     Key? key,
@@ -26,6 +29,9 @@ class IndividualPropertyPageWidget extends StatefulWidget {
     required this.numOfBedroom,
     required this.dimension,
     required this.lease,
+    required this.long,
+    required this.lat,
+    required this.imageURL,
   }) : super(key: key);
 
   @override
@@ -91,7 +97,7 @@ class _IndividualPropertyPageWidgetState
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(16.0),
                             child: Image.network(
-                              'https://images.unsplash.com/photo-1618220179428-22790b461013?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTN8fGhvbWV8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60',
+                              widget.imageURL,
                               width: double.infinity,
                               height: double.infinity,
                               fit: BoxFit.cover,
@@ -102,6 +108,8 @@ class _IndividualPropertyPageWidgetState
                     ),
                     Row(
                       mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
@@ -111,12 +119,24 @@ class _IndividualPropertyPageWidgetState
                             style: FlutterFlowTheme.of(context).title1.override(
                                   fontFamily: 'Outfit',
                                   color: Color(0xFF0F1113),
-                                  fontSize: 32.0,
+                                  fontSize: 24.0,
                                   fontWeight: FontWeight.w500,
                                 ),
                           ),
                         ),
                       ],
+                    ),
+                    Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 0.0, 10.0),
+                      child: Text(
+                        neighbourhood,
+                        style: FlutterFlowTheme.of(context).bodyText2.override(
+                            fontFamily: 'Outfit',
+                            color: Color(0xFF57636C),
+                            fontSize: 14.0,
+                            fontWeight: FontWeight.normal),
+                      ),
                     ),
                     Row(
                       mainAxisSize: MainAxisSize.max,
@@ -163,7 +183,7 @@ class _IndividualPropertyPageWidgetState
                             color: FlutterFlowTheme.of(context).primaryColor,
                             textStyle:
                                 FlutterFlowTheme.of(context).subtitle2.override(
-                                      fontFamily: 'Poppins',
+                                      fontFamily: 'Outfit',
                                       color: Colors.white,
                                       fontSize: 14.0,
                                       fontWeight: FontWeight.normal,
@@ -176,19 +196,6 @@ class _IndividualPropertyPageWidgetState
                           ),
                         ),
                       ],
-                    ),
-                    Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(16.0, 4.0, 0.0, 0.0),
-                      child: Text(
-                        neighbourhood,
-                        style: FlutterFlowTheme.of(context).bodyText2.override(
-                              fontFamily: 'Outfit',
-                              color: Color(0xFF57636C),
-                              fontSize: 14.0,
-                              fontWeight: FontWeight.normal,
-                            ),
-                      ),
                     ),
                     Padding(
                       padding:
@@ -212,11 +219,10 @@ class _IndividualPropertyPageWidgetState
                                   style: FlutterFlowTheme.of(context)
                                       .bodyText1
                                       .override(
-                                        fontFamily: 'Outfit',
-                                        color: Color(0xFF0F1113),
-                                        fontSize: 14.0,
-                                        fontWeight: FontWeight.normal,
-                                      ),
+                                          fontFamily: 'Outfit',
+                                          fontSize: 18.0,
+                                          fontWeight: FontWeight.w400,
+                                          color: Colors.black),
                                 ),
                                 collapsed: Container(
                                   width:
@@ -224,23 +230,27 @@ class _IndividualPropertyPageWidgetState
                                   decoration: BoxDecoration(
                                     color: Colors.white,
                                   ),
-                                  child: Text(
-                                    description,
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyText2
-                                        .override(
-                                          fontFamily: 'Outfit',
-                                          color: Color(0xFF57636C),
-                                          fontSize: 14.0,
-                                          fontWeight: FontWeight.normal,
-                                        ),
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 8.0, 0.0, 0.0),
+                                    child: Text(
+                                      description,
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyText2
+                                          .override(
+                                            fontFamily: 'Outfit',
+                                            color: Color(0xFF57636C),
+                                            fontSize: 14.0,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                    ),
                                   ),
                                 ),
                                 expanded: Column(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
                                     Text(
-                                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                                      description,
                                       style: FlutterFlowTheme.of(context)
                                           .bodyText2
                                           .override(

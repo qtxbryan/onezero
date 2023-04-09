@@ -1,6 +1,3 @@
-import 'package:onezero/pages/landing_page.dart';
-import 'package:onezero/pages/test_grant.dart';
-
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -8,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../auth.dart';
+import 'new_landing_6-4.dart';
 
 class NewUserPageWidget extends StatefulWidget {
   //Data passed from register page
@@ -50,7 +48,7 @@ class _NewUserPageWidgetState extends State<NewUserPageWidget> {
     }
 
     Navigator.of(context)
-        .push(MaterialPageRoute(builder: ((context) => LandingPage())));
+        .push(MaterialPageRoute(builder: ((context) => HomePage())));
   }
 
   @override
