@@ -236,13 +236,9 @@ class _ComparePageState extends State<ComparePage> {
                     padding: const EdgeInsets.all(16),
                     child: Row(
                       children: [
-                        Container(
-                          height: 50,
-                          width: 50,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            color: Colors.grey[300],
-                          ),
+                        Icon(
+                          Icons.house,
+                          size: 50,
                         ),
                         const SizedBox(width: 16),
                         Expanded(
