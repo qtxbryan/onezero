@@ -105,13 +105,21 @@ class _ComparePageState extends State<ComparePage> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(10, 20, 10, 20),
-                        child: Text(
-                          nh.toString(),
-                          textAlign: TextAlign.center,
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ),
+                          padding:
+                              EdgeInsetsDirectional.fromSTEB(10, 20, 10, 20),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment
+                                .center, //Center Row contents horizontally,
+                            crossAxisAlignment: CrossAxisAlignment
+                                .center, //Center Row contents vertically,
+                            children: [
+                              Text(
+                                nh.toString(),
+                                textAlign: TextAlign.center,
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ],
+                          )),
                     ),
                   ),
                 ),
@@ -126,13 +134,21 @@ class _ComparePageState extends State<ComparePage> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(10, 20, 10, 20),
-                        child: Text(
-                          nor.toString(),
-                          textAlign: TextAlign.center,
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ),
+                          padding:
+                              EdgeInsetsDirectional.fromSTEB(10, 20, 10, 20),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment
+                                .center, //Center Row contents horizontally,
+                            crossAxisAlignment: CrossAxisAlignment
+                                .center, //Center Row contents vertically,
+                            children: [
+                              Text(
+                                nor.toString(),
+                                textAlign: TextAlign.center,
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ],
+                          )),
                     ),
                   ),
                 ),
@@ -147,13 +163,26 @@ class _ComparePageState extends State<ComparePage> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(10, 20, 10, 20),
-                        child: Text(
-                          average.toString(),
-                          textAlign: TextAlign.center,
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ),
+                          padding:
+                              EdgeInsetsDirectional.fromSTEB(10, 20, 10, 20),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment
+                                .center, //Center Row contents horizontally,
+                            crossAxisAlignment: CrossAxisAlignment
+                                .center, //Center Row contents vertically,
+                            children: [
+                              Text(
+                                '\$',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              Text(
+                                average.toString(),
+                                textAlign: TextAlign.center,
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ],
+                          )),
                     ),
                   ),
                 ),
@@ -168,13 +197,26 @@ class _ComparePageState extends State<ComparePage> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(10, 20, 10, 20),
-                        child: Text(
-                          average.toString(),
-                          textAlign: TextAlign.center,
-                          style: TextStyle(color: Colors.white),
-                        ),
-                      ),
+                          padding:
+                              EdgeInsetsDirectional.fromSTEB(10, 20, 10, 20),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment
+                                .center, //Center Row contents horizontally,
+                            crossAxisAlignment: CrossAxisAlignment
+                                .center, //Center Row contents vertically,
+                            children: [
+                              Text(
+                                '\$',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              Text(
+                                average.toString(),
+                                textAlign: TextAlign.center,
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ],
+                          )),
                     ),
                   ),
                 ),
