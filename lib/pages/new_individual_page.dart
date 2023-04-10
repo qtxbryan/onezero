@@ -10,6 +10,7 @@ import 'package:onezero/constants.dart';
 import 'package:onezero/components/Edit_grant_profile.dart';
 import 'package:onezero/components/maps.dart';
 import 'edit_profile_page.dart';
+import 'package:onezero/pages/CompareScreen.dart';
 
 class IndividualPropertyPageWidget extends StatefulWidget {
   final String propertyName;
@@ -305,6 +306,12 @@ class _IndividualPropertyPageWidgetState
                                   FFButtonWidget(
                                     onPressed: () {
                                       print('Button pressed ...');
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: ((context) =>
+                                                  ComparePage(
+                                                    listingData: data,
+                                                  ))));
                                     },
                                     text: 'Compare',
                                     options: FFButtonOptions(
