@@ -104,7 +104,7 @@ class _ComparePageState extends State<ComparePage> {
                     padding: EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
                     child: Container(
                       width: 100,
-                      height: 70.2,
+                      height: 90,
                       decoration: BoxDecoration(
                         color: Color.fromRGBO(65, 67, 106, 1.0),
                         borderRadius: BorderRadius.circular(10),
@@ -122,6 +122,9 @@ class _ComparePageState extends State<ComparePage> {
                                 nh.toString(),
                                 textAlign: TextAlign.center,
                                 style: TextStyle(color: Colors.white),
+                                softWrap: false,
+                                maxLines: 2,
+                                overflow: TextOverflow.fade,
                               ),
                             ],
                           )),
@@ -133,7 +136,7 @@ class _ComparePageState extends State<ComparePage> {
                     padding: EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
                     child: Container(
                       width: 100,
-                      height: 70.4,
+                      height: 90,
                       decoration: BoxDecoration(
                         color: Color.fromRGBO(65, 67, 106, 1.0),
                         borderRadius: BorderRadius.circular(10),
@@ -162,7 +165,7 @@ class _ComparePageState extends State<ComparePage> {
                     padding: EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
                     child: Container(
                       width: 100,
-                      height: 70.4,
+                      height: 90,
                       decoration: BoxDecoration(
                         color: Color.fromRGBO(65, 67, 106, 1.0),
                         borderRadius: BorderRadius.circular(10),
@@ -191,7 +194,7 @@ class _ComparePageState extends State<ComparePage> {
                     padding: EdgeInsetsDirectional.fromSTEB(5, 0, 5, 0),
                     child: Container(
                       width: 100,
-                      height: 70.4,
+                      height: 90,
                       decoration: BoxDecoration(
                         color: Color.fromRGBO(246, 70, 104, 1.0),
                         borderRadius: BorderRadius.circular(10),
@@ -199,12 +202,17 @@ class _ComparePageState extends State<ComparePage> {
                       child: Padding(
                           padding:
                               EdgeInsetsDirectional.fromSTEB(10, 20, 10, 20),
-                          child: Row(
+                          child: Column(
                             mainAxisAlignment: MainAxisAlignment
-                                .center, //Center Row contents horizontally,
+                                .center, //Center Column contents vertically,
                             crossAxisAlignment: CrossAxisAlignment
-                                .center, //Center Row contents vertically,
+                                .center, //Center Column contents horizontally,
                             children: [
+                              Text(
+                                'Average:',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(color: Colors.white),
+                              ),
                               Text(
                                 average.toString(),
                                 textAlign: TextAlign.center,
