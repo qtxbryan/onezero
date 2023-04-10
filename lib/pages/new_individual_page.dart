@@ -311,6 +311,7 @@ class _IndividualPropertyPageWidgetState
                                               builder: ((context) =>
                                                   ComparePage(
                                                     listingData: data,
+                                                    priceData: widget.price,
                                                   ))));
                                     },
                                     text: 'Compare',

@@ -4,8 +4,10 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 
 class ComparePage extends StatefulWidget {
-  ComparePage({key, required this.listingData}) : super(key: key);
+  ComparePage({key, required this.listingData, required this.priceData})
+      : super(key: key);
   final Map<String, dynamic> listingData;
+  final double priceData;
 
   @override
   _ComparePageState createState() => _ComparePageState();
@@ -15,13 +17,12 @@ class _ComparePageState extends State<ComparePage> {
   Resale? resale;
   List records = [];
   List filterRecords = [];
-  //var neighbourhood = "YISHUN"; FOR TESTING
-  //var numberOfRooms = "4 ROOM"; FOR TESTING
   var isLoaded = false;
   var average = '';
   var avg;
   var nh = '';
   var nor = '';
+  var indivPrice = '';
 
   @override
   void initState() {
@@ -29,18 +30,22 @@ class _ComparePageState extends State<ComparePage> {
 
     //access passed data here
     final listingData = widget.listingData;
+    final price = widget.priceData;
     var neighbourhood = listingData['neighbourhood'].toString().toUpperCase();
     var numberOfRooms = listingData['numOfBedroom'].toString() + " ROOM";
+    var tprice = price.toInt().toString();
     //var price = listingData['price'].toString();
     //fetch data from API
-    getResaleData(neighbourhood, numberOfRooms); // resale contains the data
+    getResaleData(
+        neighbourhood, numberOfRooms, tprice); // resale contains the data
   }
 
-  getResaleData(neighbourhood, numberOfRooms) async {
+  getResaleData(neighbourhood, numberOfRooms, tprice) async {
     resale = await RemoteService().getResale();
     records = resale!.result.records;
     nh = neighbourhood;
     nor = numberOfRooms;
+    indivPrice = '\$' + tprice;
     //var test1 = records[1].town.toString().split('.').last;
     //var test2 = test1.replaceAll("_", " ");
     //var testtype = test2.runtimeType;
@@ -69,7 +74,7 @@ class _ComparePageState extends State<ComparePage> {
           .toDouble()
           .ceil();
     }
-    average = avg.toString();
+    average = '\$' + avg.toString();
     //var test = average.runtimeType;
     //log('Avg: $average, $test');
 
@@ -172,12 +177,7 @@ class _ComparePageState extends State<ComparePage> {
                                 .center, //Center Row contents vertically,
                             children: [
                               Text(
-                                '\$',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(color: Colors.white),
-                              ),
-                              Text(
-                                average.toString(),
+                                indivPrice.toString(),
                                 textAlign: TextAlign.center,
                                 style: TextStyle(color: Colors.white),
                               ),
@@ -205,11 +205,6 @@ class _ComparePageState extends State<ComparePage> {
                             crossAxisAlignment: CrossAxisAlignment
                                 .center, //Center Row contents vertically,
                             children: [
-                              Text(
-                                '\$',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(color: Colors.white),
-                              ),
                               Text(
                                 average.toString(),
                                 textAlign: TextAlign.center,
