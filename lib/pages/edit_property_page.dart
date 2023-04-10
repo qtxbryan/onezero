@@ -169,7 +169,7 @@ class _EditPropertyPageState extends State<EditPropertyPage> {
     }
 
     // Update data in Firebase
-    await firestore.collection("properties").doc(widget.property.id).update({
+    await firestore.collection("listing").doc(widget.property.id).update({
       "address": list.address,
       "description": list.description,
       "dimension": list.dimension,
