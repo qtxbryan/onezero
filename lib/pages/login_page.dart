@@ -42,26 +42,34 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _loginButton() {
-    return OutlinedButton(
-      onPressed: signInWithEmailAndPassword,
-      child: Text(
-        'Login',
-        style: TextStyle(
-          fontFamily: 'Outfit',
-          color: Colors.white,
-          fontSize: 18,
-          fontWeight: FontWeight.w500,
+    return Align(
+      alignment: Alignment.center,
+      child: OutlinedButton(
+        onPressed: signInWithEmailAndPassword,
+        child: Text(
+          'Login',
+          style: TextStyle(
+            fontFamily: 'Urbanist',
+            color: Colors.white,
+            fontSize: 18,
+            fontWeight: FontWeight.w500,
+          ),
         ),
-      ),
-      style: ButtonStyle(
-        fixedSize: MaterialStateProperty.all(Size(130, 50)),
-        padding: MaterialStateProperty.all(EdgeInsets.all(0)),
-        backgroundColor: MaterialStateProperty.all(Color(0xFF4B39EF)),
-        elevation: MaterialStateProperty.all(3),
-        side: MaterialStateProperty.all(
-          BorderSide(
-            color: Colors.transparent,
-            width: 1,
+        style: ButtonStyle(
+          fixedSize: MaterialStateProperty.all(Size(300, 50)),
+          padding: MaterialStateProperty.all(EdgeInsets.all(0)),
+          backgroundColor: MaterialStateProperty.all(Color(0xFFF64668)),
+          elevation: MaterialStateProperty.all(3),
+          side: MaterialStateProperty.all(
+            BorderSide(
+              color: Colors.transparent,
+              width: 1,
+            ),
+          ),
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
           ),
         ),
       ),
@@ -76,41 +84,41 @@ class _LoginPageState extends State<LoginPage> {
         labelText: labelText,
         labelStyle: TextStyle(
           fontFamily: 'Outfit',
-          color: Color(0xFF57636C),
-          fontSize: 14,
+          color: Colors.grey,
+          fontSize: 16,
           fontWeight: FontWeight.normal,
         ),
         hintText: hintText,
         hintStyle: TextStyle(
           fontFamily: 'Outfit',
-          color: Color(0xFF57636C),
-          fontSize: 14,
+          color: Colors.grey,
+          fontSize: 16,
           fontWeight: FontWeight.normal,
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: Color(0xFFF1F4F8),
+            color: Colors.black, // Set default border color to black
             width: 2,
           ),
           borderRadius: BorderRadius.circular(40),
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: Color(0x0000000),
+            color: Colors.black, // Set default border color to black
             width: 2,
           ),
           borderRadius: BorderRadius.circular(40),
         ),
         errorBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: Color(0x000000),
+            color: Colors.black, // Set default border color to black
             width: 2,
           ),
           borderRadius: BorderRadius.circular(40),
         ),
         focusedErrorBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: Color(0x000000),
+            color: Colors.black, // Set default border color to black
             width: 2,
           ),
           borderRadius: BorderRadius.circular(40),
@@ -122,7 +130,69 @@ class _LoginPageState extends State<LoginPage> {
       style: TextStyle(
         fontFamily: 'Outfit',
         color: Color(0xFF0F1113),
-        fontSize: 14,
+        fontSize: 16,
+        fontWeight: FontWeight.normal,
+      ),
+      maxLength: null,
+      validator: null,
+    );
+  }
+
+  Widget PasswordTextField(controller, hintText, labelText) {
+    return TextFormField(
+      controller: controller,
+      obscureText: true,
+      decoration: InputDecoration(
+        labelText: labelText,
+        labelStyle: TextStyle(
+          fontFamily: 'Outfit',
+          color: Colors.grey,
+          fontSize: 16,
+          fontWeight: FontWeight.normal,
+        ),
+        hintText: hintText,
+        hintStyle: TextStyle(
+          fontFamily: 'Outfit',
+          color: Colors.grey,
+          fontSize: 16,
+          fontWeight: FontWeight.normal,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.black, // Set default border color to black
+            width: 2,
+          ),
+          borderRadius: BorderRadius.circular(40),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.black, // Set default border color to black
+            width: 2,
+          ),
+          borderRadius: BorderRadius.circular(40),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.black, // Set default border color to black
+            width: 2,
+          ),
+          borderRadius: BorderRadius.circular(40),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.black, // Set default border color to black
+            width: 2,
+          ),
+          borderRadius: BorderRadius.circular(40),
+        ),
+        filled: true,
+        fillColor: Colors.white,
+        contentPadding: EdgeInsetsDirectional.fromSTEB(16, 24, 0, 24),
+      ),
+      style: TextStyle(
+        fontFamily: 'Outfit',
+        color: Color(0xFF0F1113),
+        fontSize: 16,
         fontWeight: FontWeight.normal,
       ),
       maxLength: null,
@@ -142,61 +212,19 @@ class _LoginPageState extends State<LoginPage> {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 50, 0, 0),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Padding(
-                            padding:
-                                EdgeInsetsDirectional.fromSTEB(0, 70, 0, 30),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                // Image.asset(
-                                //   '',
-                                //   width: 242,
-                                //   height: 120,
-                                //   fit: BoxFit.fitWidth,
-                                // ),
-                              ],
-                            ))
+                        Image.asset(
+                          'assets/images/icon.png',
+                          width: 340.7,
+                          height: 239.9,
+                          fit: BoxFit.cover,
+                        ),
                       ],
-                    ),
-                  ),
-                  Text(
-                    'Wecome Back!',
-                    style: TextStyle(
-                      fontFamily: 'Outfit',
-                      color: Color(0xFF0F1113),
-                      fontSize: 32,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
-                    child: Text(
-                      'Use the form below to access your account. ',
-                      style: TextStyle(
-                        fontFamily: 'Outfit',
-                        color: Color(0xFF57636C),
-                        fontSize: 14,
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
-                    child: Text(
-                      'Use the form below to access your account',
-                      style: TextStyle(
-                        fontFamily: 'Outfit',
-                        color: Color(0xFF57636C),
-                        fontSize: 14,
-                        fontWeight: FontWeight.normal,
-                      ),
                     ),
                   ),
                   Padding(
@@ -208,7 +236,7 @@ class _LoginPageState extends State<LoginPage> {
                         Expanded(
                           child: Padding(
                               padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+                                  EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
                               child: TextField(
                                   _controllerEmail,
                                   'Enter your email here... ',
@@ -218,26 +246,26 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Expanded(
-                          child: TextField(_controllerPassword,
+                          child: PasswordTextField(_controllerPassword,
                               'Enter your password here... ', 'Password'),
                         ),
                       ],
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
+                    padding: EdgeInsetsDirectional.fromSTEB(16, 24, 24, 0),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        TextButton(
-                          onPressed: null,
+                        /*TextButton(
+                          onPressed: null, //FORGET PASSWORD DOESNT WORK
                           child: Text(
                             'Forget Password?',
                             style: TextStyle(
@@ -259,8 +287,8 @@ class _LoginPageState extends State<LoginPage> {
                                 color: Colors.transparent,
                                 width: 1,
                               ))),
-                        ),
-                        _loginButton(),
+                        ),*/
+                        Expanded(child: _loginButton()),
                       ],
                     ),
                   ),
@@ -271,11 +299,11 @@ class _LoginPageState extends State<LoginPage> {
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Text(
-                            'Dont\'t have an account?',
+                            'Do not have an account?',
                             style: TextStyle(
-                              fontFamily: 'Outfit',
+                              fontFamily: 'Urbanist',
                               color: Color(0xFF0F1113),
-                              fontSize: 14,
+                              fontSize: 16,
                               fontWeight: FontWeight.normal,
                             ),
                           ),
@@ -304,10 +332,10 @@ class _LoginPageState extends State<LoginPage> {
                             child: Text(
                               'Create Account',
                               style: TextStyle(
-                                fontFamily: 'Outfit',
+                                fontFamily: 'Urbanist',
                                 color: Color(0xFF39D2C0),
                                 fontSize: 16,
-                                fontWeight: FontWeight.normal,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),

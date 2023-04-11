@@ -64,204 +64,68 @@ class _NewUserPageWidgetState extends State<NewUserPageWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: scaffoldKey,
-      backgroundColor: Colors.white,
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(100),
-        child: AppBar(
-          backgroundColor: Colors.white,
-          automaticallyImplyLeading: false,
-          actions: [],
-          flexibleSpace: FlexibleSpaceBar(
-            title: Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 14),
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
-                          child: IconButton(
-                            icon: Icon(
-                              Icons.arrow_back_rounded,
-                              color: Color(0xFF101213),
-                              size: 30,
-                            ),
-                            onPressed: () {
-                              print('IconButton pressed ...');
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
-                    child: Text(
-                      'Create your Profile',
-                      style: FlutterFlowTheme.of(context).title2.override(
-                            fontFamily: 'Outfit',
-                            color: Color(0xFF101213),
-                            fontSize: 22,
-                            fontWeight: FontWeight.w500,
-                          ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            centerTitle: true,
-            expandedTitleScale: 1.0,
-          ),
-          elevation: 0,
-        ),
+      appBar: AppBar(
+        title: Text('Create Your Profile'),
+        backgroundColor: Color(0xFF41436A),
+        // dk if need remove the back button
       ),
       body: SafeArea(
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
-            // Padding(
-            //   padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-            //   child: Row(
-            //     mainAxisSize: MainAxisSize.max,
-            //     mainAxisAlignment: MainAxisAlignment.center,
-            //     children: [
-            //       InkWell(
-            //         onTap: () async {
-            //           final selectedMedia =
-            //               await selectMediaWithSourceBottomSheet(
-            //             context: context,
-            //             allowPhoto: true,
-            //           );
-            //           if (selectedMedia != null &&
-            //               selectedMedia.every((m) =>
-            //                   validateFileFormat(m.storagePath, context))) {
-            //             setState(() => _model.isMediaUploading = true);
-            //             var selectedUploadedFiles = <FFUploadedFile>[];
-            //             var downloadUrls = <String>[];
-            //             try {
-            //               selectedUploadedFiles = selectedMedia
-            //                   .map((m) => FFUploadedFile(
-            //                         name: m.storagePath.split('/').last,
-            //                         bytes: m.bytes,
-            //                         height: m.dimensions?.height,
-            //                         width: m.dimensions?.width,
-            //                       ))
-            //                   .toList();
-
-            //               downloadUrls = (await Future.wait(
-            //                 selectedMedia.map(
-            //                   (m) async =>
-            //                       await uploadData(m.storagePath, m.bytes),
-            //                 ),
-            //               ))
-            //                   .where((u) => u != null)
-            //                   .map((u) => u!)
-            //                   .toList();
-            //             } finally {
-            //               _model.isMediaUploading = false;
-            //             }
-            //             if (selectedUploadedFiles.length ==
-            //                     selectedMedia.length &&
-            //                 downloadUrls.length == selectedMedia.length) {
-            //               setState(() {
-            //                 _model.uploadedLocalFile =
-            //                     selectedUploadedFiles.first;
-            //                 _model.uploadedFileUrl = downloadUrls.first;
-            //               });
-            //             } else {
-            //               setState(() {});
-            //               return;
-            //             }
-            //           }
-            //         },
-            //         child: Container(
-            //           width: 100,
-            //           height: 100,
-            //           decoration: BoxDecoration(
-            //             color: Color(0xFFDBE2E7),
-            //             shape: BoxShape.circle,
-            //           ),
-            //           child: Container(
-            //             width: 120,
-            //             height: 120,
-            //             clipBehavior: Clip.antiAlias,
-            //             decoration: BoxDecoration(
-            //               shape: BoxShape.circle,
-            //             ),
-            //             child: Image.network(
-            //               _model.uploadedFileUrl,
-            //               fit: BoxFit.cover,
-            //             ),
-            //           ),
-            //         ),
-            //       ),
-            //     ],
-            //   ),
-            // ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 16),
+              padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 16),
               child: TextFormField(
                 controller: displayNameController,
                 obscureText: false,
                 decoration: InputDecoration(
-                  labelText: 'Your Name',
-                  labelStyle: FlutterFlowTheme.of(context).bodyText2.override(
-                        fontFamily: 'Outfit',
-                        color: Color(0xFF57636C),
-                        fontSize: 14,
-                        fontWeight: FontWeight.normal,
-                      ),
-                  hintStyle: FlutterFlowTheme.of(context).bodyText2.override(
-                        fontFamily: 'Outfit',
-                        color: Color(0xFF57636C),
-                        fontSize: 14,
-                        fontWeight: FontWeight.normal,
-                      ),
+                  labelText: 'Display Name',
+                  hintText: 'Enter your name...',
+                  labelStyle: TextStyle(
+                    fontFamily: 'Outfit',
+                    color: Colors.black,
+                    fontSize: 16,
+                    fontWeight: FontWeight.normal,
+                  ),
+                  hintStyle: TextStyle(
+                    fontFamily: 'Outfit',
+                    color: Colors.black,
+                    fontSize: 16,
+                    fontWeight: FontWeight.normal,
+                  ),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Color(0xFFF1F4F8),
+                      color: Colors.black,
                       width: 2,
                     ),
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(40),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Color(0x00000000),
+                      color: Colors.black,
                       width: 2,
                     ),
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(40),
                   ),
                   errorBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Color(0x00000000),
+                      color: Colors.black,
                       width: 2,
                     ),
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(40),
                   ),
                   focusedErrorBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Color(0x00000000),
+                      color: Colors.black,
                       width: 2,
                     ),
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(40),
                   ),
                   filled: true,
                   fillColor: Colors.white,
                   contentPadding: EdgeInsetsDirectional.fromSTEB(20, 24, 0, 24),
                 ),
-                style: FlutterFlowTheme.of(context).bodyText1.override(
-                      fontFamily: 'Outfit',
-                      color: Color(0xFF101213),
-                      fontSize: 14,
-                      fontWeight: FontWeight.normal,
-                    ),
+                style: FlutterFlowTheme.of(context).subtitle2,
                 maxLines: null,
               ),
             ),
@@ -272,85 +136,71 @@ class _NewUserPageWidgetState extends State<NewUserPageWidget> {
                 obscureText: false,
                 decoration: InputDecoration(
                   labelText: 'Your Age',
-                  labelStyle: FlutterFlowTheme.of(context).bodyText2.override(
-                        fontFamily: 'Outfit',
-                        color: Color(0xFF57636C),
-                        fontSize: 14,
-                        fontWeight: FontWeight.normal,
-                      ),
-                  hintStyle: FlutterFlowTheme.of(context).bodyText2.override(
-                        fontFamily: 'Outfit',
-                        color: Color(0xFF57636C),
-                        fontSize: 14,
-                        fontWeight: FontWeight.normal,
-                      ),
+                  hintText: 'Enter your age...',
+                  labelStyle: TextStyle(
+                    fontFamily: 'Outfit',
+                    color: Colors.black,
+                    fontSize: 16,
+                    fontWeight: FontWeight.normal,
+                  ),
+                  hintStyle: TextStyle(
+                    fontFamily: 'Outfit',
+                    color: Colors.black,
+                    fontSize: 16,
+                    fontWeight: FontWeight.normal,
+                  ),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Color(0xFFF1F4F8),
+                      color: Colors.black,
                       width: 2,
                     ),
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(40),
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Color(0x00000000),
+                      color: Colors.black,
                       width: 2,
                     ),
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(40),
                   ),
                   errorBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Color(0x00000000),
+                      color: Colors.black,
                       width: 2,
                     ),
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(40),
                   ),
                   focusedErrorBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: Color(0x00000000),
+                      color: Colors.black,
                       width: 2,
                     ),
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(40),
                   ),
                   filled: true,
                   fillColor: Colors.white,
                   contentPadding: EdgeInsetsDirectional.fromSTEB(20, 24, 0, 24),
                 ),
-                style: FlutterFlowTheme.of(context).bodyText1.override(
-                      fontFamily: 'Outfit',
-                      color: Color(0xFF101213),
-                      fontSize: 14,
-                      fontWeight: FontWeight.normal,
-                    ),
+                style: FlutterFlowTheme.of(context).subtitle2,
                 maxLines: null,
               ),
             ),
             Align(
               alignment: AlignmentDirectional(0, 0.05),
               child: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
-                child: FFButtonWidget(
-                  onPressed: createUserWithEmailAndPassword,
-                  text: 'Continue',
-                  options: FFButtonOptions(
-                    width: 270,
-                    height: 50,
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                    iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                    color: Color(0xFF4B39EF),
-                    textStyle: FlutterFlowTheme.of(context).subtitle1.override(
-                          fontFamily: 'Outfit',
-                          color: Colors.white,
-                          fontSize: 18,
-                          fontWeight: FontWeight.normal,
-                        ),
-                    elevation: 2,
-                    borderSide: BorderSide(
-                      color: Colors.transparent,
-                      width: 1,
+                padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFFF64668),
+                    shape: RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.circular(20.0), // set border radius
+                      // You can also set other border properties like borderSide and sideWidth
                     ),
-                    borderRadius: BorderRadius.circular(50),
+                    minimumSize: Size(150, 50), // set minimum button size
                   ),
+                  onPressed: createUserWithEmailAndPassword,
+                  child: Text('Register', style: TextStyle(fontSize: 16.0)),
                 ),
               ),
             ),
