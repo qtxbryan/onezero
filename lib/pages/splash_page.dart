@@ -136,7 +136,7 @@ class _SplashPageState extends State<SplashPage> {
                                                 LoginPage()))));
                                   },
                                   child: const Center(
-                                    child: Text('Login',
+                                    child: Text('Get started!',
                                         style: TextStyle(
                                           fontFamily: 'Outfit',
                                           fontWeight: FontWeight.w600,

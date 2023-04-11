@@ -153,6 +153,7 @@ class _HomePageState extends State<HomePage>
         child: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
                 width: double.infinity,
