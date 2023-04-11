@@ -14,12 +14,18 @@ class FilterButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        primary: isActive ? Color(ALTERNATE_COLOR) : Color(PRIMARY_COLOR),
+        backgroundColor:
+            isActive ? Color(0xFF41436A) : Color.fromRGBO(191, 185, 185, 100),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
         ),
       ),
-      child: Text(title),
+      child: Text(
+        title,
+        style: TextStyle(
+          color: isActive ? Colors.white : Colors.black,
+        ),
+      ),
     );
   }
 }

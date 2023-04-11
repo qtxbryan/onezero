@@ -94,35 +94,36 @@ class _HomePageState extends State<HomePage>
       backgroundColor: Color(0xFFF0F0F0),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
+        backgroundColor: Color(0xFF41436A),
         currentIndex: _selectedTabIndex,
         onTap: (index) => setState(() => _selectedTabIndex = index),
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
-            backgroundColor: Color(PRIMARY_COLOR),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.favorite),
             label: 'Favourite',
-            backgroundColor: Color(PRIMARY_COLOR),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.add),
             label: 'Add',
-            backgroundColor: Color(PRIMARY_COLOR),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
-            label: 'Setting',
-            backgroundColor: Color(PRIMARY_COLOR),
+            label: 'Settings',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: 'Profile',
-            backgroundColor: Color(PRIMARY_COLOR),
           ),
         ],
+        selectedItemColor:
+            Color.fromRGBO(246, 70, 104, 1.0), // set the selected item color
+        unselectedItemColor: Colors.white, // set the unselected item color
+        // Set custom item height
+        // Set your desired height here
       ),
       body: _buildBody(user),
     );
@@ -136,7 +137,6 @@ class _HomePageState extends State<HomePage>
         return FavoritePropertiesPage();
       case 2:
         return AddPropertyPageWidget();
-
       case 3:
         return MyPropertiesWidget();
       case 4:
