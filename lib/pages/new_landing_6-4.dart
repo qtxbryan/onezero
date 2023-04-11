@@ -158,7 +158,7 @@ class _HomePageState extends State<HomePage>
                 width: double.infinity,
                 height: 250.0,
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Color.fromRGBO(65, 67, 106, 1.0),
                 ),
                 child: Container(
                   decoration: BoxDecoration(
@@ -184,14 +184,15 @@ class _HomePageState extends State<HomePage>
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    'Welcome',
+                                    'Welcome!',
                                     style: FlutterFlowTheme.of(context)
                                         .title1
                                         .override(
                                           fontFamily: 'Poppins',
-                                          color: Colors.grey,
-                                          fontSize: 14.0,
+                                          color: Colors.white,
+                                          fontSize: 30.0,
                                         ),
+                                    textAlign: TextAlign.center,
                                   ),
                                   Text(
                                     user!.email!,
@@ -199,8 +200,7 @@ class _HomePageState extends State<HomePage>
                                         .title1
                                         .override(
                                           fontFamily: 'Poppins',
-                                          color: FlutterFlowTheme.of(context)
-                                              .backgroundComponents,
+                                          color: Color(0xFF909090),
                                           fontSize: 20.0,
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -216,18 +216,19 @@ class _HomePageState extends State<HomePage>
                             16.0, 16.0, 16.0, 0.0),
                         child: Container(
                           width: double.infinity,
-                          height: 45.0,
+                          height: 60.0,
                           decoration: BoxDecoration(
-                            color: Color(0xFFE5E5E5),
-                            borderRadius: BorderRadius.circular(10.0),
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(40.0),
                           ),
                           alignment: AlignmentDirectional(0.0, 0.0),
                           child: Align(
                             alignment: AlignmentDirectional(0.0, 0.0),
                             child: Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  10.0, 0.0, 10.0, 0.0),
+                                  20.0, 0.0, 20.0, 0.0),
                               child: TextFormField(
+                                textAlign: TextAlign.left,
                                 controller: _searchController,
                                 onChanged: (value) {
                                   setState(() {
@@ -236,61 +237,69 @@ class _HomePageState extends State<HomePage>
                                 },
                                 obscureText: false,
                                 decoration: InputDecoration(
-                                    hintText: 'Search',
-                                    hintStyle:
-                                        FlutterFlowTheme.of(context).bodyText2,
-                                    enabledBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(4.0),
-                                        topRight: Radius.circular(4.0),
-                                      ),
+                                  hintText: 'Search address here...',
+                                  hintStyle:
+                                      FlutterFlowTheme.of(context).bodyText2,
+                                  contentPadding: EdgeInsets.symmetric(
+                                      vertical: 16.0), // Vertical alignment
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1.0,
                                     ),
-                                    focusedBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(4.0),
-                                        topRight: Radius.circular(4.0),
-                                      ),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
                                     ),
-                                    errorBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(4.0),
-                                        topRight: Radius.circular(4.0),
-                                      ),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1.0,
                                     ),
-                                    focusedErrorBorder: UnderlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 1.0,
-                                      ),
-                                      borderRadius: const BorderRadius.only(
-                                        topLeft: Radius.circular(4.0),
-                                        topRight: Radius.circular(4.0),
-                                      ),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
                                     ),
-                                    prefixIcon: Icon(
-                                      Icons.search,
+                                  ),
+                                  errorBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1.0,
                                     ),
-                                    suffixIcon: IconButton(
-                                      icon: Icon(Icons.clear),
-                                      onPressed: () {
-                                        _searchController.clear();
-                                        setState(() {
-                                          _searchText = '';
-                                        });
-                                      },
-                                    )),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
+                                    ),
+                                  ),
+                                  focusedErrorBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1.0,
+                                    ),
+                                    borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
+                                    ),
+                                  ),
+                                  prefixIcon: Icon(
+                                    Icons.search,
+                                    color: Colors
+                                        .grey, // Set the color of the search icon
+                                  ),
+                                  suffixIcon: IconButton(
+                                    icon: Icon(Icons.clear,
+                                        color: Colors
+                                            .grey), // Set the color of the clear icon
+                                    onPressed: () {
+                                      _searchController.clear();
+                                      setState(() {
+                                        _searchText = '';
+                                      });
+                                    },
+                                  ),
+                                  // Set the content padding to vertically align the hint text
+                                ),
                                 style: FlutterFlowTheme.of(context).bodyText1,
                               ),
                             ),

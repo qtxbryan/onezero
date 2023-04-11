@@ -14,8 +14,9 @@ class FilterButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        backgroundColor:
-            isActive ? Color(0xFF41436A) : Color.fromRGBO(191, 185, 185, 100),
+        backgroundColor: isActive
+            ? Color.fromRGBO(246, 70, 104, 100)
+            : Color.fromRGBO(191, 185, 185, 100),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
         ),
