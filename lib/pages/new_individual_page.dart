@@ -11,6 +11,7 @@ import 'package:onezero/components/Edit_grant_profile.dart';
 import 'package:onezero/components/maps.dart';
 import 'edit_profile_page.dart';
 import 'package:onezero/pages/CompareScreen.dart';
+import 'package:onezero/components/email.dart';
 
 class IndividualPropertyPageWidget extends StatefulWidget {
   final String propertyName;
@@ -1034,7 +1035,10 @@ class _IndividualPropertyPageWidgetState
                             ),
                             FFButtonWidget(
                               onPressed: () {
-                                print('Button pressed ...');
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: ((context) => EmailScreen())));
                               },
                               text: 'Email',
                               options: FFButtonOptions(

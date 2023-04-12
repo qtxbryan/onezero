@@ -82,6 +82,7 @@ class _EditPropertyPageState extends State<EditPropertyPage> {
                 decoration: InputDecoration(
                   labelText: "Address",
                 ),
+                onChanged: (value) => list.setAddress = value,
                 onSaved: (value) => list.setAddress = value,
               ),
               SizedBox(height: 16.0),
@@ -98,6 +99,7 @@ class _EditPropertyPageState extends State<EditPropertyPage> {
                 decoration: InputDecoration(
                   labelText: "Dimension",
                 ),
+                onChanged: (value) => list.setDimension = value,
                 onSaved: (value) => list.setDimension = value,
               ),
               SizedBox(height: 16.0),
@@ -106,6 +108,7 @@ class _EditPropertyPageState extends State<EditPropertyPage> {
                 decoration: InputDecoration(
                   labelText: "Neighbourhood",
                 ),
+                onChanged: (value) => list.setNeighbourhood = value,
                 onSaved: (value) => list.setNeighbourhood = value,
               ),
               SizedBox(height: 16.0),
@@ -114,6 +117,7 @@ class _EditPropertyPageState extends State<EditPropertyPage> {
                 decoration: InputDecoration(
                   labelText: "Lease",
                 ),
+                onChanged: (value) => list.setLease = value,
                 onSaved: (value) => list.setLease = value,
               ),
               SizedBox(height: 16.0),
@@ -123,6 +127,7 @@ class _EditPropertyPageState extends State<EditPropertyPage> {
                   labelText: "Number of Bedrooms",
                 ),
                 keyboardType: TextInputType.number,
+                onChanged: (value) => list.setNumOfBedroom = value,
                 onSaved: (value) => list.setNumOfBedroom = value,
               ),
               SizedBox(height: 16.0),
@@ -132,6 +137,7 @@ class _EditPropertyPageState extends State<EditPropertyPage> {
                   labelText: "Price",
                 ),
                 keyboardType: TextInputType.number,
+                onChanged: (value) => list.setPrice = value,
                 onSaved: (value) => list.setPrice = value,
               ),
               SizedBox(height: 16.0),
@@ -140,6 +146,7 @@ class _EditPropertyPageState extends State<EditPropertyPage> {
                 decoration: InputDecoration(
                   labelText: "Property Name",
                 ),
+                onChanged: (value) => list.setPropertyName = value,
                 onSaved: (value) => list.setPropertyName = value,
               ),
               SizedBox(height: 16.0),
