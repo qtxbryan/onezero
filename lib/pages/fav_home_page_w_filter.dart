@@ -18,6 +18,7 @@ import 'package:onezero/pages/create_listing.dart';
 import 'package:onezero/pages/test_create_listing.dart';
 import 'package:onezero/constants.dart';
 import 'favorite_page.dart';
+import 'dart:async';
 
 class HomePage extends StatefulWidget {
   @override
@@ -383,34 +384,77 @@ class FavoritePropertyListItem extends StatefulWidget {
 
 class _FavoritePropertyListItemState extends State<FavoritePropertyListItem> {
   bool isFavorite = true;
+  bool _isMounted = false;
+  StreamSubscription<DocumentSnapshot>? _subscription;
+  ScaffoldMessengerState? _scaffoldMessengerState;
+
+  @override
+  void initState() {
+    super.initState();
+    _isMounted = true;
+    _subscribeToFavorites();
+  }
+
+  @override
+  void dispose() {
+    _isMounted = false;
+    _unsubscribeFromFavorites();
+    super.dispose();
+  }
+
+  void _subscribeToFavorites() {
+    final User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      final favoritesRef = FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .collection('favorites');
+      _subscription =
+          favoritesRef.doc(widget.propertyId).snapshots().listen((snapshot) {
+        if (_isMounted) {
+          setState(() {
+            isFavorite = snapshot.exists;
+          });
+        }
+      });
+    }
+  }
+
+  void _unsubscribeFromFavorites() {
+    _subscription?.cancel();
+  }
 
   void _removeFromFavorites(BuildContext context) async {
-// Get the current user's ID
+    if (!_isMounted) {
+      return;
+    }
     final User? user = FirebaseAuth.instance.currentUser;
     if (user == null) {
-// If the user is not signed in, show an error message
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      _scaffoldMessengerState?.showSnackBar(SnackBar(
         content: Text(
             'You must be signed in to remove properties from your favorites.'),
       ));
       return;
     }
-// Remove the property from the user's favorites collection in Firestore
     final favoritesRef = FirebaseFirestore.instance
         .collection('users')
         .doc(user.uid)
         .collection('favorites');
     await favoritesRef.doc(widget.propertyId).delete();
-
-// Update the state to indicate that the property is no longer a favorite
-    setState(() {
-      isFavorite = false;
-    });
-
-// Show a success message
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    if (_isMounted) {
+      setState(() {
+        isFavorite = false;
+      });
+    }
+    _scaffoldMessengerState?.showSnackBar(SnackBar(
       content: Text('Removed from favorites.'),
     ));
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _scaffoldMessengerState = ScaffoldMessenger.of(context);
   }
 
   @override

@@ -82,7 +82,7 @@ class _EditPropertyPageState extends State<EditPropertyPage> {
                 decoration: InputDecoration(
                   labelText: "Address",
                 ),
-                onSaved: (value) => list.address = value,
+                onSaved: (value) => list.setAddress = value,
               ),
               SizedBox(height: 16.0),
               TextFormField(
@@ -90,7 +90,7 @@ class _EditPropertyPageState extends State<EditPropertyPage> {
                 decoration: InputDecoration(
                   labelText: "Description",
                 ),
-                onSaved: (value) => list.description = value,
+                onSaved: (value) => list.setDescription = value,
               ),
               SizedBox(height: 16.0),
               TextFormField(
@@ -98,7 +98,7 @@ class _EditPropertyPageState extends State<EditPropertyPage> {
                 decoration: InputDecoration(
                   labelText: "Dimension",
                 ),
-                onSaved: (value) => list.dimension = value,
+                onSaved: (value) => list.setDimension = value,
               ),
               SizedBox(height: 16.0),
               TextFormField(
@@ -106,7 +106,7 @@ class _EditPropertyPageState extends State<EditPropertyPage> {
                 decoration: InputDecoration(
                   labelText: "Neighbourhood",
                 ),
-                onSaved: (value) => list.neighbourhood = value,
+                onSaved: (value) => list.setNeighbourhood = value,
               ),
               SizedBox(height: 16.0),
               TextFormField(
@@ -114,7 +114,7 @@ class _EditPropertyPageState extends State<EditPropertyPage> {
                 decoration: InputDecoration(
                   labelText: "Lease",
                 ),
-                onSaved: (value) => list.lease = value,
+                onSaved: (value) => list.setLease = value,
               ),
               SizedBox(height: 16.0),
               TextFormField(
@@ -123,7 +123,7 @@ class _EditPropertyPageState extends State<EditPropertyPage> {
                   labelText: "Number of Bedrooms",
                 ),
                 keyboardType: TextInputType.number,
-                onSaved: (value) => list.numOfBedroom = value,
+                onSaved: (value) => list.setNumOfBedroom = value,
               ),
               SizedBox(height: 16.0),
               TextFormField(
@@ -132,7 +132,7 @@ class _EditPropertyPageState extends State<EditPropertyPage> {
                   labelText: "Price",
                 ),
                 keyboardType: TextInputType.number,
-                onSaved: (value) => list.price = value,
+                onSaved: (value) => list.setPrice = value,
               ),
               SizedBox(height: 16.0),
               TextFormField(
@@ -140,7 +140,7 @@ class _EditPropertyPageState extends State<EditPropertyPage> {
                 decoration: InputDecoration(
                   labelText: "Property Name",
                 ),
-                onSaved: (value) => list.propertyName = value,
+                onSaved: (value) => list.setPropertyName = value,
               ),
               SizedBox(height: 16.0),
               ElevatedButton(

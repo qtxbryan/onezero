@@ -98,7 +98,6 @@ class Database {
       String firstTime,
       String Martial,
       String citizenship,
-      String applicationStatus,
       String photoURL) {
     final docUser = FirebaseFirestore.instance.collection('users').doc(uid);
 
@@ -113,7 +112,6 @@ class Database {
       'firstTime': firstTime,
       'Martial': Martial,
       'citizenship': citizenship,
-      'applicationStatus': applicationStatus,
       'photo_url': photoURL,
     });
 

@@ -167,8 +167,6 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                 userProfileData['address']?.toString() ?? '';
             ageController.text = userProfileData['age']?.toString() ?? '';
             _citizenship = userProfileData['Citizenship']?.toString() ?? '';
-            applicationStatus =
-                userProfileData['applicationStatus']?.toString() ?? '';
             applicationType =
                 userProfileData['applicationType']?.toString() ?? '';
             monthlyHouseholdController.text =
@@ -718,7 +716,6 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                   firstTime!,
                                   martialController.text,
                                   _citizenship!,
-                                  applicationStatus!,
                                   _imageURL!);
 
                               Navigator.pop(context);
@@ -1295,7 +1292,6 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                   firstTime!,
                                   martialController.text,
                                   _citizenship!,
-                                  applicationStatus!,
                                   _imageURL!);
 
                               Navigator.pop(context);

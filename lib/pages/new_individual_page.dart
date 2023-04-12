@@ -94,6 +94,18 @@ class _IndividualPropertyPageWidgetState
         final data = snapshot.data!.data() as Map<String, dynamic>;
 
         return Scaffold(
+          appBar: PreferredSize(
+            preferredSize: Size.fromHeight(50.0),
+            child: AppBar(
+              backgroundColor: Color(0xFF41436A),
+              actions: [
+                Padding(
+                  padding: EdgeInsets.only(right: 16.0),
+                  child: Icon(Icons.more_vert),
+                )
+              ],
+            ),
+          ),
           key: scaffoldKey,
           backgroundColor: Colors.white,
           body: SafeArea(
@@ -1054,7 +1066,7 @@ class _IndividualPropertyPageWidgetState
                     ),
                   ],
                 ),
-                Align(
+                /*Align(
                   alignment: AlignmentDirectional(-0.9, -0.95),
                   child: Container(
                     width: 30.0,
@@ -1085,7 +1097,7 @@ class _IndividualPropertyPageWidgetState
                       size: 24.0,
                     ),
                   ),
-                ),
+                ),*/
               ],
             ),
           ),

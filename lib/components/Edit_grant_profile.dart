@@ -98,8 +98,6 @@ class _EditGrantProfileWidgetState extends State<EditGrantProfileWidget> {
                 userProfileData['Martial'].isEmpty ||
                 userProfileData['age'] == null ||
                 userProfileData['age'].isEmpty ||
-                userProfileData['applicationStatus'] == null ||
-                userProfileData['applicationStatus'].isEmpty ||
                 userProfileData['averageMonthlyHousehold'] == null ||
                 userProfileData['averageMonthlyHousehold'].isEmpty ||
                 userProfileData['applicationType'] == null ||

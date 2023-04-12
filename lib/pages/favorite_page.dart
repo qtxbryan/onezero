@@ -23,14 +23,14 @@ class FavoritePropertiesPage extends StatelessWidget {
       backgroundColor: Colors.white,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xFF41436A),
         elevation: 0,
         title: Center(
           child: Text(
             'Favorite Properties',
             style: TextStyle(
               fontFamily: 'Urbanist',
-              color: Color(TEXT_COLOR),
+              color: Colors.white,
               fontSize: 18,
             ),
           ),

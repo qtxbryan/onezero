@@ -1,8 +1,10 @@
+import 'package:onezero/pages/my_properties_page.dart';
+import '../auth.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:onezero/auth.dart';
-
+import 'package:onezero/pages/login_page.dart';
 import 'package:onezero/pages/edit_profile_page.dart';
 import 'reset_password_page.dart';
 
@@ -14,6 +16,7 @@ class SettingPage extends StatefulWidget {
 }
 
 class _SettingPageState extends State<SettingPage> {
+  Auth auth = Auth();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final _unfocusNode = FocusNode();
 
@@ -27,14 +30,14 @@ class _SettingPageState extends State<SettingPage> {
       key: scaffoldKey,
       backgroundColor: Color(0xFFF1F4F8),
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xFF41436A),
         automaticallyImplyLeading: false,
         title: Text(
           'Profile',
           style: FlutterFlowTheme.of(context).subtitle2.override(
-                fontFamily: 'Outfit',
-                color: Color(0xFF14181B),
-                fontSize: 16.0,
+                fontFamily: 'Urbanist',
+                color: Colors.white,
+                fontSize: 18.0,
                 fontWeight: FontWeight.w500,
               ),
         ),
@@ -215,7 +218,7 @@ class _SettingPageState extends State<SettingPage> {
                   ),
                 ),
               ),
-              Padding(
+              /*Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
                 child: Container(
                   width: double.infinity,
@@ -267,6 +270,71 @@ class _SettingPageState extends State<SettingPage> {
                           ),
                         ),
                       ],
+                    ),
+                  ),
+                ),
+              ),*/
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
+                child: Container(
+                  width: double.infinity,
+                  height: 60.0,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        blurRadius: 5.0,
+                        color: Color(0x3416202A),
+                        offset: Offset(0.0, 2.0),
+                      )
+                    ],
+                    borderRadius: BorderRadius.circular(12.0),
+                    shape: BoxShape.rectangle,
+                  ),
+                  child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 8.0, 8.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: ((context) => MyPropertiesWidget())));
+                      },
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Icon(
+                            Icons.home,
+                            color: Color(0xFF57636C),
+                            size: 24.0,
+                          ),
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                12.0, 0.0, 0.0, 0.0),
+                            child: Text(
+                              'My Properties',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyText2
+                                  .override(
+                                    fontFamily: 'Outfit',
+                                    color: Color(0xFF57636C),
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Align(
+                              alignment: AlignmentDirectional(0.9, 0.0),
+                              child: Icon(
+                                Icons.arrow_forward_ios,
+                                color: Color(0xFF57636C),
+                                size: 18.0,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -367,43 +435,55 @@ class _SettingPageState extends State<SettingPage> {
                   ),
                   child: Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 8.0, 8.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Icon(
-                          Icons.help_outline_rounded,
-                          color: Color(0xFF57636C),
-                          size: 24.0,
-                        ),
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              12.0, 0.0, 0.0, 0.0),
-                          child: Text(
-                            'Log out',
-                            style:
-                                FlutterFlowTheme.of(context).bodyText2.override(
-                                      fontFamily: 'Outfit',
-                                      color: Color(0xFF57636C),
-                                      fontSize: 14.0,
-                                      fontWeight: FontWeight.normal,
-                                    ),
+                    child: GestureDetector(
+                      onTap: () async {
+                        await auth.signOut();
+
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: ((context) => LoginPage())));
+                      },
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Icon(
+                            Icons.help_outline_rounded,
+                            color: Color(0xFF57636C),
+                            size: 24.0,
                           ),
-                        ),
-                        Expanded(
-                          child: Align(
-                            alignment: AlignmentDirectional(0.9, 0.0),
-                            child: Icon(
-                              Icons.arrow_forward_ios,
-                              color: Color(0xFF57636C),
-                              size: 18.0,
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                12.0, 0.0, 0.0, 0.0),
+                            child: Text(
+                              'Log Out',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyText2
+                                  .override(
+                                    fontFamily: 'Outfit',
+                                    color: Color(0xFF57636C),
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.normal,
+                                  ),
                             ),
                           ),
-                        ),
-                      ],
+                          Expanded(
+                            child: Align(
+                              alignment: AlignmentDirectional(0.9, 0.0),
+                              child: Icon(
+                                Icons.arrow_forward_ios,
+                                color: Color(0xFF57636C),
+                                size: 18.0,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
               ),
+              /*
               Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
                 child: Container(
@@ -515,7 +595,7 @@ class _SettingPageState extends State<SettingPage> {
                     ),
                   ),
                 ),
-              ),
+              ),*/
             ],
           ),
         ),

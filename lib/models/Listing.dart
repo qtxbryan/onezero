@@ -45,7 +45,9 @@ class Listing {
 
   get getPropertyName => this.propertyName;
 
-  set setPropertyName(propertyName) => this.propertyName = propertyName;
+  set setPropertyName(value) {
+    this.propertyName = value;
+  }
 
   get listedby_email => this.listed_by_email;
 
@@ -53,7 +55,7 @@ class Listing {
 
   get uploadurl => this.upload_url;
 
-  set uploadurl(value) => this.upload_url = value;
+  set setUploadUrl(value) => this.upload_url = value;
 
   Listing({
     this.id,

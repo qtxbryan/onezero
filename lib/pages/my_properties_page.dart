@@ -66,13 +66,13 @@ class _MyPropertiesWidgetState extends State<MyPropertiesWidget> {
       backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xFF41436A),
         elevation: 0,
         title: Text(
           'My Properties',
           style: FlutterFlowTheme.of(context).bodyText1.override(
                 fontFamily: 'Urbanist',
-                color: Color(TEXT_COLOR),
+                color: Colors.white,
                 fontSize: 18.0,
               ),
         ),

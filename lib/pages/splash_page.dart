@@ -51,11 +51,6 @@ class _SplashPageState extends State<SplashPage> {
       UserLocation.lat = _locData.latitude!;
       UserLocation.long = _locData.longitude!;
     });
-
-    Timer(Duration(milliseconds: 500), () {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => LoginPage()));
-    });
   }
 
   @override
@@ -64,7 +59,7 @@ class _SplashPageState extends State<SplashPage> {
       body: Container(
         width: double.infinity,
         height: MediaQuery.of(context).size.height,
-        color: Color(0xffF7F1F1),
+        color: Colors.white,
         child: Center(
           child: Stack(
             children: [
@@ -76,15 +71,18 @@ class _SplashPageState extends State<SplashPage> {
                   children: [
                     Image.asset(
                       'assets/images/icon.png',
-                      width: 130,
+                      width: 415.6,
+                      height: 283.2,
+                      fit: BoxFit.cover,
                     ),
-                    Padding(
+                    const Padding(
                       padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
                       child: Text(
-                        'OneZero',
+                        'Welcome!',
+                        textAlign: TextAlign.left,
                         style: TextStyle(
                           fontSize: 32,
-                          fontFamily: 'Helvetica Neue',
+                          fontFamily: 'Outfit',
                           fontWeight: FontWeight.w600,
                           color: Colors.black,
                         ),
@@ -105,8 +103,8 @@ class _SplashPageState extends State<SplashPage> {
                         children: [
                           Center(
                             child: Text(
-                              'OneZero is reimagining real estate to make it easier to unlock life next chapter.',
-                              textAlign: TextAlign.center,
+                              'FlatFinderSG is the ultimate e-commerce solution for buying and selling flats in Singapore. Finding your dream home has never been easier!',
+                              textAlign: TextAlign.left,
                               style: TextStyle(
                                 fontFamily: 'Helvetica Neue-Regular',
                                 fontWeight: FontWeight.w500,
@@ -120,9 +118,9 @@ class _SplashPageState extends State<SplashPage> {
                             child: Container(
                                 height: 50,
                                 decoration: const BoxDecoration(
-                                  color: Color(0xD9B43C42),
+                                  color: Color.fromRGBO(65, 67, 106, 1.0),
                                   borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
+                                      BorderRadius.all(Radius.circular(40)),
                                 ),
                                 child: GestureDetector(
                                   onTap: () {
@@ -133,12 +131,12 @@ class _SplashPageState extends State<SplashPage> {
                                                 LoginPage()))));
                                   },
                                   child: const Center(
-                                    child: Text('Create Account',
+                                    child: Text('Get started!',
                                         style: TextStyle(
-                                          fontFamily: 'Helvetica-Neue-Regular',
-                                          fontWeight: FontWeight.w500,
+                                          fontFamily: 'Outfit',
+                                          fontWeight: FontWeight.w600,
                                           color: Colors.white,
-                                          fontSize: 18,
+                                          fontSize: 19,
                                         )),
                                   ),
                                 )),
