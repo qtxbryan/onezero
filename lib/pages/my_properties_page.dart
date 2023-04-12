@@ -65,7 +65,7 @@ class _MyPropertiesWidgetState extends State<MyPropertiesWidget> {
       key: scaffoldKey,
       backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
       appBar: AppBar(
-        automaticallyImplyLeading: false,
+        //automaticallyImplyLeading: false,
         backgroundColor: Color(0xFF41436A),
         elevation: 0,
         title: Text(
