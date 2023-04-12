@@ -1,3 +1,5 @@
+import 'package:onezero/controller/validations.dart';
+
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -60,6 +62,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
 
   Widget buildChangePhotoButton() {
     return ElevatedButton(
+      style: ElevatedButton.styleFrom(backgroundColor: Color(0xFFF64668)),
       onPressed: () {
         showModalBottomSheet(
           isScrollControlled: true,
@@ -188,7 +191,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
               key: scaffoldKey,
               backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
               appBar: AppBar(
-                backgroundColor: FlutterFlowTheme.of(context).cultured,
+                backgroundColor: Color(0xFF41436A),
                 automaticallyImplyLeading: false,
                 leading: InkWell(
                   onTap: () async {
@@ -196,7 +199,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                   },
                   child: Icon(
                     Icons.arrow_back_rounded,
-                    color: FlutterFlowTheme.of(context).gunmetal,
+                    color: Colors.white,
                     size: 24.0,
                   ),
                 ),
@@ -207,7 +210,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                     textAlign: TextAlign.start,
                     style: FlutterFlowTheme.of(context).subtitle2.override(
                           fontFamily: 'Urbanist',
-                          color: FlutterFlowTheme.of(context).gunmetal,
+                          color: Colors.white,
                         ),
                   ),
                 ),
@@ -260,6 +263,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                         padding: EdgeInsetsDirectional.fromSTEB(
                             20.0, 0.0, 20.0, 16.0),
                         child: TextFormField(
+                          validator: validateFullName,
                           controller: displayNameController,
                           obscureText: false,
                           decoration: InputDecoration(
@@ -308,6 +312,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                         padding: EdgeInsetsDirectional.fromSTEB(
                             20.0, 0.0, 20.0, 12.0),
                         child: TextFormField(
+                          validator: validateEmail,
                           controller: emailAddressController,
                           obscureText: false,
                           decoration: InputDecoration(
@@ -356,12 +361,13 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                         padding: EdgeInsetsDirectional.fromSTEB(
                             20.0, 0.0, 20.0, 12.0),
                         child: TextFormField(
+                          validator: validatePhoneNumber,
                           controller: phoneNumberController,
                           obscureText: false,
                           decoration: InputDecoration(
                             labelText: 'Phone Number',
                             labelStyle: FlutterFlowTheme.of(context).bodyText1,
-                            hintText: 'Your email..',
+                            hintText: 'Your Phone Number..',
                             hintStyle: FlutterFlowTheme.of(context).bodyText1,
                             enabledBorder: OutlineInputBorder(
                               borderSide: BorderSide(
@@ -404,6 +410,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                         padding: EdgeInsetsDirectional.fromSTEB(
                             20.0, 0.0, 20.0, 12.0),
                         child: TextFormField(
+                          validator: validateAddress,
                           controller: addressController,
                           obscureText: false,
                           decoration: InputDecoration(
@@ -452,36 +459,69 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                         padding:
                             EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 12.0),
                         child: Container(
-                          width: 335.0,
+                          width: 370.0,
                           height: 70.0,
-                          decoration: BoxDecoration(
-                            color: FlutterFlowTheme.of(context)
-                                .secondaryBackground,
-                            borderRadius: BorderRadius.circular(8.0),
-                            shape: BoxShape.rectangle,
-                            border: Border.all(
-                              color: FlutterFlowTheme.of(context).lineGray,
-                              width: 2.0,
+                          child: InputDecorator(
+                            decoration: InputDecoration(
+                              labelText: 'First Time Applicant',
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: FlutterFlowTheme.of(context).lineGray,
+                                  width: 2.0,
+                                ),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 2.0,
+                                ),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              errorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 2.0,
+                                ),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 2.0,
+                                ),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              contentPadding: EdgeInsets.all(10),
                             ),
-                          ),
-                          child: DropdownButton(
-                            value: firstTime,
-                            onChanged: (newValue) {
-                              setState(() {
-                                firstTime = newValue;
-                              });
-                            },
-                            items: [
-                              DropdownMenuItem(
-                                value: 'Yes',
-                                child: Text('Yes'),
-                              ),
-                              DropdownMenuItem(
-                                value: 'No',
-                                child: Text('No'),
-                              ),
-                            ],
-                            hint: Text('Select an option'),
+                            child: DropdownButton<String>(
+                                value: firstTime,
+                                onChanged: (newValue) {
+                                  setState(() {
+                                    firstTime = newValue;
+                                  });
+                                },
+                                items: ['Yes', 'No']
+                                    .map<DropdownMenuItem<String>>((val) {
+                                  return DropdownMenuItem<String>(
+                                    value: val,
+                                    child: Text(val),
+                                  );
+                                }).toList(),
+                                isExpanded: true,
+                                icon: const Icon(Icons.arrow_downward),
+                                iconSize: 24,
+                                elevation: 2,
+                                hint: Text(
+                                  'First Time Applicants',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        fontFamily: 'Urbanist',
+                                        color: Colors.black,
+                                      ),
+                                ),
+                                underline: SizedBox()),
                           ),
                         ),
                       ),
@@ -489,6 +529,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                         padding: EdgeInsetsDirectional.fromSTEB(
                             20.0, 0.0, 20.0, 12.0),
                         child: TextFormField(
+                          validator: validateHouseholdIncome,
                           controller: monthlyHouseholdController,
                           obscureText: false,
                           decoration: InputDecoration(
@@ -537,57 +578,80 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                         padding:
                             EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 12.0),
                         child: Container(
-                          width: 335.0,
+                          width: 370.0,
                           height: 70.0,
-                          decoration: BoxDecoration(
-                            color: FlutterFlowTheme.of(context)
-                                .secondaryBackground,
-                            borderRadius: BorderRadius.circular(8.0),
-                            shape: BoxShape.rectangle,
-                            border: Border.all(
-                              color: FlutterFlowTheme.of(context).lineGray,
-                              width: 2.0,
+                          child: InputDecorator(
+                            decoration: InputDecoration(
+                              labelText: 'Marital Status',
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: FlutterFlowTheme.of(context).lineGray,
+                                  width: 2.0,
+                                ),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 2.0,
+                                ),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              errorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 2.0,
+                                ),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 2.0,
+                                ),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              contentPadding: EdgeInsets.all(10),
                             ),
-                          ),
-                          child: DropdownButton<String>(
-                            value: applicationType,
-                            onChanged: (val) => setState(() {
-                              applicationType = val;
-                            }),
-                            items: [
-                              DropdownMenuItem<String>(
-                                value: 'Single',
-                                child: Text('Single'),
+                            child: DropdownButton<String>(
+                              value: applicationType,
+                              onChanged: (val) => setState(() {
+                                applicationType = val;
+                              }),
+                              isExpanded: true,
+                              items: [
+                                DropdownMenuItem<String>(
+                                  value: 'Single',
+                                  child: Text('Single'),
+                                ),
+                                DropdownMenuItem<String>(
+                                  value: 'Couple',
+                                  child: Text('Couple'),
+                                ),
+                                DropdownMenuItem<String>(
+                                  value: 'Family',
+                                  child: Text('Family'),
+                                ),
+                              ],
+                              hint: Text(
+                                'Single / Couple / Family',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyText1
+                                    .override(
+                                      fontFamily: 'Urbanist',
+                                      color: Colors.black,
+                                    ),
                               ),
-                              DropdownMenuItem<String>(
-                                value: 'Couple',
-                                child: Text('Couple'),
-                              ),
-                              DropdownMenuItem<String>(
-                                value: 'Family',
-                                child: Text('Family'),
-                              ),
-                            ],
-                            hint: Text(
-                              'Single / Couple / Family',
+                              icon: const Icon(Icons.arrow_downward),
+                              iconSize: 24,
+                              elevation: 2,
                               style: FlutterFlowTheme.of(context)
                                   .bodyText1
                                   .override(
                                     fontFamily: 'Urbanist',
                                     color: Colors.black,
                                   ),
-                            ),
-                            icon: const Icon(Icons.arrow_downward),
-                            iconSize: 24,
-                            elevation: 2,
-                            style:
-                                FlutterFlowTheme.of(context).bodyText1.override(
-                                      fontFamily: 'Urbanist',
-                                      color: Colors.black,
-                                    ),
-                            underline: Container(
-                              height: 1,
-                              color: Colors.black,
+                              underline: SizedBox(),
                             ),
                           ),
                         ),
@@ -596,6 +660,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                         padding: EdgeInsetsDirectional.fromSTEB(
                             20.0, 0.0, 20.0, 12.0),
                         child: TextFormField(
+                          validator: validateAge,
                           controller: ageController,
                           obscureText: false,
                           decoration: InputDecoration(
@@ -644,57 +709,80 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                         padding:
                             EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 12.0),
                         child: Container(
-                          width: 335.0,
+                          width: 370.0,
                           height: 70.0,
-                          decoration: BoxDecoration(
-                            color: FlutterFlowTheme.of(context)
-                                .secondaryBackground,
-                            borderRadius: BorderRadius.circular(8.0),
-                            shape: BoxShape.rectangle,
-                            border: Border.all(
-                              color: FlutterFlowTheme.of(context).lineGray,
-                              width: 2.0,
+                          child: InputDecorator(
+                            decoration: InputDecoration(
+                              labelText: 'Citizenship',
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: FlutterFlowTheme.of(context).lineGray,
+                                  width: 2.0,
+                                ),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 2.0,
+                                ),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              errorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 2.0,
+                                ),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0x00000000),
+                                  width: 2.0,
+                                ),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                              contentPadding: EdgeInsets.all(10),
                             ),
-                          ),
-                          child: DropdownButton<String>(
-                            value: _citizenship,
-                            onChanged: (val) => setState(() {
-                              _citizenship = val;
-                            }),
-                            items: [
-                              DropdownMenuItem<String>(
-                                value: 'Singaporean',
-                                child: Text('Singaporean'),
+                            child: DropdownButton<String>(
+                              value: _citizenship,
+                              onChanged: (val) => setState(() {
+                                _citizenship = val;
+                              }),
+                              items: [
+                                DropdownMenuItem<String>(
+                                  value: 'Singaporean',
+                                  child: Text('Singaporean'),
+                                ),
+                                DropdownMenuItem<String>(
+                                  value: 'Permanent Resident',
+                                  child: Text('Permanent Resident'),
+                                ),
+                                DropdownMenuItem<String>(
+                                  value: 'Others',
+                                  child: Text('Others'),
+                                ),
+                              ],
+                              hint: Text(
+                                'Citizenship',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyText1
+                                    .override(
+                                      fontFamily: 'Urbanist',
+                                      color: Colors.black,
+                                    ),
                               ),
-                              DropdownMenuItem<String>(
-                                value: 'Permanent Resident',
-                                child: Text('Permanent Resident'),
-                              ),
-                              DropdownMenuItem<String>(
-                                value: 'Others',
-                                child: Text('Others'),
-                              ),
-                            ],
-                            hint: Text(
-                              'Citizenship',
+                              isExpanded: true,
+                              icon: const Icon(Icons.arrow_downward),
+                              iconSize: 24,
+                              elevation: 2,
                               style: FlutterFlowTheme.of(context)
                                   .bodyText1
                                   .override(
                                     fontFamily: 'Urbanist',
                                     color: Colors.black,
                                   ),
-                            ),
-                            icon: const Icon(Icons.arrow_downward),
-                            iconSize: 24,
-                            elevation: 2,
-                            style:
-                                FlutterFlowTheme.of(context).bodyText1.override(
-                                      fontFamily: 'Urbanist',
-                                      color: Colors.black,
-                                    ),
-                            underline: Container(
-                              height: 1,
-                              color: Colors.black,
+                              underline: SizedBox(),
                             ),
                           ),
                         ),

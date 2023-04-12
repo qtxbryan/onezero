@@ -111,10 +111,6 @@ class _HomePageState extends State<HomePage>
             label: 'Add',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: 'Profile',
           ),
@@ -138,8 +134,6 @@ class _HomePageState extends State<HomePage>
       case 2:
         return AddPropertyPageWidget();
       case 3:
-        return MyPropertiesWidget();
-      case 4:
         return SettingPage();
       default:
         return Container();

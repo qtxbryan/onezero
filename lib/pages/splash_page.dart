@@ -51,11 +51,6 @@ class _SplashPageState extends State<SplashPage> {
       UserLocation.lat = _locData.latitude!;
       UserLocation.long = _locData.longitude!;
     });
-
-    Timer(Duration(milliseconds: 500), () {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => LoginPage()));
-    });
   }
 
   @override

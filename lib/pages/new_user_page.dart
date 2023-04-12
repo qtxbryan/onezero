@@ -1,3 +1,4 @@
+import 'package:onezero/controller/validations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -26,9 +27,11 @@ class _NewUserPageWidgetState extends State<NewUserPageWidget> {
   String? errorMessage = '';
   final TextEditingController displayNameController = TextEditingController();
   final TextEditingController ageController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   Future<void> createUserWithEmailAndPassword() async {
     try {
+      print("Start try");
       await Auth().createUserWithEmailAndPassword(
         email: widget.email,
         password: widget.password,
@@ -41,6 +44,7 @@ class _NewUserPageWidgetState extends State<NewUserPageWidget> {
         'displayName': displayNameController.text,
         'age': ageController.text,
       });
+      print("End try");
     } on FirebaseAuthException catch (e) {
       setState(() {
         errorMessage = e.message;
@@ -67,9 +71,9 @@ class _NewUserPageWidgetState extends State<NewUserPageWidget> {
       appBar: AppBar(
         title: Text('Create Your Profile'),
         backgroundColor: Color(0xFF41436A),
-        // dk if need remove the back button
       ),
-      body: SafeArea(
+      body: Form(
+        key: _formKey,
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
@@ -77,6 +81,7 @@ class _NewUserPageWidgetState extends State<NewUserPageWidget> {
               padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 16),
               child: TextFormField(
                 controller: displayNameController,
+                validator: validateDisplayName,
                 obscureText: false,
                 decoration: InputDecoration(
                   labelText: 'Display Name',
@@ -133,6 +138,7 @@ class _NewUserPageWidgetState extends State<NewUserPageWidget> {
               padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 16),
               child: TextFormField(
                 controller: ageController,
+                validator: validateAge,
                 obscureText: false,
                 decoration: InputDecoration(
                   labelText: 'Your Age',
@@ -199,7 +205,12 @@ class _NewUserPageWidgetState extends State<NewUserPageWidget> {
                     ),
                     minimumSize: Size(150, 50), // set minimum button size
                   ),
-                  onPressed: createUserWithEmailAndPassword,
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      print("Test");
+                      createUserWithEmailAndPassword();
+                    }
+                  },
                   child: Text('Register', style: TextStyle(fontSize: 16.0)),
                 ),
               ),

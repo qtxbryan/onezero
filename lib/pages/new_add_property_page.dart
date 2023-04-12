@@ -1,4 +1,5 @@
 import 'package:onezero/constants.dart';
+import 'package:onezero/controller/validations.dart';
 import 'package:onezero/pages/new_landing_6-4.dart';
 
 import '/flutter_flow/flutter_flow_icon_button.dart';
@@ -233,12 +234,7 @@ class _AddPropertyPageWidgetState extends State<AddPropertyPageWidget> {
                             child: Container(
                               width: 100.0,
                               child: TextFormField(
-                                validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return "Please enter a property name.";
-                                  }
-                                  return null;
-                                },
+                                validator: validatePropertyName,
                                 onSaved: (value) => propertyName = value,
                                 obscureText: false,
                                 decoration: InputDecoration(
@@ -305,12 +301,7 @@ class _AddPropertyPageWidgetState extends State<AddPropertyPageWidget> {
                                     width: 100.0,
                                     child: TextFormField(
                                       controller: postalCodeController,
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return "Please enter an address.";
-                                        }
-                                        return null;
-                                      },
+                                      validator: validatePostalCode,
                                       obscureText: false,
                                       decoration: InputDecoration(
                                         labelText: 'Postal Code',
@@ -402,12 +393,7 @@ class _AddPropertyPageWidgetState extends State<AddPropertyPageWidget> {
                                     width: 100.0,
                                     child: TextFormField(
                                       obscureText: false,
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return "Please enter an address.";
-                                        }
-                                        return null;
-                                      },
+                                      validator: validateBlock,
                                       controller: blockNumberController,
                                       decoration: InputDecoration(
                                         labelText: 'Block',
@@ -483,7 +469,7 @@ class _AddPropertyPageWidgetState extends State<AddPropertyPageWidget> {
                                       obscureText: false,
                                       validator: (value) {
                                         if (value == null || value.isEmpty) {
-                                          return "Please enter an address.";
+                                          return "Please enter an street.";
                                         }
                                         return null;
                                       },
@@ -558,12 +544,7 @@ class _AddPropertyPageWidgetState extends State<AddPropertyPageWidget> {
                                   child: Container(
                                     width: 100.0,
                                     child: TextFormField(
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return "Please enter a level.";
-                                        }
-                                        return null;
-                                      },
+                                      validator: validateLevel,
                                       controller: levelController,
                                       obscureText: false,
                                       decoration: InputDecoration(
@@ -635,12 +616,7 @@ class _AddPropertyPageWidgetState extends State<AddPropertyPageWidget> {
                                     width: 100.0,
                                     child: TextFormField(
                                       obscureText: false,
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return "Please enter an address.";
-                                        }
-                                        return null;
-                                      },
+                                      validator: validateUnit,
                                       controller: unitNumberController,
                                       decoration: InputDecoration(
                                         labelText: 'Unit',
@@ -709,12 +685,7 @@ class _AddPropertyPageWidgetState extends State<AddPropertyPageWidget> {
                                   child: Container(
                                     width: 100.0,
                                     child: TextFormField(
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return "Please enter a neighbourhood.";
-                                        }
-                                        return null;
-                                      },
+                                      validator: validateNeighborhood,
                                       onSaved: (value) => neighbourhood = value,
                                       obscureText: false,
                                       decoration: InputDecoration(
@@ -789,12 +760,7 @@ class _AddPropertyPageWidgetState extends State<AddPropertyPageWidget> {
                                     width: 100.0,
                                     child: TextFormField(
                                       obscureText: false,
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return "Please enter a number of bedrooms.";
-                                        }
-                                        return null;
-                                      },
+                                      validator: validateNumberOfBedrooms,
                                       onSaved: (value) => numOfBedroom = value,
                                       decoration: InputDecoration(
                                         labelText: 'Bedrooms',
@@ -865,12 +831,7 @@ class _AddPropertyPageWidgetState extends State<AddPropertyPageWidget> {
                                   child: Container(
                                     width: 100.0,
                                     child: TextFormField(
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return "Please enter a lease.";
-                                        }
-                                        return null;
-                                      },
+                                      validator: validateLease,
                                       onSaved: (value) => lease = value,
                                       obscureText: false,
                                       decoration: InputDecoration(
@@ -941,12 +902,7 @@ class _AddPropertyPageWidgetState extends State<AddPropertyPageWidget> {
                                     width: 100.0,
                                     child: TextFormField(
                                       obscureText: false,
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return "Please enter a dimension.";
-                                        }
-                                        return null;
-                                      },
+                                      validator: validateDimensions,
                                       onSaved: (value) => dimension = value,
                                       decoration: InputDecoration(
                                         labelText: 'Dimensions',
@@ -1018,12 +974,7 @@ class _AddPropertyPageWidgetState extends State<AddPropertyPageWidget> {
                                   child: Container(
                                     width: 100.0,
                                     child: TextFormField(
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return "Please enter a price.";
-                                        }
-                                        return null;
-                                      },
+                                      validator: validatePrice,
                                       onSaved: (value) => price = value,
                                       obscureText: false,
                                       decoration: InputDecoration(
@@ -1094,12 +1045,7 @@ class _AddPropertyPageWidgetState extends State<AddPropertyPageWidget> {
                                     width: 100.0,
                                     child: TextFormField(
                                       obscureText: false,
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return "Please enter a description.";
-                                        }
-                                        return null;
-                                      },
+                                      validator: validateDescription,
                                       onSaved: (value) => description = value,
                                       decoration: InputDecoration(
                                         labelText: 'Description',
