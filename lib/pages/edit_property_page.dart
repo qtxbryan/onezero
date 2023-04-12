@@ -2,11 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:onezero/controller/validations.dart';
 import 'dart:io';
 import 'package:onezero/models/Listing.dart';
 import 'package:onezero/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
 
 class EditPropertyPage extends StatefulWidget {
   final Listing property;
@@ -51,7 +51,6 @@ class _EditPropertyPageState extends State<EditPropertyPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Edit Property"),
-        backgroundColor: Color(0xFF41436A),
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
@@ -80,340 +79,88 @@ class _EditPropertyPageState extends State<EditPropertyPage> {
               ),
               SizedBox(height: 16.0),
               TextFormField(
+                validator: validateAddress,
                 initialValue: list.address,
                 decoration: InputDecoration(
                   labelText: "Address",
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: FlutterFlowTheme.of(context).lineGray,
-                      width: 2.0,
-                    ),
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(0x00000000),
-                      width: 2.0,
-                    ),
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  errorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(0x00000000),
-                      width: 2.0,
-                    ),
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  focusedErrorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(0x00000000),
-                      width: 2.0,
-                    ),
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  filled: true,
-                  fillColor: FlutterFlowTheme.of(context).secondaryBackground,
-                  contentPadding:
-                      EdgeInsetsDirectional.fromSTEB(20.0, 24.0, 0.0, 24.0),
                 ),
-                style: FlutterFlowTheme.of(context).subtitle2,
-                onSaved: (value) => list.address = value,
+                onChanged: (value) => list.setAddress = value,
+                onSaved: (value) => list.setAddress = value,
               ),
               SizedBox(height: 16.0),
               TextFormField(
+                validator: validateDescription,
                 initialValue: list.description,
                 decoration: InputDecoration(
                   labelText: "Description",
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: FlutterFlowTheme.of(context).lineGray,
-                      width: 2.0,
-                    ),
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(0x00000000),
-                      width: 2.0,
-                    ),
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  errorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(0x00000000),
-                      width: 2.0,
-                    ),
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  focusedErrorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(0x00000000),
-                      width: 2.0,
-                    ),
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  filled: true,
-                  fillColor: FlutterFlowTheme.of(context).secondaryBackground,
-                  contentPadding:
-                      EdgeInsetsDirectional.fromSTEB(20.0, 24.0, 0.0, 24.0),
                 ),
-                style: FlutterFlowTheme.of(context).subtitle2,
-                onSaved: (value) => list.description = value,
+                onSaved: (value) => list.setDescription = value,
               ),
               SizedBox(height: 16.0),
               TextFormField(
+                validator: validateDimensions,
                 initialValue: list.dimension,
                 decoration: InputDecoration(
                   labelText: "Dimension",
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: FlutterFlowTheme.of(context).lineGray,
-                      width: 2.0,
-                    ),
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(0x00000000),
-                      width: 2.0,
-                    ),
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  errorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(0x00000000),
-                      width: 2.0,
-                    ),
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  focusedErrorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(0x00000000),
-                      width: 2.0,
-                    ),
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  filled: true,
-                  fillColor: FlutterFlowTheme.of(context).secondaryBackground,
-                  contentPadding:
-                      EdgeInsetsDirectional.fromSTEB(20.0, 24.0, 0.0, 24.0),
                 ),
-                style: FlutterFlowTheme.of(context).subtitle2,
-                onSaved: (value) => list.dimension = value,
+                onChanged: (value) => list.setDimension = value,
+                onSaved: (value) => list.setDimension = value,
               ),
               SizedBox(height: 16.0),
               TextFormField(
+                validator: validateNeighborhood,
                 initialValue: list.neighbourhood,
                 decoration: InputDecoration(
                   labelText: "Neighbourhood",
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: FlutterFlowTheme.of(context).lineGray,
-                      width: 2.0,
-                    ),
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(0x00000000),
-                      width: 2.0,
-                    ),
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  errorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(0x00000000),
-                      width: 2.0,
-                    ),
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  focusedErrorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(0x00000000),
-                      width: 2.0,
-                    ),
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  filled: true,
-                  fillColor: FlutterFlowTheme.of(context).secondaryBackground,
-                  contentPadding:
-                      EdgeInsetsDirectional.fromSTEB(20.0, 24.0, 0.0, 24.0),
                 ),
-                style: FlutterFlowTheme.of(context).subtitle2,
-                onSaved: (value) => list.neighbourhood = value,
+                onChanged: (value) => list.setNeighbourhood = value,
+                onSaved: (value) => list.setNeighbourhood = value,
               ),
               SizedBox(height: 16.0),
               TextFormField(
+                validator: validateLease,
                 initialValue: list.lease,
                 decoration: InputDecoration(
                   labelText: "Lease",
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: FlutterFlowTheme.of(context).lineGray,
-                      width: 2.0,
-                    ),
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(0x00000000),
-                      width: 2.0,
-                    ),
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  errorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(0x00000000),
-                      width: 2.0,
-                    ),
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  focusedErrorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(0x00000000),
-                      width: 2.0,
-                    ),
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  filled: true,
-                  fillColor: FlutterFlowTheme.of(context).secondaryBackground,
-                  contentPadding:
-                      EdgeInsetsDirectional.fromSTEB(20.0, 24.0, 0.0, 24.0),
                 ),
-                style: FlutterFlowTheme.of(context).subtitle2,
-                onSaved: (value) => list.lease = value,
+                onChanged: (value) => list.setLease = value,
+                onSaved: (value) => list.setLease = value,
               ),
               SizedBox(height: 16.0),
               TextFormField(
+                validator: validateNumberOfBedrooms,
                 initialValue: list.numOfBedroom?.toString(),
                 decoration: InputDecoration(
                   labelText: "Number of Bedrooms",
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: FlutterFlowTheme.of(context).lineGray,
-                      width: 2.0,
-                    ),
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(0x00000000),
-                      width: 2.0,
-                    ),
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  errorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(0x00000000),
-                      width: 2.0,
-                    ),
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  focusedErrorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(0x00000000),
-                      width: 2.0,
-                    ),
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  filled: true,
-                  fillColor: FlutterFlowTheme.of(context).secondaryBackground,
-                  contentPadding:
-                      EdgeInsetsDirectional.fromSTEB(20.0, 24.0, 0.0, 24.0),
                 ),
-                style: FlutterFlowTheme.of(context).subtitle2,
                 keyboardType: TextInputType.number,
-                onSaved: (value) => list.numOfBedroom = value,
+                onChanged: (value) => list.setNumOfBedroom = value,
+                onSaved: (value) => list.setNumOfBedroom = value,
               ),
               SizedBox(height: 16.0),
               TextFormField(
+                validator: validatePrice,
                 initialValue: list.price?.toString(),
                 decoration: InputDecoration(
                   labelText: "Price",
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: FlutterFlowTheme.of(context).lineGray,
-                      width: 2.0,
-                    ),
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(0x00000000),
-                      width: 2.0,
-                    ),
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  errorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(0x00000000),
-                      width: 2.0,
-                    ),
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  focusedErrorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(0x00000000),
-                      width: 2.0,
-                    ),
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  filled: true,
-                  fillColor: FlutterFlowTheme.of(context).secondaryBackground,
-                  contentPadding:
-                      EdgeInsetsDirectional.fromSTEB(20.0, 24.0, 0.0, 24.0),
                 ),
-                style: FlutterFlowTheme.of(context).subtitle2,
                 keyboardType: TextInputType.number,
-                onSaved: (value) => list.price = value,
+                onChanged: (value) => list.setPrice = value,
+                onSaved: (value) => list.setPrice = value,
               ),
               SizedBox(height: 16.0),
               TextFormField(
+                validator: validatePropertyName,
                 initialValue: list.propertyName,
                 decoration: InputDecoration(
                   labelText: "Property Name",
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: FlutterFlowTheme.of(context).lineGray,
-                      width: 2.0,
-                    ),
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(0x00000000),
-                      width: 2.0,
-                    ),
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  errorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(0x00000000),
-                      width: 2.0,
-                    ),
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  focusedErrorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Color(0x00000000),
-                      width: 2.0,
-                    ),
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  filled: true,
-                  fillColor: FlutterFlowTheme.of(context).secondaryBackground,
-                  contentPadding:
-                      EdgeInsetsDirectional.fromSTEB(20.0, 24.0, 0.0, 24.0),
                 ),
-                style: FlutterFlowTheme.of(context).subtitle2,
-                onSaved: (value) => list.propertyName = value,
+                onChanged: (value) => list.setPropertyName = value,
+                onSaved: (value) => list.setPropertyName = value,
               ),
               SizedBox(height: 16.0),
               ElevatedButton(
                 child: Text("Save Changes"),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFFF64668),
-                ),
                 onPressed: () => saveChanges(),
               ),
             ],
