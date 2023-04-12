@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class EmailScreen extends StatelessWidget {
-  final String emailRecipient = 'example@email.com';
+  final String emailRecipient = 'weihao868@gmail.com';
   final String emailSubject = '[Enquiry]: Interest in block 258 Punggol Field';
-  final String emailBody = 'Help me to generate';
+  final String emailBody = 'TESTING EMAIL BODY';
 
   void _sendEmail() async {
     String url = 'mailto:$emailRecipient?subject=$emailSubject&body=$emailBody';
@@ -14,6 +14,13 @@ class EmailScreen extends StatelessWidget {
       throw 'Could not launch email';
     }
   }
+
+  Future sendEmail({
+    required String name,
+    required String email,
+    required String subject,
+    required String message,
+  }) async {}
 
   @override
   Widget build(BuildContext context) {
