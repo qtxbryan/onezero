@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:onezero/controller/textInputFormatter.dart';
+import 'package:onezero/controller/validations.dart';
 import 'dart:io';
 import 'package:onezero/models/Listing.dart';
 import 'package:onezero/auth.dart';
@@ -78,6 +80,7 @@ class _EditPropertyPageState extends State<EditPropertyPage> {
               ),
               SizedBox(height: 16.0),
               TextFormField(
+                validator: validateAddress,
                 initialValue: list.address,
                 decoration: InputDecoration(
                   labelText: "Address",
@@ -87,6 +90,7 @@ class _EditPropertyPageState extends State<EditPropertyPage> {
               ),
               SizedBox(height: 16.0),
               TextFormField(
+                validator: validateDescription,
                 initialValue: list.description,
                 decoration: InputDecoration(
                   labelText: "Description",
@@ -95,6 +99,7 @@ class _EditPropertyPageState extends State<EditPropertyPage> {
               ),
               SizedBox(height: 16.0),
               TextFormField(
+                validator: validateDimensions,
                 initialValue: list.dimension,
                 decoration: InputDecoration(
                   labelText: "Dimension",
@@ -104,6 +109,7 @@ class _EditPropertyPageState extends State<EditPropertyPage> {
               ),
               SizedBox(height: 16.0),
               TextFormField(
+                validator: validateNeighborhood,
                 initialValue: list.neighbourhood,
                 decoration: InputDecoration(
                   labelText: "Neighbourhood",
@@ -113,6 +119,7 @@ class _EditPropertyPageState extends State<EditPropertyPage> {
               ),
               SizedBox(height: 16.0),
               TextFormField(
+                validator: validateLease,
                 initialValue: list.lease,
                 decoration: InputDecoration(
                   labelText: "Lease",
@@ -122,6 +129,7 @@ class _EditPropertyPageState extends State<EditPropertyPage> {
               ),
               SizedBox(height: 16.0),
               TextFormField(
+                validator: validateNumberOfBedrooms,
                 initialValue: list.numOfBedroom?.toString(),
                 decoration: InputDecoration(
                   labelText: "Number of Bedrooms",
@@ -132,6 +140,8 @@ class _EditPropertyPageState extends State<EditPropertyPage> {
               ),
               SizedBox(height: 16.0),
               TextFormField(
+                validator: validatePrice,
+                inputFormatters: [ThousandFormatter()],
                 initialValue: list.price?.toString(),
                 decoration: InputDecoration(
                   labelText: "Price",
@@ -142,6 +152,7 @@ class _EditPropertyPageState extends State<EditPropertyPage> {
               ),
               SizedBox(height: 16.0),
               TextFormField(
+                validator: validatePropertyName,
                 initialValue: list.propertyName,
                 decoration: InputDecoration(
                   labelText: "Property Name",
@@ -170,6 +181,10 @@ class _EditPropertyPageState extends State<EditPropertyPage> {
   }
 
   void saveChanges() async {
+    // Check form first
+    if (!formKey.currentState!.validate()) {
+      return;
+    }
     // Upload image if provided
     if (imageFile != null) {
       list.upload_url = await uploadImage();
