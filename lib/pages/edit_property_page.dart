@@ -179,6 +179,10 @@ class _EditPropertyPageState extends State<EditPropertyPage> {
   }
 
   void saveChanges() async {
+    // Check form first
+    if (!formKey.currentState!.validate()) {
+      return;
+    }
     // Upload image if provided
     if (imageFile != null) {
       list.upload_url = await uploadImage();
