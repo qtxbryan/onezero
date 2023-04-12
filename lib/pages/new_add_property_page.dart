@@ -467,12 +467,8 @@ class _AddPropertyPageWidgetState extends State<AddPropertyPageWidget> {
                                     width: 100.0,
                                     child: TextFormField(
                                       obscureText: false,
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return "Please enter an street.";
-                                        }
-                                        return null;
-                                      },
+                                      validator:
+                                          validateStreet, // THIS WILL BE AUTOFILLED
                                       controller: streetNameController,
                                       decoration: InputDecoration(
                                         labelText: 'Street',

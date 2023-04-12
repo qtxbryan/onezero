@@ -36,13 +36,14 @@ String? validateDisplayName(String? value) {
 
 // VALIDATE PROPERTY NAME
 String? validatePropertyName(String? value) {
-  (value) {
-    if (value == null || value.isEmpty) {
-      print(value);
-      return 'Please enter property name';
-    }
+  RegExp regex = RegExp(r'^[0-9A-Za-z\s.,#/-]+$');
+  if (value == null) {
+    return 'Property name cannot be null';
+  } else if (!regex.hasMatch(value)) {
+    return 'Invalid property name';
+  } else {
     return null;
-  };
+  }
 }
 
 // VALIDATE DESCRIPTION
@@ -229,6 +230,17 @@ String? validateValue(String? value) {
     return 'Age cannot be null';
   } else if (!regex.hasMatch(value)) {
     return 'Invalid age';
+  } else {
+    return null;
+  }
+}
+
+String? validateStreet(String? value) {
+  RegExp regex = RegExp(r'\s(\b\w*\b\s){1,2}\w*');
+  if (value == null) {
+    return 'Street cannot be null';
+  } else if (!regex.hasMatch(value)) {
+    return 'Invalid street';
   } else {
     return null;
   }
