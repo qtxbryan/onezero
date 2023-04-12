@@ -1,3 +1,4 @@
+import 'package:onezero/controller/textInputFormatter.dart';
 import 'package:onezero/controller/validations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -550,6 +551,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                           child: TextFormField(
                             validator: validateHouseholdIncome,
                             controller: monthlyHouseholdController,
+                            inputFormatters: [ThousandFormatter()],
                             obscureText: false,
                             decoration: InputDecoration(
                               labelText: 'Household Income',
@@ -1207,6 +1209,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                           child: TextFormField(
                             validator: validateHouseholdIncome,
                             controller: monthlyHouseholdController,
+                            inputFormatters: [ThousandFormatter()],
                             obscureText: false,
                             decoration: InputDecoration(
                               labelText: 'Household Income',

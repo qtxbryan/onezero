@@ -1,4 +1,5 @@
 import 'package:onezero/constants.dart';
+import 'package:onezero/controller/textInputFormatter.dart';
 import 'package:onezero/controller/validations.dart';
 import 'package:onezero/pages/new_landing_6-4.dart';
 
@@ -971,6 +972,7 @@ class _AddPropertyPageWidgetState extends State<AddPropertyPageWidget> {
                                     width: 100.0,
                                     child: TextFormField(
                                       validator: validatePrice,
+                                      inputFormatters: [ThousandFormatter()],
                                       onSaved: (value) => price = value,
                                       obscureText: false,
                                       decoration: InputDecoration(

@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:onezero/controller/textInputFormatter.dart';
 import 'package:onezero/controller/validations.dart';
 import 'dart:io';
 import 'package:onezero/models/Listing.dart';
@@ -140,6 +141,7 @@ class _EditPropertyPageState extends State<EditPropertyPage> {
               SizedBox(height: 16.0),
               TextFormField(
                 validator: validatePrice,
+                inputFormatters: [ThousandFormatter()],
                 initialValue: list.price?.toString(),
                 decoration: InputDecoration(
                   labelText: "Price",
