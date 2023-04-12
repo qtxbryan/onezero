@@ -36,7 +36,8 @@ String? validateDisplayName(String? value) {
 
 // VALIDATE PROPERTY NAME
 String? validatePropertyName(String? value) {
-  RegExp regex = RegExp(r'^[0-9A-Za-z\s.,#/-]+$');
+  RegExp regex = RegExp(r'^\s*\b\w+\b\s*(?:\s+\b\w+\b\s*)*$');
+
   if (value == null) {
     return 'Property name cannot be null';
   } else if (!regex.hasMatch(value)) {
@@ -141,7 +142,8 @@ String? validateDimensions(String? value) {
 
 // VALIDATE PRICE
 String? validatePrice(String? value) {
-  RegExp regex = RegExp(r'^(?:0|[1-9][0-9]{0,5}|999999)$');
+  RegExp regex =
+      RegExp(r'^(?:0|[1-9][0-9]{0,2}(?:,[0-9]{3})*|999,?[0-9]{0,2}|999999)$');
   if (value == null) {
     return 'Price cannot be null';
   } else if (!regex.hasMatch(value)) {
@@ -177,7 +179,8 @@ String? validateNumberOfBedrooms(String? value) {
 
 // VALIDATE FULL NAME
 String? validateFullName(String? value) {
-  RegExp regex = RegExp(r'^[a-zA-Z]+(?: [a-zA-Z]+)+$');
+  RegExp regex = RegExp(r'^\s*\b\w+\b\s*(?:\s+\b\w+\b\s*)*$');
+
   if (value == null) {
     return 'Full Name cannot be null';
   } else if (!regex.hasMatch(value)) {
@@ -213,7 +216,8 @@ String? validateAddress(String? value) {
 
 // VALIDATE HOUSEHOLD INCOME (cannot be negative)
 String? validateHouseholdIncome(String? value) {
-  RegExp regex = RegExp(r'^\d+(\.\d{1,2})?$');
+  RegExp regex = RegExp(r'^(?:\d{1,3}(?:,\d{3})*|\d+)(?:\.\d{1,2})?$');
+
   if (value == null) {
     return 'Income cannot be null';
   } else if (!regex.hasMatch(value)) {
