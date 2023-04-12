@@ -847,11 +847,11 @@ class _IndividualPropertyPageWidgetState
                                                                 ),
                                                           ),
                                                           EditGrantProfileWidget(
-                                                              grant: true,
-                                                              numOfBedroom: widget
-                                                                  .numOfBedroom,
-                                                              lease:
-                                                                  widget.lease)
+                                                            grant: true,
+                                                            numOfBedroom: widget
+                                                                .numOfBedroom,
+                                                            lease: widget.lease,
+                                                          )
                                                         ],
                                                       ),
                                                     ),
@@ -904,11 +904,11 @@ class _IndividualPropertyPageWidgetState
                                                                 ),
                                                           ),
                                                           EditGrantProfileWidget(
-                                                              grant: false,
-                                                              numOfBedroom: widget
-                                                                  .numOfBedroom,
-                                                              lease:
-                                                                  widget.lease),
+                                                            grant: false,
+                                                            numOfBedroom: widget
+                                                                .numOfBedroom,
+                                                            lease: widget.lease,
+                                                          ),
                                                         ],
                                                       ),
                                                     ),
@@ -1038,7 +1038,9 @@ class _IndividualPropertyPageWidgetState
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: ((context) => EmailScreen())));
+                                        builder: ((context) => EmailWidget(
+                                            listed_by:
+                                                data['listed_by_email']))));
                               },
                               text: 'Email',
                               options: FFButtonOptions(

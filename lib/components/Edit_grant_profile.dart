@@ -44,7 +44,7 @@ class _EditGrantProfileWidgetState extends State<EditGrantProfileWidget> {
                 item.toString(),
                 style: FlutterFlowTheme.of(context).bodyText1.override(
                       fontFamily: 'Poppins',
-                      fontSize: 12.0,
+                      fontSize: 10.0,
                       color: Color(TEXT_COLOR),
                     ),
               ))
