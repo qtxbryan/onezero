@@ -96,4 +96,35 @@ class Listing {
         propertyName: json['propertyName'],
         listed_by_email: json['listed_by_email'],
       );
+
+  factory Listing.fromMap(Map<String, dynamic> map, String id) {
+    return Listing(
+      id: id,
+      address: map['address'],
+      description: map['description'],
+      dimension: map['dimension'],
+      lease: map['lease'],
+      neighbourhood: map['neighbourhood'],
+      numOfBedroom: map['numOfBedroom'],
+      price: map['price'],
+      propertyName: map['propertyName'],
+      listed_by_email: map['listedByEmail'],
+      upload_url: map['uploadUrl'],
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'address': address,
+      'description': description,
+      'dimension': dimension,
+      'lease': lease,
+      'neighbourhood': neighbourhood,
+      'numOfBedroom': numOfBedroom,
+      'price': price,
+      'propertyName': propertyName,
+      'listedByEmail': listed_by_email,
+      'uploadUrl': upload_url,
+    };
+  }
 }

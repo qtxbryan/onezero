@@ -91,9 +91,11 @@ class _FavoritePropertyListItemState extends State<FavoritePropertyListItem> {
   bool isFavorite = true;
 
   void _showRemovedFromFavoritesSnackbar(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text('Removed from favorites.'),
-    ));
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Removed from favorites.'),
+      ));
+    }
   }
 
   void _removeFromFavorites(BuildContext context) async {
@@ -330,87 +332,55 @@ class _FavoritePropertyListItemState extends State<FavoritePropertyListItem> {
                                       ),
                                     ),
                                   ),
-                                  Align(
-                                    alignment: AlignmentDirectional(0, 0),
+                                  Container(
+                                    //FIXED INCORRECT USE OF PARENT WIDGET
                                     child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           8, 10, 0, 0),
-                                      child: Flexible(
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Align(
-                                              alignment:
-                                                  AlignmentDirectional(0, 0),
-                                              child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 0, 3, 0),
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    Icon(
-                                                      Icons.attach_money,
-                                                      color: Color(
-                                                          ALTERNATE_COLOR),
-                                                      size: 24,
-                                                    ),
-                                                    Text(
-                                                      widget.property['price'],
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyText1
-                                                          .override(
-                                                            fontFamily:
-                                                                'Poppins',
-                                                            color: Colors.black,
-                                                            fontSize: 12,
-                                                          ),
-                                                    ),
-                                                  ],
-                                                ),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Icon(
+                                                Icons.attach_money,
+                                                color: Color(ALTERNATE_COLOR),
+                                                size: 24,
                                               ),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0, 0, 10, 0),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.end,
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                                60, 0, 0, 0),
-                                                    child: IconButton(
-                                                      icon: Icon(
-                                                        isFavorite
-                                                            ? Icons.favorite
-                                                            : Icons
-                                                                .favorite_border,
-                                                        color: isFavorite
-                                                            ? Colors.red
-                                                            : null,
-                                                      ),
-                                                      onPressed: () {
-                                                        if (isFavorite) {
-                                                          _removeFromFavorites(
-                                                              context);
-                                                        }
-                                                      },
-                                                    ),
-                                                  ),
-                                                ],
+                                              Text(
+                                                widget.property['price'],
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyText1
+                                                        .override(
+                                                          fontFamily: 'Poppins',
+                                                          color: Colors.black,
+                                                          fontSize: 12,
+                                                        ),
                                               ),
+                                            ],
+                                          ),
+                                          IconButton(
+                                            icon: Icon(
+                                              isFavorite
+                                                  ? Icons.favorite
+                                                  : Icons.favorite_border,
+                                              color: isFavorite
+                                                  ? Colors.red
+                                                  : null,
                                             ),
-                                          ],
-                                        ),
+                                            onPressed: () {
+                                              if (isFavorite) {
+                                                _removeFromFavorites(context);
+                                              }
+                                            },
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ),

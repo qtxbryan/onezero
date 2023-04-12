@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:onezero/models/LocationModel.dart';
 import 'package:location/location.dart';
 import 'dart:async';
-import 'package:onezero/pages/login_page.dart';
+import 'package:onezero/pages/new_login.dart';
+import 'package:onezero/constants.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -64,30 +66,16 @@ class _SplashPageState extends State<SplashPage> {
           child: Stack(
             children: [
               Positioned(
-                bottom: 350,
+                bottom: 400,
                 left: 0,
                 right: 0,
                 child: Column(
                   children: [
                     Image.asset(
-                      'assets/images/icon.png',
-                      width: 415.6,
-                      height: 283.2,
-                      fit: BoxFit.cover,
+                      'assets/images/flatfinder.png',
+                      width: 200,
+                      fit: BoxFit.fitWidth,
                     ),
-                    const Padding(
-                      padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
-                      child: Text(
-                        'Welcome!',
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                          fontSize: 32,
-                          fontFamily: 'Outfit',
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black,
-                        ),
-                      ),
-                    )
                   ],
                 ),
               ),
@@ -96,50 +84,64 @@ class _SplashPageState extends State<SplashPage> {
                   left: 0,
                   right: 0,
                   child: Padding(
-                    padding: const EdgeInsets.all(40.0),
+                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                     child: GestureDetector(
                       onTap: null,
                       child: Column(
                         children: [
                           Center(
-                            child: Text(
-                              'FlatFinderSG is the ultimate e-commerce solution for buying and selling flats in Singapore. Finding your dream home has never been easier!',
-                              textAlign: TextAlign.left,
-                              style: TextStyle(
-                                fontFamily: 'Helvetica Neue-Regular',
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black54,
-                                fontSize: 16,
+                            child: Padding(
+                              padding: EdgeInsets.fromLTRB(20, 0, 20, 40),
+                              child: Text(
+                                'FlatFinderSG is the ultimate e-commerce solution for buying and selling flats in Singapore. Finding your dream home has never been easier!',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontFamily: 'Helvetica Neue-Regular',
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.black54,
+                                  fontSize: 12,
+                                ),
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(0, 40, 0, 0),
-                            child: Container(
-                                height: 50,
-                                decoration: const BoxDecoration(
-                                  color: Color.fromRGBO(65, 67, 106, 1.0),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(40)),
+                          Container(
+                            width: 300.0,
+                            height: 50.0,
+                            decoration: BoxDecoration(
+                              color:
+                                  FlutterFlowTheme.of(context).primaryBtnText,
+                            ),
+                            child: FFButtonWidget(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (((context) =>
+                                            LoginPageWidget()))));
+                              },
+                              text: 'Get Started',
+                              options: FFButtonOptions(
+                                width: 300.0,
+                                height: 40.0,
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 0.0),
+                                iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 0.0),
+                                color:
+                                    FlutterFlowTheme.of(context).primaryBtnText,
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .bodyText2
+                                    .override(
+                                      fontFamily: 'Poppins',
+                                      color: Color(PRIMARY_COLOR),
+                                    ),
+                                borderSide: BorderSide(
+                                  color: Color(PRIMARY_COLOR),
+                                  width: 1.0,
                                 ),
-                                child: GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (((context) =>
-                                                LoginPage()))));
-                                  },
-                                  child: const Center(
-                                    child: Text('Get started!',
-                                        style: TextStyle(
-                                          fontFamily: 'Outfit',
-                                          fontWeight: FontWeight.w600,
-                                          color: Colors.white,
-                                          fontSize: 19,
-                                        )),
-                                  ),
-                                )),
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+                            ),
                           ),
                         ],
                       ),

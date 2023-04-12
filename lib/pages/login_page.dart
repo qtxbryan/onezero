@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:onezero/pages/test_register.dart';
-// import 'package:onezero/pages/new_landing_6-4.dart';
-import 'fav_home_page_w_filter.dart';
+import 'package:onezero/pages/new_landing_6-4.dart';
 
 import '../auth.dart';
 
