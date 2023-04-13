@@ -1,6 +1,10 @@
 #  SC2006-One.Zero
 
-> Project for SC2006 -> One-stop E-commerce housing mobile application
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/97502375/231726159-d77b8d3d-72e6-4692-8030-bbb8f789b45a.png" alt="flatfinder">
+</p>
+
+> Project for SC2006 Software Engineering: One-stop E-commerce housing mobile application
 
 ## Getting Started
 
