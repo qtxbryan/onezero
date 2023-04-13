@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:onezero/pages/new_individual_page.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import 'package:onezero/constants.dart';
+import 'package:intl/intl.dart';
 
 class PropertyListItem extends StatefulWidget {
   final Map<String, dynamic> property;
@@ -20,6 +21,8 @@ class _PropertyListItemState extends State<PropertyListItem>
 
   @override
   bool get wantKeepAlive => true;
+
+  final formatter = NumberFormat('#,###');
 
   @override
   void initState() {
@@ -325,7 +328,8 @@ class _PropertyListItemState extends State<PropertyListItem>
                                                 size: 24,
                                               ),
                                               Text(
-                                                widget.property['price'],
+                                                formatter.format(int.parse(
+                                                    widget.property['price'])),
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .bodyText1

@@ -104,10 +104,16 @@ class _EditGrantProfileWidgetState extends State<EditGrantProfileWidget> {
                 userProfileData['applicationType'].isEmpty;
 
             if (hasEmptyFields) {
-              return ElevatedButton(
-                onPressed: null, //GO to edit profile page
-                child: Text('Edit Profile'),
-              );
+              return Padding(
+                  padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                  child: Text(
+                    'No Profile Data Found',
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontFamily: 'Poppins',
+                      color: Color(ALTERNATE_COLOR),
+                    ),
+                  ));
             } else {
               /// Calculating grant logic
 
@@ -162,7 +168,7 @@ class _EditGrantProfileWidgetState extends State<EditGrantProfileWidget> {
                   grantAmount.add(CPF_HOUSING_GRANT_AMOUNT_FAMILY_5RM);
                   grantAwarded.add(CPF_HOUSING_GRANT_FAMILY_5RM);
                 }
-              } else if (applicationType == 'Singles' &&
+              } else if (applicationType == 'Single' &&
                   firstTime == "Yes" &&
                   averageMonthlyHousehold <= 7000 &&
                   citizenship == 'Singaporean' &&
@@ -175,8 +181,12 @@ class _EditGrantProfileWidgetState extends State<EditGrantProfileWidget> {
                   grantAmount.add(SINGLE_GRANT_5RM_AMOUNT);
                   grantAwarded.add(SINGLE_GRANT_5RM);
                 }
+              } else {
+                grantAwarded.add("Not Applicable");
+                grantAmount.add(0);
               }
 
+              //True to dispaly grantAwarded
               if (widget.grant == true) {
                 return new Padding(
                     padding:

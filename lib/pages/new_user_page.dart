@@ -1,3 +1,4 @@
+import 'package:onezero/controller/validations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -6,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../auth.dart';
 import 'new_landing_6-4.dart';
+import 'package:onezero/constants.dart';
 
 class NewUserPageWidget extends StatefulWidget {
   //Data passed from register page
@@ -22,13 +24,16 @@ class NewUserPageWidget extends StatefulWidget {
 
 class _NewUserPageWidgetState extends State<NewUserPageWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _unfocusNode = FocusNode();
 
   String? errorMessage = '';
   final TextEditingController displayNameController = TextEditingController();
   final TextEditingController ageController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   Future<void> createUserWithEmailAndPassword() async {
     try {
+      print("Start try");
       await Auth().createUserWithEmailAndPassword(
         email: widget.email,
         password: widget.password,
@@ -41,6 +46,7 @@ class _NewUserPageWidgetState extends State<NewUserPageWidget> {
         'displayName': displayNameController.text,
         'age': ageController.text,
       });
+      print("End try");
     } on FirebaseAuthException catch (e) {
       setState(() {
         errorMessage = e.message;
@@ -63,148 +69,268 @@ class _NewUserPageWidgetState extends State<NewUserPageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Create Your Profile'),
-        backgroundColor: Color(0xFF41436A),
-        // dk if need remove the back button
-      ),
-      body: SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(20, 20, 20, 16),
-              child: TextFormField(
-                controller: displayNameController,
-                obscureText: false,
-                decoration: InputDecoration(
-                  labelText: 'Display Name',
-                  hintText: 'Enter your name...',
-                  labelStyle: TextStyle(
-                    fontFamily: 'Outfit',
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.normal,
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+      child: Scaffold(
+        key: scaffoldKey,
+        backgroundColor: Colors.white,
+        body: SingleChildScrollView(
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 70, 0, 30),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            if (Theme.of(context).brightness ==
+                                Brightness.light)
+                              Image.asset(
+                                'assets/images/flatfinder.png',
+                                width: 242,
+                                height: 120,
+                                fit: BoxFit.fitWidth,
+                              ),
+                            if (Theme.of(context).brightness == Brightness.dark)
+                              Image.network(
+                                'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/template-screens-hpce0u/assets/xofl99y11az0/@3xlogo_primary_color_white.png',
+                                width: 242,
+                                height: 60,
+                                fit: BoxFit.fitWidth,
+                              ),
+                          ],
+                        ),
+                      ),
+                      Text(
+                        'New users!',
+                        style: FlutterFlowTheme.of(context).bodyText2.override(
+                              fontFamily: 'Outfit',
+                              color: Color(0xFF0F1113),
+                              fontSize: 32,
+                              fontWeight: FontWeight.w500,
+                            ),
+                      ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              child: Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+                                child: TextFormField(
+                                  controller: displayNameController,
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    labelText: 'Display Name',
+                                    labelStyle: FlutterFlowTheme.of(context)
+                                        .bodyText2
+                                        .override(
+                                          fontFamily: 'Outfit',
+                                          color: Color(0xFF57636C),
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                    hintText: 'Enter your name here...',
+                                    hintStyle: FlutterFlowTheme.of(context)
+                                        .bodyText2
+                                        .override(
+                                          fontFamily: 'Outfit',
+                                          color: Color(0xFF57636C),
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0xFFF1F4F8),
+                                        width: 2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(40),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(PRIMARY_COLOR),
+                                        width: 2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(40),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(40),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(ALTERNATE_COLOR),
+                                        width: 2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(40),
+                                    ),
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    contentPadding:
+                                        EdgeInsetsDirectional.fromSTEB(
+                                            16, 24, 0, 24),
+                                  ),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        fontFamily: 'Outfit',
+                                        color: Color(0xFF0F1113),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                  maxLines: null,
+                                  minLines: 1,
+                                  validator: validateDisplayName,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              child: Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
+                                child: TextFormField(
+                                  controller: ageController,
+                                  obscureText: false,
+                                  decoration: InputDecoration(
+                                    labelText: 'Age',
+                                    labelStyle: FlutterFlowTheme.of(context)
+                                        .bodyText2
+                                        .override(
+                                          fontFamily: 'Outfit',
+                                          color: Color(0xFF57636C),
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                    hintText: 'Enter your age here...',
+                                    hintStyle: FlutterFlowTheme.of(context)
+                                        .bodyText2
+                                        .override(
+                                          fontFamily: 'Outfit',
+                                          color: Color(0xFF57636C),
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0xFFF1F4F8),
+                                        width: 2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(40),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(PRIMARY_COLOR),
+                                        width: 2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(40),
+                                    ),
+                                    errorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(0x00000000),
+                                        width: 2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(40),
+                                    ),
+                                    focusedErrorBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                        color: Color(ALTERNATE_COLOR),
+                                        width: 2,
+                                      ),
+                                      borderRadius: BorderRadius.circular(40),
+                                    ),
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    contentPadding:
+                                        EdgeInsetsDirectional.fromSTEB(
+                                            16, 24, 0, 24),
+                                  ),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyText1
+                                      .override(
+                                        fontFamily: 'Outfit',
+                                        color: Color(0xFF0F1113),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                  maxLines: null,
+                                  minLines: 1,
+                                  validator: validateAge,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            FFButtonWidget(
+                              onPressed: () {
+                                if (_formKey.currentState!.validate()) {
+                                  createUserWithEmailAndPassword(); // Navigate to next page
+                                }
+                              },
+                              text: 'Create Account',
+                              options: FFButtonOptions(
+                                width: 330,
+                                height: 50,
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                                iconPadding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                                color: Color(0xFF4B39EF),
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .bodyText1
+                                    .override(
+                                      fontFamily: 'Outfit',
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                elevation: 3,
+                                borderSide: BorderSide(
+                                  color: Colors.transparent,
+                                  width: 1,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                  hintStyle: TextStyle(
-                    fontFamily: 'Outfit',
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.normal,
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.black,
-                      width: 2,
-                    ),
-                    borderRadius: BorderRadius.circular(40),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.black,
-                      width: 2,
-                    ),
-                    borderRadius: BorderRadius.circular(40),
-                  ),
-                  errorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.black,
-                      width: 2,
-                    ),
-                    borderRadius: BorderRadius.circular(40),
-                  ),
-                  focusedErrorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.black,
-                      width: 2,
-                    ),
-                    borderRadius: BorderRadius.circular(40),
-                  ),
-                  filled: true,
-                  fillColor: Colors.white,
-                  contentPadding: EdgeInsetsDirectional.fromSTEB(20, 24, 0, 24),
                 ),
-                style: FlutterFlowTheme.of(context).subtitle2,
-                maxLines: null,
-              ),
+              ],
             ),
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 16),
-              child: TextFormField(
-                controller: ageController,
-                obscureText: false,
-                decoration: InputDecoration(
-                  labelText: 'Your Age',
-                  hintText: 'Enter your age...',
-                  labelStyle: TextStyle(
-                    fontFamily: 'Outfit',
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.normal,
-                  ),
-                  hintStyle: TextStyle(
-                    fontFamily: 'Outfit',
-                    color: Colors.black,
-                    fontSize: 16,
-                    fontWeight: FontWeight.normal,
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.black,
-                      width: 2,
-                    ),
-                    borderRadius: BorderRadius.circular(40),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.black,
-                      width: 2,
-                    ),
-                    borderRadius: BorderRadius.circular(40),
-                  ),
-                  errorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.black,
-                      width: 2,
-                    ),
-                    borderRadius: BorderRadius.circular(40),
-                  ),
-                  focusedErrorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.black,
-                      width: 2,
-                    ),
-                    borderRadius: BorderRadius.circular(40),
-                  ),
-                  filled: true,
-                  fillColor: Colors.white,
-                  contentPadding: EdgeInsetsDirectional.fromSTEB(20, 24, 0, 24),
-                ),
-                style: FlutterFlowTheme.of(context).subtitle2,
-                maxLines: null,
-              ),
-            ),
-            Align(
-              alignment: AlignmentDirectional(0, 0.05),
-              child: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFFF64668),
-                    shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.circular(20.0), // set border radius
-                      // You can also set other border properties like borderSide and sideWidth
-                    ),
-                    minimumSize: Size(150, 50), // set minimum button size
-                  ),
-                  onPressed: createUserWithEmailAndPassword,
-                  child: Text('Register', style: TextStyle(fontSize: 16.0)),
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );

@@ -66,8 +66,8 @@ class _MainPageState extends State<MainPage>
             label: 'Add',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
+            icon: Icon(Icons.apartment),
+            label: 'Properties',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),

@@ -13,6 +13,8 @@ import 'package:onezero/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:onezero/pages/add_property_page.dart';
 import 'package:onezero/pages/edit_property_page.dart';
+// import 'new_edit_property.dart';
+import 'package:intl/intl.dart';
 
 class MyPropertiesWidget extends StatefulWidget {
   const MyPropertiesWidget({
@@ -29,6 +31,7 @@ class _MyPropertiesWidgetState extends State<MyPropertiesWidget> {
   Auth _auth = Auth();
 
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  final formatter = NumberFormat('#,###');
 
   @override
   void initState() {
@@ -199,7 +202,7 @@ class _MyPropertiesWidgetState extends State<MyPropertiesWidget> {
                                                 .override(
                                                   fontFamily: 'Outfit',
                                                   color: Color(ALTERNATE_COLOR),
-                                                  fontSize: 20.0,
+                                                  fontSize: 16.0,
                                                   fontWeight: FontWeight.w500,
                                                 ),
                                           ),
@@ -370,7 +373,9 @@ class _MyPropertiesWidgetState extends State<MyPropertiesWidget> {
                                                               size: 24.0,
                                                             ),
                                                             Text(
-                                                              property.price!,
+                                                              formatter.format(int
+                                                                  .parse(property
+                                                                      .price!)),
                                                               style: FlutterFlowTheme
                                                                       .of(context)
                                                                   .bodyText1

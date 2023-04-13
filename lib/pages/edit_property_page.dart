@@ -147,7 +147,7 @@ class _EditPropertyPageState extends State<EditPropertyPage> {
                   labelText: "Price",
                 ),
                 keyboardType: TextInputType.number,
-                onChanged: (value) => list.setPrice = value,
+                onChanged: (value) => list.setPrice = value.replaceAll(',', ''),
                 onSaved: (value) => list.setPrice = value,
               ),
               SizedBox(height: 16.0),
