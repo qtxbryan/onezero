@@ -1,16 +1,54 @@
-# onezero
+#  SC2006-One.Zero
 
-A new Flutter project.
+> Project for SC2006 -> One-stop E-commerce housing mobile application
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+> From your command line go to the folder directory and run the following scripts in the terminal.
+1\. Go to folder directory
 
-A few resources to get you started if this is your first Flutter project:
+```terminal
+cd <FOLDER-NAME>
+```
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+2\. Clone the repo
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```terminal
+git clone https://github.com/qtxbryan/onezero.git
+```
+
+3\. Go to project directory
+
+```terminal
+cd onezero
+```
+
+4\. Install required dependencies
+
+```terminal
+flutter pub get
+```
+
+5\. Run the application
+
+```terminal
+flutter run 
+```
+
+## Project Folder Structure
+
+
+
+## Tech Stacks
+<p>
+  <img src="https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white" >
+  <img src="https://img.shields.io/badge/Firebase-F29D0C?style=for-the-badge&logo=firebase&logoColor=white" >
+</p>
+
+## Contributors - Team One.Zero
+
+- [Bryan Tan](https://github.com/qtxbryan)
+- [Glendon Goh](https://github.com/Glendon123)
+- [Jabez Ng](https://github.com/jabezng2)
+- [Wei Hao](https://github.com/weihaooooo)
+- [Yupei](https://github.com/FAN0020)
