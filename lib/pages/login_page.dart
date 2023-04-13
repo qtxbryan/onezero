@@ -1,12 +1,8 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:onezero/controller/validations.dart';
 import 'package:onezero/pages/test_register.dart';
 import 'package:onezero/pages/new_landing_6-4.dart';
-import 'package:onezero/pages/my_properties_page.dart';
-import 'test_maps.dart';
+
 import '../auth.dart';
 
 class LoginPage extends StatefulWidget {
@@ -20,67 +16,34 @@ class _LoginPageState extends State<LoginPage> {
   final _unfocusNode = FocusNode();
 
   String? errorMessage = '';
-  bool hasError = false;
 
   final TextEditingController _controllerEmail = TextEditingController();
   final TextEditingController _controllerPassword = TextEditingController();
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   Future<void> signInWithEmailAndPassword() async {
     try {
       await Auth().signInWithEmailAndPassword(
           email: _controllerEmail.text, password: _controllerPassword.text);
-      Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => HomePage(),
-      ));
     } on FirebaseAuthException catch (e) {
       setState(() {
-        hasError = true;
-        errorMessage = e.code; // Update error message with error code
+        errorMessage = e.message;
       });
     }
+
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => HomePage(),
+    ));
   }
 
   Widget _errorMessage() {
-    hasError ? errorMessage : '';
-    print('$errorMessage');
-    return Center(
-      child: Text(
-        errorMessage == ''
-            ? ''
-            : errorMessage == 'invalid-email' // Add condition for invalid email
-                ? 'Invalid email.'
-                : errorMessage ==
-                        'wrong-password' // Add condition for wrong password
-                    ? 'Wrong password.'
-                    : 'Account does not exist.',
-        style: TextStyle(
-          color: Colors.red,
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _formKey = GlobalKey<FormState>(); // Initialize _formKey in initState()
+    return Text(errorMessage == '' ? '' : 'Humm ? $errorMessage');
   }
 
   Widget _loginButton() {
     return Align(
       alignment: Alignment.center,
       child: OutlinedButton(
-        onPressed: () {
-          if (_formKey.currentState!.validate()) {
-            setState(() {
-              errorMessage = ''; // Clear error message before validating form
-            });
-            signInWithEmailAndPassword();
-          }
-        },
+        onPressed: signInWithEmailAndPassword,
         child: Text(
           'Login',
           style: TextStyle(
@@ -114,7 +77,6 @@ class _LoginPageState extends State<LoginPage> {
   Widget TextField(controller, hintText, labelText) {
     return TextFormField(
       controller: controller,
-      validator: validateEmail,
       obscureText: false,
       decoration: InputDecoration(
         labelText: labelText,
@@ -170,13 +132,13 @@ class _LoginPageState extends State<LoginPage> {
         fontWeight: FontWeight.normal,
       ),
       maxLength: null,
+      validator: null,
     );
   }
 
   Widget PasswordTextField(controller, hintText, labelText) {
     return TextFormField(
       controller: controller,
-      validator: validatePassword,
       obscureText: true,
       decoration: InputDecoration(
         labelText: labelText,
@@ -232,6 +194,7 @@ class _LoginPageState extends State<LoginPage> {
         fontWeight: FontWeight.normal,
       ),
       maxLength: null,
+      validator: null,
     );
   }
 
@@ -242,8 +205,7 @@ class _LoginPageState extends State<LoginPage> {
         body: GestureDetector(
             onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
             child: Container(
-                child: Form(
-              key: _formKey,
+                child: SafeArea(
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [

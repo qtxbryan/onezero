@@ -21,6 +21,27 @@ class _PropertyListItemState extends State<PropertyListItem>
   @override
   bool get wantKeepAlive => true;
 
+  @override
+  void initState() {
+    super.initState();
+
+    // Check if the property is already in the user's favorites collection
+    final User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      final favoritesRef = FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .collection('favorites');
+      favoritesRef.doc(widget.property['id']).get().then((doc) {
+        if (doc.exists) {
+          setState(() {
+            isFavorite = true;
+          });
+        }
+      });
+    }
+  }
+
   void _addToFavorites(BuildContext context) async {
 // Get the current user's ID
     final User? user = FirebaseAuth.instance.currentUser;
@@ -85,7 +106,7 @@ class _PropertyListItemState extends State<PropertyListItem>
     super.build(context);
     return Padding(
       padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 12.0),
-      child: InkWell(
+      child: GestureDetector(
         onTap: () async {
           //PUSH INDIVIDUAL PAGE
           Navigator.of(context).push(MaterialPageRoute(
@@ -105,8 +126,6 @@ class _PropertyListItemState extends State<PropertyListItem>
           ));
         },
         child: Container(
-          width: 100.0,
-          height: 160.0,
           decoration: BoxDecoration(
             color: Colors.white,
             boxShadow: [
@@ -285,93 +304,60 @@ class _PropertyListItemState extends State<PropertyListItem>
                                       ),
                                     ),
                                   ),
-                                  Align(
-                                    alignment: AlignmentDirectional(0, 0),
+                                  Container(
+                                    //FIXED INCORRECT USE OF PARENT WIDGET
                                     child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           8, 10, 0, 0),
-                                      child: Flexible(
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Align(
-                                              alignment:
-                                                  AlignmentDirectional(0, 0),
-                                              child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 0, 3, 0),
-                                                child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    Icon(
-                                                      Icons.attach_money,
-                                                      color: Color(
-                                                          ALTERNATE_COLOR),
-                                                      size: 24,
-                                                    ),
-                                                    Text(
-                                                      widget.property['price'],
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyText1
-                                                          .override(
-                                                            fontFamily:
-                                                                'Poppins',
-                                                            color: Colors.black,
-                                                            fontSize: 12,
-                                                          ),
-                                                    ),
-                                                  ],
-                                                ),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Icon(
+                                                Icons.attach_money,
+                                                color: Color(ALTERNATE_COLOR),
+                                                size: 24,
                                               ),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0, 0, 10, 0),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.end,
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(
-                                                                60, 0, 0, 0),
-                                                    child: IconButton(
-                                                      icon: Icon(
-                                                        isFavorite
-                                                            ? Icons.favorite
-                                                            : Icons
-                                                                .favorite_border,
-                                                        color: isFavorite
-                                                            ? Colors.red
-                                                            : null,
-                                                      ),
-                                                      onPressed: () {
-                                                        if (isFavorite) {
-                                                          _removeFromFavorites(
-                                                              context);
-                                                        } else {
-                                                          _addToFavorites(
-                                                              context);
-                                                        }
-                                                      },
-                                                    ),
-                                                  ),
-                                                ],
+                                              Text(
+                                                widget.property['price'],
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyText1
+                                                        .override(
+                                                          fontFamily: 'Poppins',
+                                                          color: Colors.black,
+                                                          fontSize: 12,
+                                                        ),
                                               ),
+                                            ],
+                                          ),
+                                          IconButton(
+                                            icon: Icon(
+                                              isFavorite
+                                                  ? Icons.favorite
+                                                  : Icons.favorite_border,
+                                              color: isFavorite
+                                                  ? Colors.red
+                                                  : null,
                                             ),
-                                          ],
-                                        ),
+                                            onPressed: () {
+                                              if (isFavorite) {
+                                                _removeFromFavorites(context);
+                                              } else {
+                                                _addToFavorites(context);
+                                              }
+                                            },
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                  ),
+                                  )
                                 ],
                               ),
                             ),

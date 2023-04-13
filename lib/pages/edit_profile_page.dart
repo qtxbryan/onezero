@@ -57,11 +57,15 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
     } else if (_imageURL != null) {
       return Image.network(_imageURL!);
     } else {
-      return Placeholder();
+      //return Placeholder();
+      return Text(
+        'No photo selected', // Error message
+        style: TextStyle(color: Colors.red),
+      );
     }
   }
 
-  Widget buildChangePhotoButton() {
+  Widget buildChangePhotoButton(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(backgroundColor: Color(0xFFF64668)),
       onPressed: () {
@@ -264,7 +268,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: [buildChangePhotoButton()],
+                            children: [buildChangePhotoButton(context)],
                           ),
                         ),
                         Padding(
@@ -964,7 +968,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: [buildChangePhotoButton()],
+                            children: [buildChangePhotoButton(context)],
                           ),
                         ),
                         Padding(

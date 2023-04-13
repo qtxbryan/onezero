@@ -143,7 +143,7 @@ String? validateDimensions(String? value) {
 // VALIDATE PRICE
 String? validatePrice(String? value) {
   RegExp regex =
-      RegExp(r'^(?:0|[1-9][0-9]{0,2}(?:,[0-9]{3})*|999,?[0-9]{0,2}|999999)$');
+      RegExp(r'^(?:0|[1-9][0-9]{0,2}(?:,[0-9]{3})*|999,?[0-9]{0,6}|999999)$');
   if (value == null) {
     return 'Price cannot be null';
   } else if (!regex.hasMatch(value)) {

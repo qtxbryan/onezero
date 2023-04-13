@@ -1,70 +1,57 @@
-import 'package:onezero/controller/validations.dart';
-import '/flutter_flow/flutter_flow_theme.dart';
-import '/flutter_flow/flutter_flow_widgets.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import '../auth.dart';
-import 'new_landing_6-4.dart';
 import 'package:onezero/constants.dart';
 
-class NewUserPageWidget extends StatefulWidget {
-  //Data passed from register page
-  final String email;
-  final String password;
+import '/flutter_flow/flutter_flow_theme.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import '../auth.dart';
+import 'new_user_page.dart';
+import 'new_login.dart';
+import 'package:onezero/controller/validations.dart';
 
-  const NewUserPageWidget(
-      {Key? key, required this.email, required this.password})
-      : super(key: key);
+class RegisterPageWidget extends StatefulWidget {
+  const RegisterPageWidget({Key? key}) : super(key: key);
 
   @override
-  _NewUserPageWidgetState createState() => _NewUserPageWidgetState();
+  _RegisterPageWidgetState createState() => _RegisterPageWidgetState();
 }
 
-class _NewUserPageWidgetState extends State<NewUserPageWidget> {
+class _RegisterPageWidgetState extends State<RegisterPageWidget> {
+  String? errorMessage = '';
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final _unfocusNode = FocusNode();
 
-  String? errorMessage = '';
-  final TextEditingController displayNameController = TextEditingController();
-  final TextEditingController ageController = TextEditingController();
+  final TextEditingController _controllerEmail = TextEditingController();
+  final TextEditingController _controllerPassword = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+
+  bool obscureText = false;
 
   Future<void> createUserWithEmailAndPassword() async {
     try {
-      print("Start try");
       await Auth().createUserWithEmailAndPassword(
-        email: widget.email,
-        password: widget.password,
+        email: _controllerEmail.text,
+        password: _controllerPassword.text,
       );
 
       // Get the current user and create a new document with their data
       User? user = Auth().currentUser;
       await FirebaseFirestore.instance.collection('users').doc(user?.uid).set({
         'email': user?.email,
-        'displayName': displayNameController.text,
-        'age': ageController.text,
       });
-      print("End try");
     } on FirebaseAuthException catch (e) {
       setState(() {
         errorMessage = e.message;
       });
     }
-
-    Navigator.of(context)
-        .push(MaterialPageRoute(builder: ((context) => HomePage())));
   }
 
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
+  Widget _errorMessage() {
+    return Text(errorMessage == '' ? '' : 'Humm ? ${errorMessage}');
   }
 
   @override
@@ -112,7 +99,7 @@ class _NewUserPageWidgetState extends State<NewUserPageWidget> {
                         ),
                       ),
                       Text(
-                        'New users!',
+                        'Get Started',
                         style: FlutterFlowTheme.of(context).bodyText2.override(
                               fontFamily: 'Outfit',
                               color: Color(0xFF0F1113),
@@ -131,10 +118,10 @@ class _NewUserPageWidgetState extends State<NewUserPageWidget> {
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
                                 child: TextFormField(
-                                  controller: displayNameController,
+                                  controller: _controllerEmail,
                                   obscureText: false,
                                   decoration: InputDecoration(
-                                    labelText: 'Display Name',
+                                    labelText: 'Email Address',
                                     labelStyle: FlutterFlowTheme.of(context)
                                         .bodyText2
                                         .override(
@@ -143,7 +130,7 @@ class _NewUserPageWidgetState extends State<NewUserPageWidget> {
                                           fontSize: 14,
                                           fontWeight: FontWeight.normal,
                                         ),
-                                    hintText: 'Enter your name here...',
+                                    hintText: 'Enter your email here...',
                                     hintStyle: FlutterFlowTheme.of(context)
                                         .bodyText2
                                         .override(
@@ -196,7 +183,7 @@ class _NewUserPageWidgetState extends State<NewUserPageWidget> {
                                       ),
                                   maxLines: null,
                                   minLines: 1,
-                                  validator: validateDisplayName,
+                                  validator: validateEmail,
                                 ),
                               ),
                             ),
@@ -210,77 +197,86 @@ class _NewUserPageWidgetState extends State<NewUserPageWidget> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Expanded(
-                              child: Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 16, 0, 0),
-                                child: TextFormField(
-                                  controller: ageController,
-                                  obscureText: false,
-                                  decoration: InputDecoration(
-                                    labelText: 'Age',
-                                    labelStyle: FlutterFlowTheme.of(context)
-                                        .bodyText2
-                                        .override(
-                                          fontFamily: 'Outfit',
-                                          color: Color(0xFF57636C),
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                    hintText: 'Enter your age here...',
-                                    hintStyle: FlutterFlowTheme.of(context)
-                                        .bodyText2
-                                        .override(
-                                          fontFamily: 'Outfit',
-                                          color: Color(0xFF57636C),
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0xFFF1F4F8),
-                                        width: 2,
-                                      ),
-                                      borderRadius: BorderRadius.circular(40),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(PRIMARY_COLOR),
-                                        width: 2,
-                                      ),
-                                      borderRadius: BorderRadius.circular(40),
-                                    ),
-                                    errorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(0x00000000),
-                                        width: 2,
-                                      ),
-                                      borderRadius: BorderRadius.circular(40),
-                                    ),
-                                    focusedErrorBorder: OutlineInputBorder(
-                                      borderSide: BorderSide(
-                                        color: Color(ALTERNATE_COLOR),
-                                        width: 2,
-                                      ),
-                                      borderRadius: BorderRadius.circular(40),
-                                    ),
-                                    filled: true,
-                                    fillColor: Colors.white,
-                                    contentPadding:
-                                        EdgeInsetsDirectional.fromSTEB(
-                                            16, 24, 0, 24),
-                                  ),
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyText1
+                              child: TextFormField(
+                                controller: _controllerPassword,
+                                obscureText: obscureText,
+                                decoration: InputDecoration(
+                                  labelText: 'Password',
+                                  labelStyle: FlutterFlowTheme.of(context)
+                                      .bodyText2
                                       .override(
                                         fontFamily: 'Outfit',
-                                        color: Color(0xFF0F1113),
+                                        color: Color(0xFF57636C),
                                         fontSize: 14,
                                         fontWeight: FontWeight.normal,
                                       ),
-                                  maxLines: null,
-                                  minLines: 1,
-                                  validator: validateAge,
+                                  hintText: 'Enter your email here...',
+                                  hintStyle: FlutterFlowTheme.of(context)
+                                      .bodyText2
+                                      .override(
+                                        fontFamily: 'Outfit',
+                                        color: Color(0xFF57636C),
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0xFFF1F4F8),
+                                      width: 2,
+                                    ),
+                                    borderRadius: BorderRadius.circular(40),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(PRIMARY_COLOR),
+                                      width: 2,
+                                    ),
+                                    borderRadius: BorderRadius.circular(40),
+                                  ),
+                                  errorBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 2,
+                                    ),
+                                    borderRadius: BorderRadius.circular(40),
+                                  ),
+                                  focusedErrorBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(ALTERNATE_COLOR),
+                                      width: 2,
+                                    ),
+                                    borderRadius: BorderRadius.circular(40),
+                                  ),
+                                  filled: true,
+                                  fillColor: Colors.white,
+                                  contentPadding:
+                                      EdgeInsetsDirectional.fromSTEB(
+                                          16, 24, 24, 24),
+                                  suffixIcon: InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        obscureText = false;
+                                      });
+                                    },
+                                    focusNode: FocusNode(skipTraversal: true),
+                                    child: Icon(
+                                      obscureText
+                                          ? Icons.visibility_outlined
+                                          : Icons.visibility_off_outlined,
+                                      color: Color(0xFF57636C),
+                                      size: 22,
+                                    ),
+                                  ),
                                 ),
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyText1
+                                    .override(
+                                      fontFamily: 'Outfit',
+                                      color: Color(0xFF0F1113),
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                validator: validatePassword,
                               ),
                             ),
                           ],
@@ -295,7 +291,12 @@ class _NewUserPageWidgetState extends State<NewUserPageWidget> {
                             FFButtonWidget(
                               onPressed: () {
                                 if (_formKey.currentState!.validate()) {
-                                  createUserWithEmailAndPassword(); // Navigate to next page
+                                  print("test");
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: ((context) => NewUserPageWidget(
+                                          email: _controllerEmail.text,
+                                          password: _controllerPassword
+                                              .text)))); // Navigate to next page
                                 }
                               },
                               text: 'Create Account',
@@ -316,6 +317,58 @@ class _NewUserPageWidgetState extends State<NewUserPageWidget> {
                                       fontWeight: FontWeight.w500,
                                     ),
                                 elevation: 3,
+                                borderSide: BorderSide(
+                                  color: Colors.transparent,
+                                  width: 1,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 24),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Already have an account?',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodyText1
+                                  .override(
+                                    fontFamily: 'Outfit',
+                                    color: Color(0xFF0F1113),
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                            ),
+                            FFButtonWidget(
+                              onPressed: () async {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: ((context) =>
+                                            LoginPageWidget())));
+                              },
+                              text: 'Log In',
+                              options: FFButtonOptions(
+                                width: 90,
+                                height: 30,
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                                iconPadding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                                color: Color(0x00FFFFFF),
+                                textStyle: FlutterFlowTheme.of(context)
+                                    .bodyText2
+                                    .override(
+                                      fontFamily: 'Outfit',
+                                      color: Color(0xFF39D2C0),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                elevation: 0,
                                 borderSide: BorderSide(
                                   color: Colors.transparent,
                                   width: 1,
