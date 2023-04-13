@@ -5,6 +5,7 @@
 ## Getting Started
 
 > From your command line go to the folder directory and run the following scripts in the terminal.
+
 1\. Go to folder directory
 
 ```terminal
