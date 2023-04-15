@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:onezero/pages/new_user_page.dart';
-import '../auth.dart';
+import '../controller/auth.dart';
 import 'package:onezero/flutter_flow/flutter_flow_theme.dart';
 
 class TestRegisterPage extends StatefulWidget {

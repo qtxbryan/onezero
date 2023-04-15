@@ -1,19 +1,12 @@
 import 'package:onezero/constants.dart';
-
-import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
 import 'package:onezero/models/Listing.dart';
-import 'package:onezero/auth.dart';
+import 'package:onezero/controller/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:onezero/pages/add_property_page.dart';
 import 'package:onezero/pages/edit_property_page.dart';
-// import 'new_edit_property.dart';
 import 'package:intl/intl.dart';
 
 class MyPropertiesWidget extends StatefulWidget {

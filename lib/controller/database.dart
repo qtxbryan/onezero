@@ -8,6 +8,15 @@ class Database {
   final firebase_storage.FirebaseStorage storage =
       firebase_storage.FirebaseStorage.instance;
 
+  Future<void> registerUser(
+      String uid, String email, String displayName, String age) async {
+    await FirebaseFirestore.instance.collection('users').doc(uid).set({
+      'email': email,
+      'displayName': displayName,
+      'age': age,
+    });
+  }
+
   Future<void> uploadFile(String filePath, String fileName) async {
     File file = File(filePath);
 
@@ -71,6 +80,19 @@ class Database {
   //Read Listing
   CollectionReference listings =
       FirebaseFirestore.instance.collection('listing');
+
+  /// Read all listings
+  ///
+  /// param: [collectionName]
+  /// Returns: [Stream]
+  /// Author: [Bryan]
+  Stream<QuerySnapshot> readListings(String collectionName) {
+    Stream<QuerySnapshot> collectionDocStream;
+    collectionDocStream =
+        FirebaseFirestore.instance.collection(collectionName).snapshots();
+
+    return collectionDocStream;
+  }
 
   Stream<DocumentSnapshot> readSingleDocument(
       String collectionName, String uid) {

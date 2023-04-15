@@ -1,13 +1,12 @@
 import 'package:onezero/controller/validations.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:onezero/controller/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../auth.dart';
-import 'new_landing_6-4.dart';
+import '../controller/auth.dart';
 import 'package:onezero/constants.dart';
+import 'package:onezero/pages/main_page.dart';
 
 class NewUserPageWidget extends StatefulWidget {
   //Data passed from register page
@@ -31,6 +30,8 @@ class _NewUserPageWidgetState extends State<NewUserPageWidget> {
   final TextEditingController ageController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
+  Database db = Database();
+
   Future<void> createUserWithEmailAndPassword() async {
     try {
       print("Start try");
@@ -41,12 +42,13 @@ class _NewUserPageWidgetState extends State<NewUserPageWidget> {
 
       // Get the current user and create a new document with their data
       User? user = Auth().currentUser;
-      await FirebaseFirestore.instance.collection('users').doc(user?.uid).set({
-        'email': user?.email,
-        'displayName': displayNameController.text,
-        'age': ageController.text,
-      });
-      print("End try");
+
+      if (user != null) {
+        await user.updateDisplayName(displayNameController.text);
+      }
+
+      db.registerUser(user!.uid, user.email!, displayNameController.text,
+          ageController.text);
     } on FirebaseAuthException catch (e) {
       setState(() {
         errorMessage = e.message;
@@ -54,7 +56,7 @@ class _NewUserPageWidgetState extends State<NewUserPageWidget> {
     }
 
     Navigator.of(context)
-        .push(MaterialPageRoute(builder: ((context) => HomePage())));
+        .push(MaterialPageRoute(builder: ((context) => MainPage())));
   }
 
   @override

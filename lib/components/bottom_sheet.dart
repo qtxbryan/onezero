@@ -2,7 +2,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../auth.dart';
+import '../controller/auth.dart';
 import 'package:onezero/pages/new_login.dart';
 
 class BottomSheetWidget extends StatefulWidget {

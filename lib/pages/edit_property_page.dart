@@ -10,11 +10,9 @@ import '/flutter_flow/flutter_flow_theme.dart';
 
 import 'package:onezero/controller/validations.dart';
 import 'dart:io';
-import '/flutter_flow/flutter_flow_theme.dart';
 
 import 'package:onezero/models/Listing.dart';
-import 'package:onezero/auth.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:onezero/controller/auth.dart';
 
 class EditPropertyPage extends StatefulWidget {
   final Listing property;

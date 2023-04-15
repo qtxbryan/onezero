@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:onezero/backend/database.dart';
+import 'package:onezero/controller/database.dart';
 import 'dart:io';
 
 class EditImageWidget extends StatefulWidget {

@@ -3,12 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:image_picker/image_picker.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
-import 'package:onezero/controller/textInputFormatter.dart';
-import 'package:onezero/controller/validations.dart';
 import 'dart:io';
-import 'package:onezero/models/Listing.dart';
-import 'package:onezero/controller/auth.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:cached_network_image/cached_network_image.dart';
 

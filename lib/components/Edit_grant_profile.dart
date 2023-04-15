@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:onezero/components/GrantCard.dart';
+import 'package:onezero/controller/grantController.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
-
-import '../auth.dart';
-import 'package:onezero/backend/database.dart';
+import 'package:onezero/models/grant.dart';
+import '../controller/auth.dart';
+import 'package:onezero/controller/database.dart';
+import 'package:onezero/controller/userController.dart';
 import '../constants.dart';
 
 class EditGrantProfileWidget extends StatefulWidget {
@@ -26,15 +27,17 @@ class EditGrantProfileWidget extends StatefulWidget {
 }
 
 class _EditGrantProfileWidgetState extends State<EditGrantProfileWidget> {
-  late final User? _user;
-  late final Stream<DocumentSnapshot> _userDocStream;
+  // late final User? _user;
+  // late final Stream<DocumentSnapshot> _userDocStream;
+
+  UserController userController = UserController();
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _user = Auth().currentUser;
-    _userDocStream = widget.db.readSingleDocument('users', _user!.uid);
+    // _user = Auth().currentUser;
+    // _userDocStream = widget.db.readSingleDocument('users', _user!.uid);
   }
 
   Widget getGrant(List grants) {
@@ -70,7 +73,7 @@ class _EditGrantProfileWidgetState extends State<EditGrantProfileWidget> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<DocumentSnapshot>(
-        stream: _userDocStream,
+        stream: userController.getUserDocStream(),
         builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
           if (snapshot.hasError) {
             return Center(
@@ -84,24 +87,17 @@ class _EditGrantProfileWidgetState extends State<EditGrantProfileWidget> {
             );
           }
 
-          print(snapshot.data!);
-
           if (snapshot.hasData && snapshot.data!.exists) {
             final userProfileData =
                 snapshot.data!.data() as Map<String, dynamic>;
 
-            final hasEmptyFields = userProfileData['displayName'] == null ||
-                userProfileData['displayName'].isEmpty ||
-                userProfileData['Citizenship'] == null ||
-                userProfileData['Citizenship'].isEmpty ||
-                userProfileData['Martial'] == null ||
-                userProfileData['Martial'].isEmpty ||
-                userProfileData['age'] == null ||
-                userProfileData['age'].isEmpty ||
-                userProfileData['averageMonthlyHousehold'] == null ||
-                userProfileData['averageMonthlyHousehold'].isEmpty ||
-                userProfileData['applicationType'] == null ||
-                userProfileData['applicationType'].isEmpty;
+            bool hasEmptyFields;
+
+            GrantController grantController =
+                GrantController(userProfileData: userProfileData);
+
+            hasEmptyFields = grantController.hasEmptyFields(
+                widget.numOfBedroom, widget.lease);
 
             if (hasEmptyFields) {
               return Padding(
@@ -115,76 +111,7 @@ class _EditGrantProfileWidgetState extends State<EditGrantProfileWidget> {
                     ),
                   ));
             } else {
-              /// Calculating grant logic
-
-              List<int> grantAmount = [];
-              List<String> grantAwarded = [];
-
-              String applicationType = userProfileData['applicationType'];
-              String firstTime = userProfileData['firstTime'];
-              int averageMonthlyHousehold =
-                  int.parse(userProfileData['averageMonthlyHousehold']);
-              String citizenship = userProfileData['Citizenship'];
-              int age = int.parse(userProfileData['age']);
-
-              //Logic for grant
-
-              if (applicationType == 'Couple' &&
-                  firstTime == 'Yes' &&
-                  averageMonthlyHousehold <= 14000 &&
-                  citizenship == 'Singaporean' &&
-                  age >= 21 &&
-                  widget.lease > 20) {
-                print('Hit first inner loop for couple');
-
-                if (averageMonthlyHousehold < 9000) {
-                  grantAmount.add(ENHANCED_CPF_HOUSING_AMOUNT);
-                  grantAwarded.add(ENHANCED_CPF_HOUSING);
-                }
-
-                if (widget.numOfBedroom <= 4) {
-                  grantAmount.add(CPF_HOUSING_GRANT_AMOUNT);
-                  grantAwarded.add(CPF_HOUSING_GRANT);
-                  print('hit inner loop for 4 room');
-                } else {
-                  grantAmount.add(CPF_HOUSING_GRANT_AMOUNT_5RM);
-                  grantAwarded.add(CPF_HOUSING_GRANT_5RM);
-                }
-              } else if (applicationType == 'Family' &&
-                  firstTime == 'Yes' &&
-                  averageMonthlyHousehold <= 21000 &&
-                  citizenship == 'Singaporean' &&
-                  age >= 21 &&
-                  widget.lease > 20) {
-                if (averageMonthlyHousehold < 4500) {
-                  grantAmount.add(ENHANCED_CPF_HOUSING_AMOUNT);
-                  grantAwarded.add(ENHANCED_CPF_HOUSING);
-                }
-
-                if (widget.numOfBedroom <= 4) {
-                  grantAmount.add(CPF_HOUSING_GRANT_AMOUNT_FAMILY);
-                  grantAwarded.add(CPF_HOUSING_GRANT_FAMILY);
-                } else {
-                  grantAmount.add(CPF_HOUSING_GRANT_AMOUNT_FAMILY_5RM);
-                  grantAwarded.add(CPF_HOUSING_GRANT_FAMILY_5RM);
-                }
-              } else if (applicationType == 'Single' &&
-                  firstTime == "Yes" &&
-                  averageMonthlyHousehold <= 7000 &&
-                  citizenship == 'Singaporean' &&
-                  age >= 35 &&
-                  widget.lease > 20) {
-                if (widget.numOfBedroom <= 4) {
-                  grantAmount.add(SINGLE_GRANT_AMOUNT);
-                  grantAwarded.add(SINGLE_GRANT);
-                } else {
-                  grantAmount.add(SINGLE_GRANT_5RM_AMOUNT);
-                  grantAwarded.add(SINGLE_GRANT_5RM);
-                }
-              } else {
-                grantAwarded.add("Not Applicable");
-                grantAmount.add(0);
-              }
+              List grants = grantController.getGrantAwarded();
 
               //True to dispaly grantAwarded
               if (widget.grant == true) {
@@ -193,17 +120,15 @@ class _EditGrantProfileWidgetState extends State<EditGrantProfileWidget> {
                         EdgeInsetsDirectional.fromSTEB(0.0, 15.0, 0.0, 0.0),
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
-                      children: [getGrant(grantAwarded)],
+                      children: [getGrant(grants[0])],
                     ));
               }
               return new Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 15.0, 0.0, 0.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.max,
-                    children: [getGrantAward(grantAmount)],
+                    children: [getGrantAward(grants[1])],
                   ));
-
-              // RETURN WIDGET HERE
             }
           } else {
             return Center(child: Text("No profile record!"));

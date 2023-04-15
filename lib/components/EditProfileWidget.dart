@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:onezero/components/GrantCard.dart';
-import '../auth.dart';
-import 'package:onezero/backend/database.dart';
+import '../controller/auth.dart';
+import 'package:onezero/controller/database.dart';
 import '../constants.dart';
 
 class EditProfileWidget extends StatefulWidget {

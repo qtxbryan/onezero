@@ -8,7 +8,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-import 'package:onezero/backend/database.dart';
+import 'package:onezero/controller/database.dart';
 import 'dart:io';
 
 class ChangePhotoWidget extends StatefulWidget {

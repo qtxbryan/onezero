@@ -1,5 +1,5 @@
 import '/flutter_flow/flutter_flow_theme.dart';
-import '../auth.dart';
+import '../controller/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -10,7 +10,7 @@ import 'package:onezero/constants.dart';
 import 'package:onezero/components/Edit_grant_profile.dart';
 import 'package:onezero/components/maps.dart';
 import 'edit_profile_page.dart';
-import 'package:onezero/pages/CompareScreen.dart';
+import 'package:onezero/pages/compare_page.dart';
 import 'package:onezero/components/email.dart';
 
 class IndividualPropertyPageWidget extends StatefulWidget {
@@ -1072,38 +1072,6 @@ class _IndividualPropertyPageWidgetState
                     ),
                   ],
                 ),
-                /*Align(
-                  alignment: AlignmentDirectional(-0.9, -0.95),
-                  child: Container(
-                    width: 30.0,
-                    height: 30.0,
-                    decoration: BoxDecoration(
-                      color: FlutterFlowTheme.of(context).secondaryBackground,
-                      shape: BoxShape.circle,
-                    ),
-                    child: Icon(
-                      Icons.arrow_back,
-                      color: Colors.black,
-                      size: 24.0,
-                    ),
-                  ),
-                ),
-                Align(
-                  alignment: AlignmentDirectional(0.9, -0.95),
-                  child: Container(
-                    width: 30.0,
-                    height: 30.0,
-                    decoration: BoxDecoration(
-                      color: FlutterFlowTheme.of(context).secondaryBackground,
-                      shape: BoxShape.circle,
-                    ),
-                    child: Icon(
-                      Icons.keyboard_control,
-                      color: Colors.black,
-                      size: 24.0,
-                    ),
-                  ),
-                ),*/
               ],
             ),
           ),

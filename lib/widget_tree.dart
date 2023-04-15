@@ -1,7 +1,7 @@
-import 'package:onezero/auth.dart';
-import 'package:onezero/pages/login_page.dart';
+import 'package:onezero/controller/auth.dart';
+import 'package:onezero/pages/new_login.dart';
 import 'package:flutter/material.dart';
-import 'package:onezero/pages/add_to_fav.dart';
+import 'package:onezero/pages/main_page.dart';
 
 class WidgetTree extends StatefulWidget {
   const WidgetTree({super.key});
@@ -18,9 +18,9 @@ class _WidgetTreeState extends State<WidgetTree> {
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           // return HomePage();
-          return HomePage();
+          return MainPage();
         } else {
-          return LoginPage();
+          return LoginPageWidget();
         }
       },
     );

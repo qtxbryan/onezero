@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:onezero/backend/database.dart';
+import 'package:onezero/controller/database.dart';
 import 'package:onezero/models/Listing.dart';
 import 'package:flutter_number_picker/flutter_number_picker.dart';
 import 'dart:io';

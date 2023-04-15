@@ -1,6 +1,5 @@
 import 'package:onezero/models/resale.dart';
 import 'package:onezero/controller/remote_service.dart';
-import 'dart:developer';
 import 'package:flutter/material.dart';
 
 class ComparePage extends StatefulWidget {

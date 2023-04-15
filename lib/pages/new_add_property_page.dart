@@ -11,7 +11,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:onezero/auth.dart';
+import 'package:onezero/controller/auth.dart';
 import 'dart:io';
 
 class AddPropertyPageWidget extends StatefulWidget {

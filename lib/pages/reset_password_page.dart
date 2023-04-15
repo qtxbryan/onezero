@@ -1,9 +1,7 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import '../auth.dart';
+import '../controller/auth.dart';
 import 'package:onezero/components/bottom_sheet.dart';
 
 class ChangePasswordWidget extends StatefulWidget {

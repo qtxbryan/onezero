@@ -1,12 +1,9 @@
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:onezero/models/Listing.dart';
-import 'package:onezero/backend/database.dart';
+import 'package:onezero/controller/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../auth.dart';
+import '../controller/auth.dart';
 
 class CreatePropertyPageWidget extends StatefulWidget {
   const CreatePropertyPageWidget({Key? key}) : super(key: key);

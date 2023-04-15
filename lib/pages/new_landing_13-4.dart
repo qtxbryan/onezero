@@ -2,16 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
-import 'package:onezero/backend/database.dart';
-import 'package:onezero/auth.dart';
-import 'package:onezero/models/LocationModel.dart';
-import 'package:geocoding/geocoding.dart';
-import 'favorite_page.dart';
+import 'package:onezero/controller/database.dart';
+import 'package:onezero/controller/auth.dart';
 import 'package:onezero/components/property_card.dart';
 import 'package:onezero/components/filter_button.dart';
-import 'settings_page.dart';
-import 'new_add_property_page.dart';
-import 'my_properties_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -22,11 +16,13 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with AutomaticKeepAliveClientMixin {
+  // Defining Controllers
+  final Auth _auth = Auth();
+  final db = Database();
+
+  // Defining Variables
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final _unfocusNode = FocusNode();
-  final Auth _auth = Auth();
-
-  Database db = Database();
   String _searchText = '';
   int _selectedFilterIndex = -1;
   late TextEditingController _searchController;
@@ -208,7 +204,6 @@ class _HomePageState extends State<HomePage>
                                           });
                                         },
                                       ),
-                                      // Set the content padding to vertically align the hint text
                                     ),
                                     style:
                                         FlutterFlowTheme.of(context).bodyText1,
@@ -306,15 +301,15 @@ class _HomePageState extends State<HomePage>
                         padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 50),
                         child: SafeArea(
                           child: StreamBuilder<QuerySnapshot>(
-                            stream: FirebaseFirestore.instance
-                                .collection('listing')
-                                .snapshots(),
+                            stream: db.readListings('listing'),
                             builder: (context, snapshot) {
+                              // Checks if there is data in snapshot
                               if (!snapshot.hasData) {
                                 return Center(
                                   child: CircularProgressIndicator(),
                                 );
                               }
+                              //get all listing documents from firebase
                               final properties = snapshot.data!.docs;
                               final filteredProperties =
                                   properties.where((property) {
