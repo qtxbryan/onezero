@@ -46,8 +46,15 @@ flutter run
 
 ```terminal
 .
+├── android 
+├── assets  
 ├── deliverables         # lab deliverables
+├── ios  
 ├── lib                  # flutter app
+├── linux  
+├── macos
+├── web
+├── windows  
 ├── .gitignore
 └── README.md
 ```
