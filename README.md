@@ -42,6 +42,16 @@ flutter run
 
 ## Project Folder Structure
 
+#### Top Level Directory Layout
+
+```terminal
+.
+├── deliverables         # lab deliverables
+├── lib                  # flutter app
+├── .gitignore
+└── README.md
+```
+
 
 
 ## Tech Stacks
