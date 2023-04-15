@@ -1,16 +1,59 @@
-# onezero
+#  SC2006-One.Zero
 
-A new Flutter project.
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/97502375/231726159-d77b8d3d-72e6-4692-8030-bbb8f789b45a.png" alt="flatfinder" style="width: 600px; height: 100px;">
+</p>
+
+> Project for SC2006 Software Engineering: One-stop E-commerce housing mobile application
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+> From your command line go to the folder directory and run the following scripts in the terminal.
 
-A few resources to get you started if this is your first Flutter project:
+1\. Go to folder directory
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+```terminal
+cd <FOLDER-NAME>
+```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+2\. Clone the repo
+
+```terminal
+git clone https://github.com/qtxbryan/onezero.git
+```
+
+3\. Go to project directory
+
+```terminal
+cd onezero
+```
+
+4\. Install required dependencies
+
+```terminal
+flutter pub get
+```
+
+5\. Run the application
+
+```terminal
+flutter run 
+```
+
+## Project Folder Structure
+
+
+
+## Tech Stacks
+<p>
+  <img src="https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white" >
+  <img src="https://img.shields.io/badge/Firebase-F29D0C?style=for-the-badge&logo=firebase&logoColor=white" >
+</p>
+
+## Contributors - Team One.Zero
+
+- [Bryan Tan](https://github.com/qtxbryan)
+- [Glendon Goh](https://github.com/Glendon123)
+- [Jabez Ng](https://github.com/jabezng2)
+- [Wei Hao](https://github.com/weihaooooo)
+- [Yupei](https://github.com/FAN0020)
