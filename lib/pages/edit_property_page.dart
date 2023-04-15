@@ -2,9 +2,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:onezero/constants.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
+
 import 'package:onezero/controller/textInputFormatter.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
+
 import 'package:onezero/controller/validations.dart';
 import 'dart:io';
+import '/flutter_flow/flutter_flow_theme.dart';
+
 import 'package:onezero/models/Listing.dart';
 import 'package:onezero/auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -51,7 +58,19 @@ class _EditPropertyPageState extends State<EditPropertyPage> {
     print(list.upload_url);
     return Scaffold(
       appBar: AppBar(
-        title: Text("Edit Property"),
+        automaticallyImplyLeading: false,
+        backgroundColor: Color(0xFF41436A),
+        elevation: 0,
+        title: Text(
+          'Edit Property',
+          style: FlutterFlowTheme.of(context).bodyText1.override(
+                fontFamily: 'Urbanist',
+                color: Colors.white,
+                fontSize: 18.0,
+              ),
+        ),
+        actions: [],
+        centerTitle: true,
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),
@@ -161,9 +180,26 @@ class _EditPropertyPageState extends State<EditPropertyPage> {
                 onSaved: (value) => list.setPropertyName = value,
               ),
               SizedBox(height: 16.0),
-              ElevatedButton(
-                child: Text("Save Changes"),
+              FFButtonWidget(
                 onPressed: () => saveChanges(),
+                text: 'Save Changes',
+                options: FFButtonOptions(
+                  width: 130.0,
+                  height: 40.0,
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                  iconPadding:
+                      EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                  color: FlutterFlowTheme.of(context).primaryBtnText,
+                  textStyle: FlutterFlowTheme.of(context).bodyText2.override(
+                        fontFamily: 'Poppins',
+                        color: Color(PRIMARY_COLOR),
+                      ),
+                  borderSide: BorderSide(
+                    color: Color(PRIMARY_COLOR),
+                    width: 1.0,
+                  ),
+                  borderRadius: BorderRadius.circular(8.0),
+                ),
               ),
             ],
           ),

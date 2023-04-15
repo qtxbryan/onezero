@@ -1,5 +1,5 @@
 import 'package:onezero/constants.dart';
-import 'package:onezero/pages/new_landing_6-4.dart';
+import 'main_page.dart';
 
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -128,7 +128,7 @@ class _AddPropertyPageWidgetState extends State<AddPropertyPageWidget> {
       });
 
       Navigator.push(
-          context, MaterialPageRoute(builder: ((context) => HomePage())));
+          context, MaterialPageRoute(builder: ((context) => MainPage())));
     }
   }
 

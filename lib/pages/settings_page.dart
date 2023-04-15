@@ -4,7 +4,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:onezero/auth.dart';
-import 'package:onezero/pages/login_page.dart';
+import 'package:onezero/pages/new_login.dart';
 import 'package:onezero/pages/edit_profile_page.dart';
 import 'reset_password_page.dart';
 
@@ -16,11 +16,35 @@ class SettingPage extends StatefulWidget {
 }
 
 class _SettingPageState extends State<SettingPage> {
-  Auth auth = Auth();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final _unfocusNode = FocusNode();
 
-  final Auth _auth = Auth();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  User? _currentUser;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadCurrentUser();
+  }
+
+  void _loadCurrentUser() {
+    final user = _auth.currentUser;
+    setState(() {
+      _currentUser = user;
+    });
+  }
+
+  Future<void> _handleSignOut() async {
+    try {
+      await _auth.signOut();
+      setState(() {
+        _currentUser = null;
+      });
+    } catch (e) {
+      print('Error signing out: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -437,12 +461,12 @@ class _SettingPageState extends State<SettingPage> {
                     padding: EdgeInsetsDirectional.fromSTEB(8.0, 8.0, 8.0, 8.0),
                     child: GestureDetector(
                       onTap: () async {
-                        await auth.signOut();
+                        _currentUser == null ? null : _handleSignOut;
 
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: ((context) => LoginPage())));
+                                builder: ((context) => LoginPageWidget())));
                       },
                       child: Row(
                         mainAxisSize: MainAxisSize.max,

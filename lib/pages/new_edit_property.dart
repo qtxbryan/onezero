@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:image_picker/image_picker.dart';
+import '/flutter_flow/flutter_flow_theme.dart';
 import 'package:onezero/controller/textInputFormatter.dart';
 import 'package:onezero/controller/validations.dart';
 import 'dart:io';
@@ -82,7 +83,19 @@ class _EditPropertyPageState extends State<EditPropertyPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        automaticallyImplyLeading: false,
+        backgroundColor: Color(0xFF41436A),
+        elevation: 0,
+        title: Text(
+          'My Properties',
+          style: FlutterFlowTheme.of(context).bodyText1.override(
+                fontFamily: 'Urbanist',
+                color: Colors.white,
+                fontSize: 18.0,
+              ),
+        ),
+        actions: [],
+        centerTitle: true,
       ),
       body: Center(
         child: Column(

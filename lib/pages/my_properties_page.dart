@@ -83,7 +83,10 @@ class _MyPropertiesWidgetState extends State<MyPropertiesWidget> {
         centerTitle: true,
       ),
       body: StreamBuilder<QuerySnapshot>(
-        stream: firestore.collection('listing').snapshots(),
+        stream: firestore
+            .collection('listing')
+            .where('listed_by_email', isEqualTo: user!.email)
+            .snapshots(),
         builder: (context, snapshot) {
           // Customize what your widget looks like when it's loading.
           if (!snapshot.hasData) {

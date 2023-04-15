@@ -29,7 +29,7 @@ class _RegisterPageWidgetState extends State<RegisterPageWidget> {
   final TextEditingController _controllerPassword = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-  bool obscureText = false;
+  bool obscureText = true;
 
   Future<void> createUserWithEmailAndPassword() async {
     try {

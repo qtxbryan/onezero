@@ -471,7 +471,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 12.0),
                           child: Container(
-                            width: 370.0,
+                            width: 350.0,
                             height: 70.0,
                             child: InputDecorator(
                               decoration: InputDecoration(
@@ -600,7 +600,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 12.0),
                           child: Container(
-                            width: 370.0,
+                            width: 350.0,
                             height: 70.0,
                             child: InputDecorator(
                               decoration: InputDecoration(
@@ -735,7 +735,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                           padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 0.0, 0.0, 12.0),
                           child: Container(
-                            width: 370.0,
+                            width: 350.0,
                             height: 70.0,
                             child: InputDecorator(
                               decoration: InputDecoration(
