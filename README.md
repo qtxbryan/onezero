@@ -33,14 +33,43 @@ cd onezero
 ```terminal
 flutter pub get
 ```
+5\. Add in Android API Keys for Google Maps in AndroidMainifest.xml (android/app/main/AndroidManifest.xml)
 
-5\. Run the application
+``` terminal
+<meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="API KEY HERE"/>
+```
+
+6\. Add in IOS API Keys for Google Maps in AppDelegate.swift (ios/Runner/AppDelegate.swift)
+
+``` terminal
+GMSServices.provideAPIKey("API KEY HERE")
+```
+
+7\. Run the application
 
 ```terminal
 flutter run 
 ```
 
 ## Project Folder Structure
+
+#### Top Level Directory Layout
+
+```terminal
+.
+├── android 
+├── assets  
+├── deliverables         # lab deliverables
+├── ios  
+├── lib                  # flutter app
+├── linux  
+├── macos
+├── web
+├── windows  
+├── .gitignore
+└── README.md
+```
 
 
 
