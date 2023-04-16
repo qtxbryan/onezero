@@ -33,7 +33,7 @@ class _ComparePageState extends State<ComparePage> {
     var neighbourhood = listingData['neighbourhood'].toString().toUpperCase();
     var numberOfRooms = listingData['numOfBedroom'].toString() + " ROOM";
     var tprice = price.toInt().toString();
-    //var price = listingData['price'].toString();
+
     //fetch data from API
     getResaleData(
         neighbourhood, numberOfRooms, tprice); // resale contains the data
@@ -45,11 +45,6 @@ class _ComparePageState extends State<ComparePage> {
     nh = neighbourhood;
     nor = numberOfRooms;
     indivPrice = '\$' + tprice;
-    //var test1 = records[1].town.toString().split('.').last;
-    //var test2 = test1.replaceAll("_", " ");
-    //var testtype = test2.runtimeType;
-    //log('Data: $test1, $test2, $testtype'); PRINTS(BUKIT_MERAH, BUKIT MERAH, String) !!
-    //log('Testing parameter passing: $neighbourhood, $numberOfRooms');
     filterRecords = records
         .where((record) =>
             (record.town.toString().split('.').last.replaceAll("_", " ") ==
@@ -62,7 +57,6 @@ class _ComparePageState extends State<ComparePage> {
                     .replaceAll("_", " ") ==
                 numberOfRooms))
         .toList();
-    //log('Data: $filterRecords');
 
     // Average Calculation
     if (filterRecords.isNotEmpty) {
@@ -74,8 +68,6 @@ class _ComparePageState extends State<ComparePage> {
           .ceil();
     }
     average = '\$' + avg.toString();
-    //var test = average.runtimeType;
-    //log('Avg: $average, $test');
 
     if (resale != null) {
       setState(() {

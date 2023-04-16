@@ -1,5 +1,5 @@
 import 'package:onezero/controller/auth.dart';
-import 'package:onezero/pages/new_login.dart';
+import 'package:onezero/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:onezero/pages/main_page.dart';
 

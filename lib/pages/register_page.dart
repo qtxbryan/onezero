@@ -7,7 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import '../controller/auth.dart';
 import 'new_user_page.dart';
-import 'new_login.dart';
+import 'login_page.dart';
 import 'package:onezero/controller/validations.dart';
 
 class RegisterPageWidget extends StatefulWidget {

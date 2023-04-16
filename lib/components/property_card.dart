@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:onezero/pages/new_individual_page.dart';
+import 'package:onezero/pages/individual_page.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import 'package:onezero/constants.dart';
 import 'package:intl/intl.dart';

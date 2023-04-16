@@ -6,7 +6,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../controller/auth.dart';
-import 'new_register.dart';
+import 'register_page.dart';
 import 'package:onezero/controller/validations.dart';
 
 class LoginPageWidget extends StatefulWidget {

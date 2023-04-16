@@ -13,8 +13,6 @@ class GrantController {
         userProfileData['displayName'].isEmpty ||
         userProfileData['citizenship'] == null ||
         userProfileData['citizenship'].isEmpty ||
-        userProfileData['Martial'] == null ||
-        userProfileData['Martial'].isEmpty ||
         userProfileData['age'] == null ||
         userProfileData['age'].isEmpty ||
         userProfileData['averageMonthlyHousehold'] == null ||
@@ -29,9 +27,10 @@ class GrantController {
         lease: lease,
         applicationType: userProfileData['applicationType'],
         firstTime: userProfileData['firstTime'],
-        averageMonthlyHousehold: userProfileData['averageMonthlyHousehold'],
+        averageMonthlyHousehold:
+            int.parse(userProfileData['averageMonthlyHousehold']),
         citizenship: userProfileData['citizenship'],
-        age: userProfileData['age']);
+        age: int.parse(userProfileData['age']));
 
     return false;
   }

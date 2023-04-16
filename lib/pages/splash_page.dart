@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:onezero/models/LocationModel.dart';
 import 'package:location/location.dart';
 import 'dart:async';
-import 'package:onezero/pages/new_login.dart';
+import 'package:onezero/pages/login_page.dart';
 import 'package:onezero/constants.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';

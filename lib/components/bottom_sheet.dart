@@ -3,7 +3,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../controller/auth.dart';
-import 'package:onezero/pages/new_login.dart';
+import 'package:onezero/pages/login_page.dart';
 
 class BottomSheetWidget extends StatefulWidget {
   const BottomSheetWidget({Key? key}) : super(key: key);

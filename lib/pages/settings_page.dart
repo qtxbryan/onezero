@@ -2,7 +2,7 @@ import 'package:onezero/pages/my_properties_page.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:onezero/pages/new_login.dart';
+import 'package:onezero/pages/login_page.dart';
 import 'package:onezero/pages/edit_profile_page.dart';
 import 'reset_password_page.dart';
 

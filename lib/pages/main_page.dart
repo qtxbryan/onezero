@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:onezero/controller/auth.dart';
 import 'favorite_page.dart';
 import 'settings_page.dart';
-import 'new_landing_13-4.dart';
+import 'landing_page.dart';
 import 'add_property_page.dart';
 import 'my_properties_page.dart';
 

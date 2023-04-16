@@ -4,14 +4,13 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import '../controller/auth.dart';
+import 'package:onezero/controller/auth.dart';
 import 'package:onezero/controller/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:onezero/constants.dart';
 import 'dart:io';
-import 'package:onezero/components/change_photo.dart';
+import 'package:onezero/pages/change_photo.dart';
 
 class EditProfileWidget extends StatefulWidget {
   const EditProfileWidget({
@@ -101,7 +100,9 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
   String? firstTime;
   final phoneNumberController = TextEditingController();
 
-  final List<String> firstTimeOptions = ['Yes', 'No'];
+  String? firstTimeChange;
+  String? applicationTypeChange;
+  String? citizenshipChange;
 
   late final User? _user;
   late final Stream<DocumentSnapshot> _userDocStream;
@@ -185,8 +186,6 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
             firstTime = userProfileData['firstTime']?.toString() ?? '';
             phoneNumberController.text =
                 userProfileData['phoneNumber']?.toString() ?? '';
-
-            print("PRINT ON TOP ${citizenship}");
 
             return Scaffold(
               key: scaffoldKey,
@@ -503,27 +502,24 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                 contentPadding: EdgeInsets.all(10),
                               ),
                               child: DropdownButtonFormField<String>(
-                                value: firstTime == ''
-                                    ? firstTimeOptions[0]
-                                    : firstTime,
-                                items: firstTimeOptions
+                                value: firstTime == "" ? "Yes" : firstTime,
+                                items: ['Yes', 'No']
                                     .map<DropdownMenuItem<String>>((val) {
-                                      return DropdownMenuItem<String>(
-                                        value: val,
-                                        child: Text(val),
-                                      );
-                                    })
-                                    .toSet()
-                                    .toList(), // remove duplicates using toSet()
+                                  return DropdownMenuItem<String>(
+                                    value: val,
+                                    child: Text(val),
+                                  );
+                                }).toList(),
                                 onChanged: (val) {
                                   setState(() {
-                                    firstTime = val;
                                     print(firstTime);
+                                    firstTimeChange = val;
                                   });
                                 },
                                 onSaved: (val) {
                                   setState(() {
-                                    firstTime = val;
+                                    print(firstTime);
+                                    firstTimeChange = val;
                                   });
                                 },
                                 isExpanded: true,
@@ -635,8 +631,8 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                 contentPadding: EdgeInsets.all(10),
                               ),
                               child: DropdownButtonFormField<String>(
-                                value: applicationType == ''
-                                    ? "Couple"
+                                value: applicationType == ""
+                                    ? "Single"
                                     : applicationType,
                                 isExpanded: true,
                                 items: [
@@ -654,14 +650,11 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                   ),
                                 ],
                                 onChanged: (val) => setState(() {
-                                  applicationType = val;
-                                  print(applicationType);
+                                  applicationTypeChange = val;
                                 }),
-                                onSaved: (value) {
-                                  setState(() {
-                                    applicationType = value;
-                                  });
-                                },
+                                onSaved: (val) => setState(() {
+                                  applicationTypeChange = val;
+                                }),
                                 hint: Text(
                                   'Single / Couple / Family',
                                   style: FlutterFlowTheme.of(context)
@@ -775,10 +768,15 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                 contentPadding: EdgeInsets.all(10),
                               ),
                               child: DropdownButtonFormField<String>(
-                                value: citizenship == ''
-                                    ? "Singaporean"
-                                    : citizenship,
-                                isExpanded: true,
+                                value: citizenship == ""
+                                    ? citizenship = "Singaporean"
+                                    : citizenshipChange,
+                                onChanged: (val) => setState(() {
+                                  citizenshipChange = val;
+                                }),
+                                onSaved: (val) => setState(() {
+                                  citizenshipChange = val;
+                                }),
                                 items: [
                                   DropdownMenuItem<String>(
                                     value: 'Singaporean',
@@ -789,21 +787,12 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                     child: Text('Permanent Resident'),
                                   ),
                                   DropdownMenuItem<String>(
-                                    value: 'Foreigner',
-                                    child: Text('Foreigner'),
+                                    value: 'Others',
+                                    child: Text('Others'),
                                   ),
                                 ],
-                                onChanged: (val) => setState(() {
-                                  citizenship = val;
-                                  print(citizenship);
-                                }),
-                                onSaved: (value) {
-                                  setState(() {
-                                    citizenship = value;
-                                  });
-                                },
                                 hint: Text(
-                                  'Singaporean / PR / Foreigner',
+                                  'Citizenship',
                                   style: FlutterFlowTheme.of(context)
                                       .bodyText1
                                       .override(
@@ -811,6 +800,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                         color: Colors.black,
                                       ),
                                 ),
+                                isExpanded: true,
                                 icon: const Icon(Icons.arrow_downward),
                                 iconSize: 24,
                                 elevation: 2,
@@ -832,14 +822,23 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                             child: FFButtonWidget(
                               onPressed: () async {
                                 // Test form validate
+                                if (!formKey.currentState!.validate()) {
+                                  return;
+                                }
+
+                                if (firstTimeChange == null) {
+                                  firstTimeChange = firstTime;
+                                }
+                                if (applicationTypeChange == null) {
+                                  applicationTypeChange = applicationType;
+                                }
+                                if (citizenshipChange == null) {
+                                  citizenshipChange = citizenship;
+                                }
 
                                 String monthlyHouseholdFormatted =
                                     monthlyHouseholdController.text
                                         .replaceAll(',', '');
-
-                                print(firstTime);
-                                print(citizenship);
-                                print(applicationType);
 
                                 await db.updateProfile(
                                     _user!.uid,
@@ -849,11 +848,12 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                     addressController.text,
                                     ageController.text,
                                     monthlyHouseholdFormatted,
-                                    applicationType!,
-                                    firstTime!,
+                                    applicationTypeChange!,
+                                    firstTimeChange!,
                                     martialController.text,
-                                    citizenship!,
+                                    citizenshipChange!,
                                     _imageURL!);
+
                                 Navigator.pop(context);
                               },
                               text: 'Save Changes',
@@ -890,12 +890,8 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
               ),
             );
           } else {
-            return Center(
-              child: CircularProgressIndicator(
-                color: Color(PRIMARY_COLOR),
-              ),
-            );
-          }
+            return Center(child: CircularProgressIndicator());
+          } // End of streambuilder
         });
   }
 }
