@@ -52,6 +52,13 @@ GMSServices.provideAPIKey("API KEY HERE")
 flutter run 
 ```
 
+8\. Test Account
+
+``` terminal
+email: sc2006@gmail.com
+password: Testing1!
+```
+
 ## Project Folder Structure
 
 #### Top Level Directory Layout
